@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Team discussion
+    url: https://github.com/comp4310-project/kaizen/discussions
+    about: Open-ended questions and ideas that are not yet a unit of work.

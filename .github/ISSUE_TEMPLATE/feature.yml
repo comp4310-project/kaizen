@@ -1,0 +1,33 @@
+name: Feature
+description: Propose new functionality for the system.
+title: "[Feature]: "
+labels: ["feature"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem
+      description: What user problem does this solve? Who is the user?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed behaviour
+      description: What should the system do? Describe it from the user's side.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Out of scope
+      description: What this explicitly does not include. Guards against creep.
+    validations:
+      required: false
+  - type: dropdown
+    id: area
+    attributes:
+      label: Area
+      options: ["frontend", "backend", "ml", "data", "docs", "unsure"]
+    validations:
+      required: true

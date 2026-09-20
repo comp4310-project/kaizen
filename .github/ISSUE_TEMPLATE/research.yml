@@ -1,0 +1,33 @@
+name: Research
+description: A question to investigate — literature, existing systems, or a technical spike.
+title: "[Research]: "
+labels: ["research"]
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What exactly are we trying to find out?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it matters
+      description: What decision does the answer unblock?
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Expected output
+      description: A note in docs/research/? An ADR? A throwaway prototype?
+    validations:
+      required: true
+  - type: input
+    id: timebox
+    attributes:
+      label: Timebox
+      placeholder: e.g. 3 hours — stop and report what you found, even if inconclusive
+    validations:
+      required: false

@@ -1,0 +1,6 @@
+# Every pull request requires a review from the core team.
+# Adding a path-specific line below overrides the default for that path.
+#
+# Docs: https://docs.github.com/articles/about-code-owners
+
+* @comp4310-project/core
