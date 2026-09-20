@@ -1,7 +1,7 @@
-# P0 — Team Formation and Topic Selection
+# P0: Team Formation and Topic Selection
 
-COMP 4310 — Web Health Informatics, Lakehead University
-Due: Sunday, September 20, 2026, 11:59 PM — one PDF per team on D2L
+COMP 4310 Web Health Informatics, Lakehead University
+Due: Sunday, September 20, 2026, 11:59 PM. One PDF per team on D2L.
 
 > Draft. Anything marked TBD needs confirming with the team before this gets submitted.
 
@@ -30,9 +30,9 @@ Kaizen: Turning Hospital Feedback into Actionable Quality Improvements
 
 Student-proposed project.
 
-It overlaps with several of the suggested themes — P11 (health report generation), P6
-(analytics dashboard), P5 (summarization) and P12 (search and recommendation) — but
-doesn't fit neatly into one, so we're proposing it as our own topic and would like
+It overlaps with several of the suggested themes: P11 (health report generation), P6
+(analytics dashboard), P5 (summarization) and P12 (search and recommendation). It doesn't
+fit neatly into any one of them, so we're proposing it as our own topic and would like
 approval for the scope below.
 
 ## 5. Brief Project Idea
@@ -69,7 +69,7 @@ changes go through pull requests with a review.
 
 ## Data and limitations
 
-We'll only use synthetic, public, or properly de-identified data — no real patient
+We'll only use synthetic, public, or properly de-identified data. No real patient
 information at any point. This is a course prototype, not a clinically validated system,
 and anything the AI generates is decision support for a human to check rather than an
 authoritative answer. Part of the work is testing whether the generated suggestions

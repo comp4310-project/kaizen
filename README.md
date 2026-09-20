@@ -2,21 +2,21 @@
 
 Group project for COMP 4310 (Web Health Informatics), Lakehead University.
 
-**Status: placeholder.** Topic and stack aren't final and still need approval from the
-instructor. The repo exists so we can start working properly.
+**Status: placeholder.** The topic below still needs approval from the instructor, and the
+stack isn't decided. There's no code yet.
 
 ## The idea
 
-Hospitals collect a lot of written feedback from patients, doctors, nurses and visitors,
-and most of it never gets read properly. The same problem can show up in fifty comments
-across three wards and nobody notices.
+Hospitals collect a lot of written feedback from patients, doctors, nurses and visitors.
+Most of it gets counted and filed, so a problem that keeps recurring across different
+wards, described in slightly different words each time, never gets spotted as one problem.
 
-We want to build something that groups feedback into recurring problems, shows where in
-the hospital's workflow they're happening, and suggests fixes based on hospital policy
-and published research.
+We want to build something that groups feedback into recurring issues, works out where in
+the hospital's workflow each one is happening, and suggests fixes based on hospital policy
+and published research on quality improvement.
 
-Named after *kaizen* (改善), continuous improvement from lots of small changes. It's a
-term that actually gets used in hospital operations.
+Named after kaizen (改善), continuous improvement from lots of small changes. It's a term
+that actually gets used in hospital operations, which is why we picked it.
 
 ## Team
 
@@ -29,21 +29,28 @@ term that actually gets used in hospital operations.
 
 ## Stack
 
-Nothing decided yet. Currently thinking React + TypeScript on the front, Python/FastAPI
-and Postgres on the back, and an LLM API with embeddings for the clustering and
-suggestions.
+Undecided. Currently leaning towards React and TypeScript on the front, Python with
+FastAPI and Postgres on the back, and an LLM API with embeddings for the clustering and
+the suggestions. This will change.
+
+## Running it
+
+Nothing to run yet. Setup instructions go here once there's code.
+
+## Data
+
+Synthetic, public, or properly de-identified data only. No real patient information at any
+point, which is a course requirement and also just sensible. Don't commit `.env` files or
+API keys either.
 
 ## Deliverables
 
-P0 draft is in [docs/p0-team-formation.md](docs/p0-team-formation.md). Nothing else started.
+P0 draft: [docs/p0-team-formation.md](docs/p0-team-formation.md). Nothing else started.
 
 ## Working on this
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). Short version: branch, open a PR, get one review,
-squash merge. `main` is protected so nobody can push to it directly.
-
-Synthetic or public data only — the course rules don't allow real patient data, and we
-shouldn't commit `.env` files or API keys either.
+See [CONTRIBUTING.md](CONTRIBUTING.md). Branch, open a PR, get one review, squash merge.
+`main` is protected so nobody can push to it directly.
 
 ## License
 
