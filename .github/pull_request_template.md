@@ -1,19 +1,16 @@
 ## What
 
-<!-- One or two sentences. What does this change do? -->
+<!-- What does this change? One or two sentences. -->
 
 ## Why
 
-<!-- What problem does it solve? Link the issue: Closes #NN -->
+<!-- Closes #NN -->
 
-## How to review
+## Notes for the reviewer
 
-<!-- Where should the reviewer look first? Anything you are unsure about? -->
+<!-- Anything you're unsure about, or where to look first. -->
 
-## Checklist
+---
 
-- [ ] Branch name follows `type/short-description`
-- [ ] Commits use Conventional Commits (`feat:`, `docs:`, `fix:`, ...)
 - [ ] CI passes
-- [ ] Documentation updated if setup or behaviour changed
-- [ ] No secrets, credentials, or real patient data in the diff
+- [ ] No secrets or real patient data in the diff

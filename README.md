@@ -1,106 +1,56 @@
 # Kaizen
 
-> **Status: placeholder.** The team, project topic, and technology stack on this page are
-> preliminary and pending instructor/TA approval (see [P0](docs/p0-team-formation.md)).
-> Nothing here is final. Structure exists so that collaboration starts on day one.
+Group project for COMP 4310 (Web Health Informatics), Lakehead University.
 
-Turning hospital feedback into actionable quality improvements.
+**Status: placeholder.** The topic below still needs approval from the instructor, and the
+stack isn't decided. There's no code yet.
 
-**COMP 4310 — Web Health Informatics**
-Department of Computer Science, Lakehead University, Thunder Bay, ON
+## The idea
 
----
+Hospitals collect a lot of written feedback from patients, doctors, nurses and visitors.
+Most of it gets counted and filed, so a problem that keeps recurring across different
+wards, described in slightly different words each time, never gets spotted as one problem.
 
-## Problem
+We want to build something that groups feedback into recurring issues, works out where in
+the hospital's workflow each one is happening, and suggests fixes based on hospital policy
+and published research on quality improvement.
 
-Hospitals collect large volumes of free-text feedback from patients, families, nurses,
-physicians, and visitors. Most of it is read once, counted, and filed. Recurring problems
-stay invisible because nobody can read ten thousand comments and notice that the same
-handover failure appears in three different wards under four different descriptions.
-
-## What we are building
-
-A decision-support system that:
-
-1. **Ingests** free-text feedback from multiple stakeholder groups.
-2. **Clusters** it into recurring themes using NLP and large language models.
-3. **Maps** each theme to the hospital workflow stage where it originates.
-4. **Proposes** candidate interventions grounded in hospital policy and published
-   quality-improvement literature.
-5. **Estimates** the expected impact of each intervention.
-
-Named for *kaizen* (改善) — continuous improvement driven by many small changes surfaced
-by the people closest to the work. It is established Lean healthcare vocabulary, and it
-describes the loop this system is meant to close.
-
-## Intended users
-
-Quality-improvement teams, unit managers, and hospital administrators.
-
-## Scope and limitations
-
-- **Synthetic, public, or appropriately de-identified data only.** No confidential patient
-  information is used at any point.
-- This is a course prototype. It is **not** a clinically validated medical device or
-  diagnostic system.
-- AI-generated output is **decision support**, not an authoritative clinical or
-  administrative decision. Every generated suggestion is presented for human review.
-- Evaluating whether generated output is faithful to its source data is part of the
-  project, not an afterthought.
+Named after kaizen (改善), continuous improvement from lots of small changes. It's a term
+that actually gets used in hospital operations, which is why we picked it.
 
 ## Team
 
-| Name | Lakehead email | GitHub | Role |
-|------|----------------|--------|------|
-| Mohammed Asrar Ali | _TBD_ | [@Asrar-ali](https://github.com/Asrar-ali) | _TBD_ |
-| _TBD_ | _TBD_ | [@Muazhuja01](https://github.com/Muazhuja01) | _TBD_ |
-| _TBD_ | _TBD_ | _TBD_ | _TBD_ |
-| _TBD_ | _TBD_ | _TBD_ | _TBD_ |
+| Name | Email | GitHub |
+|------|-------|--------|
+| Mohammed Asrar Ali | TBD | [@Asrar-ali](https://github.com/Asrar-ali) |
+| TBD | TBD | [@Muazhuja01](https://github.com/Muazhuja01) |
+| TBD | TBD | TBD |
+| TBD | TBD | TBD |
 
-## Technology stack
+## Stack
 
-Preliminary and subject to change. See [ADR directory](docs/decisions/) for decisions as
-they are made and justified.
+Undecided. Currently leaning towards React and TypeScript on the front, Python with
+FastAPI and Postgres on the back, and an LLM API with embeddings for the clustering and
+the suggestions. This will change.
 
-| Layer | Candidate |
-|-------|-----------|
-| Frontend | React + TypeScript |
-| Backend | Python, FastAPI |
-| Database | PostgreSQL |
-| Semantic search | Embeddings + vector store |
-| NLP / GenAI | LLM API or locally hosted model |
-| Clustering | scikit-learn / topic modelling |
-| CI | GitHub Actions |
+## Running it
 
-## Repository layout
+Nothing to run yet. Setup instructions go here once there's code.
 
-```
-docs/
-  p0-team-formation.md   P0 deliverable
-  decisions/             architecture decision records — what we chose and why
-  meetings/              dated meeting notes
-  research/              literature and existing-system review
-.github/
-  workflows/             CI
-  ISSUE_TEMPLATE/        issue forms
-```
+## Data
 
-## Course deliverables
+Synthetic, public, or properly de-identified data only. No real patient information at any
+point, which is a course requirement and also just sensible. Don't commit `.env` files or
+API keys either.
 
-| # | Deliverable | Status |
-|---|-------------|--------|
-| P0 | Team formation and topic selection | In progress |
-| P1 | Project proposal | Not started |
-| P2 | _TBD_ | Not started |
-| P3 | _TBD_ | Not started |
-| P4 | _TBD_ | Not started |
-| P5 | _TBD_ | Not started |
+## Deliverables
 
-## Contributing
+P0 draft: [docs/p0-team-formation.md](docs/p0-team-formation.md). Nothing else started.
 
-Read [CONTRIBUTING.md](CONTRIBUTING.md) before your first pull request. Short version:
-branch, commit with a conventional prefix, open a PR, get one approval, squash merge.
-`main` is protected — nobody pushes to it directly, including repository owners.
+## Working on this
+
+See [CONTRIBUTING.md](CONTRIBUTING.md). Branch, open a PR, get one review, squash merge.
+`main` is protected so nobody can push to it directly.
 
 ## License
 

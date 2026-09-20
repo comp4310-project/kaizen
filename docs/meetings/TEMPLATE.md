@@ -1,28 +1,18 @@
-# Meeting — YYYY-MM-DD
+# YYYY-MM-DD
 
-**Present:**
-**Absent:**
+**There:**
+**Missing:**
 
-## Decisions
-
-<!-- What did we actually decide? Anything significant gets an ADR in docs/decisions/. -->
+## What we decided
 
 -
 
-## Discussion
+## To do
 
-<!-- Only what a person who missed this meeting would need to know. -->
+| What | Who | When |
+|------|-----|------|
+|      |     |      |
 
--
-
-## Action items
-
-| What | Who | By when |
-|------|-----|---------|
-|      |     |         |
-
-## Blockers
-
-<!-- Anything stopping someone from making progress. Raise these early. -->
+## Blocked on
 
 -
