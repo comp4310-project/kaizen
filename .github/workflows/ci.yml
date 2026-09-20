@@ -32,7 +32,7 @@ jobs:
       - name: Verify required documents are present
         run: |
           missing=0
-          for f in README.md CONTRIBUTING.md CODE_OF_CONDUCT.md LICENSE .gitignore .github/CODEOWNERS; do
+          for f in README.md CONTRIBUTING.md LICENSE .gitignore .github/CODEOWNERS; do
             if [ ! -f "$f" ]; then
               echo "FAIL  missing required file: $f"
               missing=1

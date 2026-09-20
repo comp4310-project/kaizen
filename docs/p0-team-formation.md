@@ -1,93 +1,84 @@
 # P0 — Team Formation and Topic Selection
 
-**COMP 4310 — Web Health Informatics**
-Department of Computer Science, Lakehead University
-Due: Sunday, September 20, 2026, 11:59 PM · Submission: one PDF per team via MyCourseLink (D2L)
+COMP 4310 — Web Health Informatics, Lakehead University
+Due: Sunday, September 20, 2026, 11:59 PM — one PDF per team on D2L
 
-> **Draft.** Fields marked _TBD_ need confirmation from the team before this is exported to
-> PDF and submitted.
-
----
+> Draft. Anything marked TBD needs confirming with the team before this gets submitted.
 
 ## 1. Team Name
 
 **Kaizen**
 
-*Kaizen* (改善) is the practice of continuous improvement driven by many small changes
-surfaced by the people closest to the work. It entered healthcare through Lean hospital
-operations, and it names exactly the loop this project tries to close.
+*Kaizen* (改善) means continuous improvement through lots of small changes, usually
+suggested by the people doing the work. It's a term used in hospital operations, and it
+describes what we're trying to build.
 
 ## 2. Team Members
 
 | Full name | Lakehead email | GitHub |
 |-----------|----------------|--------|
-| Mohammed Asrar Ali | _TBD_ | @Asrar-ali |
-| _TBD_ | _TBD_ | @Muazhuja01 |
-| _TBD_ | _TBD_ | _TBD_ |
-| _TBD_ | _TBD_ | _TBD_ |
+| Mohammed Asrar Ali | TBD | @Asrar-ali |
+| TBD | TBD | @Muazhuja01 |
+| TBD | TBD | TBD |
+| TBD | TBD | TBD |
 
 ## 3. Preliminary Project Title
 
-**Kaizen: Turning Multi-Stakeholder Hospital Feedback into Actionable Quality Improvements**
+Kaizen: Turning Hospital Feedback into Actionable Quality Improvements
 
 ## 4. Project Theme / Area
 
-**Student-proposed project.**
+Student-proposed project.
 
-The work draws on several suggested themes without matching any single one: P11
-(AI-Assisted Health Report Generator), P6 (Health Data Analytics Dashboard), P5
-(Clinical Note Summarization), and P12 (Health Information Search and Recommendation).
-We are seeking instructor/TA approval for the student-proposed scope described below.
+It overlaps with several of the suggested themes — P11 (health report generation), P6
+(analytics dashboard), P5 (summarization) and P12 (search and recommendation) — but
+doesn't fit neatly into one, so we're proposing it as our own topic and would like
+approval for the scope below.
 
 ## 5. Brief Project Idea
 
-We plan to develop a web-based system that helps hospitals convert unstructured feedback
-from patients, doctors, nurses, and visitors into prioritized, actionable quality
-improvements. Feedback of this kind is collected in volume but rarely analyzed
-systematically, so recurring problems remain invisible. The system will use NLP and large
-language models to cluster comments into recurring themes, identify where each theme
-originates in hospital workflows, and propose candidate interventions grounded in hospital
-policies and published quality-improvement research. It will also estimate the expected
-impact of proposed changes. Intended users are quality-improvement teams, unit managers,
-and administrators. All outputs are decision support, evaluated for faithfulness rather
-than treated as authoritative.
+We want to build a web system that helps hospitals turn feedback from patients, doctors,
+nurses and visitors into improvements they can actually act on. Hospitals collect a lot of
+this feedback but rarely analyse it properly, so problems that keep recurring go unnoticed.
+The system would use NLP and large language models to group comments into recurring
+themes, work out where in the hospital's workflow each problem is happening, and suggest
+possible fixes based on hospital policies and published research on quality improvement.
+The users would be quality-improvement teams and hospital managers. Everything the system
+produces is a suggestion for a person to review, not a decision.
 
 ## 6. Preliminary Technology Stack
 
-Preliminary and subject to change as the design develops.
+Nothing here is decided yet.
 
-| Layer | Candidate technologies |
+| Layer | What we're considering |
 |-------|------------------------|
 | Frontend | React, TypeScript |
-| Backend | Python, FastAPI, REST API |
+| Backend | Python, FastAPI |
 | Database | PostgreSQL |
-| Semantic search | Sentence embeddings, vector store |
-| NLP / Generative AI | LLM API or locally hosted model; retrieval-augmented generation over a policy and literature corpus |
-| Clustering / topic modelling | scikit-learn, topic modelling over embeddings |
-| Visualization | Interactive dashboard |
-| Collaboration and CI | GitHub, GitHub Actions |
+| Search | Sentence embeddings, vector store |
+| NLP / AI | LLM API or a local model, with retrieval over a policy and research corpus |
+| Clustering | scikit-learn, topic modelling |
+| Other | GitHub Actions for CI |
 
 ## 7. Shared Repository
 
 https://github.com/comp4310-project/kaizen
 
-Public repository under the team organization `comp4310-project`. All team members have
-access. `main` is protected: changes land through reviewed pull requests.
+Public repo under our team organisation. All members have access. `main` is protected, so
+changes go through pull requests with a review.
 
----
+## Data and limitations
 
-## Data and Ethics
+We'll only use synthetic, public, or properly de-identified data — no real patient
+information at any point. This is a course prototype, not a clinically validated system,
+and anything the AI generates is decision support for a human to check rather than an
+authoritative answer. Part of the work is testing whether the generated suggestions
+actually match the data they came from.
 
-Consistent with the course requirements, the project will use synthetic, publicly
-available, or appropriately de-identified feedback data only. It will not require access
-to confidential patient information, will not be represented as a clinically validated
-system, and will present AI-generated output as decision support for human review rather
-than as authoritative decisions. Evaluating output faithfulness, and documenting the
-system's limitations, are explicit parts of the project.
+## Questions for the instructor/TA
 
-## Open questions for instructor/TA
-
-1. Is the student-proposed scope appropriate, or should it be framed under P11?
-2. Is a synthetic feedback corpus acceptable, given that real hospital feedback data is
-   not publicly available at useful scale?
-3. How rigorous should the impact-estimation component be for a one-term project?
+1. Is this scope alright as a student-proposed project, or would you rather we ran it
+   under P11?
+2. Is synthetic feedback data acceptable? Real hospital feedback doesn't seem to be
+   publicly available at any useful scale.
+3. How far should we take the impact-estimation part in one term?

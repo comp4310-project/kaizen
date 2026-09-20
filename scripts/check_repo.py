@@ -1,14 +1,11 @@
 #!/usr/bin/env python3
-"""Repository hygiene checks.
+"""Checks the repo for things we don't want committed.
 
-Deliberately dependency-free so it runs identically in CI and on a laptop:
+No dependencies, so it runs the same in CI and locally:
 
     python3 scripts/check_repo.py
 
-Checks:
-  1. No secret-bearing files are tracked by git.
-  2. No oversized files are tracked.
-  3. Relative links in Markdown files point at something that exists.
+Looks for secret files, oversized files, and broken relative links in Markdown.
 """
 
 from __future__ import annotations
@@ -28,7 +25,6 @@ SECRET_PATTERNS = (
     re.compile(r"(^|/)secrets\.json$"),
 )
 
-# Inline markdown links: [text](target)
 LINK = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
 
 
@@ -47,7 +43,7 @@ def check_secrets(files: list[Path]) -> list[str]:
     for path in files:
         posix = path.as_posix()
         if any(pattern.search(posix) for pattern in SECRET_PATTERNS):
-            problems.append(f"{posix}: looks like a secret file and must not be tracked")
+            problems.append(f"{posix}: secret file, should not be committed")
     return problems
 
 
@@ -59,7 +55,7 @@ def check_sizes(files: list[Path]) -> list[str]:
         size = path.stat().st_size
         if size > MAX_FILE_BYTES:
             mb = size / 1024 / 1024
-            problems.append(f"{path.as_posix()}: {mb:.1f} MB exceeds the {MAX_FILE_BYTES // 1024 // 1024} MB limit")
+            problems.append(f"{path.as_posix()}: {mb:.1f} MB, over the {MAX_FILE_BYTES // 1024 // 1024} MB limit")
     return problems
 
 
@@ -92,7 +88,7 @@ def main() -> int:
             print(f"  FAIL  {problem}")
         return 1
 
-    print(f"Repository hygiene: OK ({len(files)} tracked files checked)")
+    print(f"OK - checked {len(files)} files")
     return 0
 
 

@@ -1,20 +1,18 @@
 name: Task
-description: A unit of work for a course deliverable.
+description: Something that needs doing.
 title: "[Task]: "
 labels: ["task"]
 body:
   - type: textarea
     id: what
     attributes:
-      label: What needs to be done
-      placeholder: Describe the work concretely enough that someone else could pick it up.
+      label: What needs doing
     validations:
       required: true
   - type: textarea
     id: done
     attributes:
-      label: Definition of done
-      description: How do we know this is finished?
+      label: Done when
       value: |
         - [ ] 
     validations:
@@ -23,12 +21,6 @@ body:
     id: deliverable
     attributes:
       label: Deliverable
-      options: ["P0", "P1", "P2", "P3", "P4", "P5", "Not deliverable-specific"]
+      options: ["P0", "P1", "P2", "P3", "P4", "P5", "N/A"]
     validations:
       required: true
-  - type: textarea
-    id: notes
-    attributes:
-      label: Notes, blockers, dependencies
-    validations:
-      required: false

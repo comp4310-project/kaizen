@@ -1,35 +1,27 @@
 name: Bug
-description: Something does not work as expected.
+description: Something's broken.
 title: "[Bug]: "
 labels: ["bug"]
 body:
   - type: textarea
     id: expected
     attributes:
-      label: What you expected
+      label: What should happen
     validations:
       required: true
   - type: textarea
     id: actual
     attributes:
-      label: What actually happened
-      description: Paste exact error output if there is any.
+      label: What happens instead
+      description: Paste the error if there is one.
     validations:
       required: true
   - type: textarea
     id: repro
     attributes:
-      label: Steps to reproduce
+      label: How to reproduce
       value: |
         1. 
         2. 
-        3. 
     validations:
       required: true
-  - type: input
-    id: env
-    attributes:
-      label: Environment
-      placeholder: OS, browser, Python/Node version, branch or commit
-    validations:
-      required: false
