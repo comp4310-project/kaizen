@@ -1,0 +1,44 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  hygiene:
+    name: Repository hygiene
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Check secrets, file sizes, and internal links
+        run: python3 scripts/check_repo.py
+
+  structure:
+    name: Required documents
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Verify required documents are present
+        run: |
+          missing=0
+          for f in README.md CONTRIBUTING.md CODE_OF_CONDUCT.md LICENSE .gitignore .github/CODEOWNERS; do
+            if [ ! -f "$f" ]; then
+              echo "FAIL  missing required file: $f"
+              missing=1
+            fi
+          done
+          if [ "$missing" -eq 0 ]; then
+            echo "All required documents present."
+          fi
+          exit "$missing"
