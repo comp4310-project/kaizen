@@ -22,11 +22,11 @@ that actually gets used in hospital operations, which is why we picked it.
 
 | Name | GitHub |
 |------|--------|
-| Hemanth Reddy Basireddy | TBD |
+| Hemanth Reddy Basireddy | [@HemanthReddy1518](https://github.com/HemanthReddy1518) |
 | Hujaifa Muaz | [@Muazhuja01](https://github.com/Muazhuja01) |
 | Mohammed Asrar Ali | [@Asrar-ali](https://github.com/Asrar-ali) |
-| Aansh Amitabh Arora | TBD |
-| Bhavya Bhatt | TBD |
+| Aansh Amitabh Arora | [@AanshXArora](https://github.com/AanshXArora) |
+| Bhavya Bhatt | [@Bhavya1435](https://github.com/Bhavya1435) |
 
 ## Stack
 
