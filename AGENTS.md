@@ -1,6 +1,6 @@
 # Notes for coding agents
 
-Student group project, COMP 4310 at Lakehead. Four people, one term. Read this before
+Student group project, COMP 4310 at Lakehead. Five people, one term. Read this before
 changing anything.
 
 ## State
@@ -22,6 +22,10 @@ scripts/check_repo.py       hygiene checks, also runs in CI
 
 Never commit real patient data, `.env` files, API keys, or files over 5MB. Synthetic,
 public, or de-identified data only. This is a course requirement, not a preference.
+
+The repo is public. No student IDs and no personal email addresses anywhere in it, in any
+file. Those belong in the D2L submission. `scripts/check_repo.py` fails on any 7-digit
+number in a text file for this reason.
 
 `main` is protected. Work on a branch, open a PR, one approval, squash merge.
 
@@ -48,5 +52,5 @@ Say when something is broken or undecided instead of hedging around it.
 ## Don't add
 
 Code of conduct, security policy, changelog, badge rows, issue templates, architecture
-decision records. Four people don't need governance files, and an empty one is worse than
+decision records. Five people don't need governance files, and an empty one is worse than
 none. Don't create placeholder directories.
