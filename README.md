@@ -20,18 +20,18 @@ that actually gets used in hospital operations, which is why we picked it.
 
 ## Team
 
-| Name | Email | GitHub |
-|------|-------|--------|
-| Mohammed Asrar Ali | TBD | [@Asrar-ali](https://github.com/Asrar-ali) |
-| TBD | TBD | [@Muazhuja01](https://github.com/Muazhuja01) |
-| TBD | TBD | TBD |
-| TBD | TBD | TBD |
+| Name | GitHub |
+|------|--------|
+| Hemanth Reddy Basireddy | [@HemanthReddy1518](https://github.com/HemanthReddy1518) |
+| Hujaifa Muaz | [@Muazhuja01](https://github.com/Muazhuja01) |
+| Mohammed Asrar Ali | [@Asrar-ali](https://github.com/Asrar-ali) |
+| Aansh Amitabh Arora | [@AanshXArora](https://github.com/AanshXArora) |
+| Bhavya Bhatt | [@Bhavya1435](https://github.com/Bhavya1435) |
 
 ## Stack
 
-Undecided. Currently leaning towards React and TypeScript on the front, Python with
-FastAPI and Postgres on the back, and an LLM API with embeddings for the clustering and
-the suggestions. This will change.
+What we put in P0, still subject to change: Python, React, MySQL, LLMs and NLP libraries
+for the analysis, and pandas and matplotlib for the data work.
 
 ## Running it
 
@@ -42,6 +42,9 @@ Nothing to run yet. Setup instructions go here once there's code.
 Synthetic, public, or properly de-identified data only. No real patient information at any
 point, which is a course requirement and also just sensible. Don't commit `.env` files or
 API keys either.
+
+This repo is public, so no student IDs and no personal email addresses anywhere in it.
+Those go in the D2L submission, not here.
 
 ## Deliverables
 

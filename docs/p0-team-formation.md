@@ -1,84 +1,60 @@
 # P0: Team Formation and Topic Selection
 
 COMP 4310 Web Health Informatics, Lakehead University
-Due: Sunday, September 20, 2026, 11:59 PM. One PDF per team on D2L.
+Submitted to D2L on 2026-09-20.
 
-> Draft. Anything marked TBD needs confirming with the team before this gets submitted.
+This mirrors what went in the PDF. Student IDs are in the submitted version only, since
+this repo is public.
 
-## 1. Team Name
+## Team name
 
-**Kaizen**
+Kaizen
 
-*Kaizen* (改善) means continuous improvement through lots of small changes, usually
-suggested by the people doing the work. It's a term used in hospital operations, and it
-describes what we're trying to build.
+## Team members
 
-## 2. Team Members
+- Hemanth Reddy Basireddy
+- Hujaifa Muaz
+- Mohammed Asrar Ali
+- Aansh Amitabh Arora
+- Bhavya Bhatt
 
-| Full name | Lakehead email | GitHub |
-|-----------|----------------|--------|
-| Mohammed Asrar Ali | TBD | @Asrar-ali |
-| TBD | TBD | @Muazhuja01 |
-| TBD | TBD | TBD |
-| TBD | TBD | TBD |
-
-## 3. Preliminary Project Title
+## Project title
 
 Kaizen: Turning Hospital Feedback into Actionable Quality Improvements
 
-## 4. Project Theme / Area
+## Theme / area
 
-Student-proposed project.
+Artificial Intelligence and Natural Language Processing for healthcare quality
+improvement. Proposed by us rather than picked from the suggested themes, though it
+overlaps with P11, P6, P5 and P12.
 
-It overlaps with several of the suggested themes: P11 (health report generation), P6
-(analytics dashboard), P5 (summarization) and P12 (search and recommendation). It doesn't
-fit neatly into any one of them, so we're proposing it as our own topic and would like
-approval for the scope below.
+## Project idea
 
-## 5. Brief Project Idea
+We propose to develop a system that helps hospitals turn feedback from patients, doctors,
+nurses, and visitors into actionable quality improvements. The system will use Natural
+Language Processing (NLP) and Large Language Models (LLMs) to analyze large amounts of
+feedback, identify recurring or related issues, and determine where these issues may occur
+within hospital workflows. It may also suggest potential improvements based on available
+feedback, hospital policies, and relevant healthcare research. The system is intended to
+support hospital administrators and quality improvement teams by making feedback easier to
+analyze and helping them identify areas for potential improvement.
 
-We want to build a web system that helps hospitals turn feedback from patients, doctors,
-nurses and visitors into improvements they can actually act on. Hospitals collect a lot of
-this feedback but rarely analyse it properly, so problems that keep recurring go unnoticed.
-The system would use NLP and large language models to group comments into recurring
-themes, work out where in the hospital's workflow each problem is happening, and suggest
-possible fixes based on hospital policies and published research on quality improvement.
-The users would be quality-improvement teams and hospital managers. Everything the system
-produces is a suggestion for a person to review, not a decision.
+## Preliminary technology stack
 
-## 6. Preliminary Technology Stack
+- Language: Python
+- Web framework: React
+- Database: MySQL
+- AI/ML: LLMs, NLP
+- Data analysis: pandas, matplotlib
 
-Nothing here is decided yet.
-
-| Layer | What we're considering |
-|-------|------------------------|
-| Frontend | React, TypeScript |
-| Backend | Python, FastAPI |
-| Database | PostgreSQL |
-| Search | Sentence embeddings, vector store |
-| NLP / AI | LLM API or a local model, with retrieval over a policy and research corpus |
-| Clustering | scikit-learn, topic modelling |
-| Other | GitHub Actions for CI |
-
-## 7. Shared Repository
+## Repository
 
 https://github.com/comp4310-project/kaizen
 
-Public repo under our team organisation. All members have access. `main` is protected, so
-changes go through pull requests with a review.
-
 ## Data and limitations
 
-We'll only use synthetic, public, or properly de-identified data. No real patient
-information at any point. This is a course prototype, not a clinically validated system,
-and anything the AI generates is decision support for a human to check rather than an
-authoritative answer. Part of the work is testing whether the generated suggestions
-actually match the data they came from.
-
-## Questions for the instructor/TA
-
-1. Is this scope alright as a student-proposed project, or would you rather we ran it
-   under P11?
-2. Is synthetic feedback data acceptable? Real hospital feedback doesn't seem to be
-   publicly available at any useful scale.
-3. How far should we take the impact-estimation part in one term?
+Synthetic, public, or properly de-identified data only. No real patient information at any
+point. This is a course prototype, not a clinically validated system, and anything the
+model generates is a suggestion for a person to check rather than an authoritative answer.
+Testing whether the generated suggestions actually match the data they came from is part
+of the work.

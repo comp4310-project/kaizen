@@ -23,6 +23,10 @@ scripts/check_repo.py       hygiene checks, also runs in CI
 Never commit real patient data, `.env` files, API keys, or files over 5MB. Synthetic,
 public, or de-identified data only. This is a course requirement, not a preference.
 
+The repo is public. No student IDs and no personal email addresses anywhere in it, in any
+file. Those belong in the D2L submission. `scripts/check_repo.py` fails on any 7-digit
+number in a text file for this reason.
+
 `main` is protected. Work on a branch, open a PR, one approval, squash merge.
 
 Commit subjects are `area: what you did`, lower case, short. Explain why in the body when

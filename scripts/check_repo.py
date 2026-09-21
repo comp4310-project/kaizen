@@ -5,7 +5,7 @@ No dependencies, so it runs the same in CI and locally:
 
     python3 scripts/check_repo.py
 
-Looks for secret files, oversized files, and broken relative links in Markdown.
+Looks for secret files, oversized files, student IDs, and broken relative links.
 """
 
 from __future__ import annotations
@@ -26,6 +26,10 @@ SECRET_PATTERNS = (
 )
 
 LINK = re.compile(r"\[[^\]]*\]\(([^)]+)\)")
+
+# Lakehead student IDs are 7 digits. The repo is public, so they must not appear in it.
+STUDENT_ID = re.compile(r"(?<!\d)\d{7}(?!\d)")
+ID_SUFFIXES = {".md", ".txt", ".yml", ".yaml"}
 
 
 def tracked_files() -> list[Path]:
@@ -59,6 +63,21 @@ def check_sizes(files: list[Path]) -> list[str]:
     return problems
 
 
+def check_student_ids(files: list[Path]) -> list[str]:
+    problems = []
+    for path in files:
+        if path.suffix.lower() not in ID_SUFFIXES or not path.is_file():
+            continue
+        text = path.read_text(encoding="utf-8", errors="replace")
+        for line_no, line in enumerate(text.splitlines(), 1):
+            if STUDENT_ID.search(line):
+                problems.append(
+                    f"{path.as_posix()}:{line_no}: 7-digit number, looks like a student ID. "
+                    "This repo is public, keep IDs in the D2L submission only."
+                )
+    return problems
+
+
 def check_links(files: list[Path]) -> list[str]:
     problems = []
     for path in files:
@@ -80,10 +99,11 @@ def main() -> int:
     problems: list[str] = []
     problems += check_secrets(files)
     problems += check_sizes(files)
+    problems += check_student_ids(files)
     problems += check_links(files)
 
     if problems:
-        print(f"Repository hygiene: {len(problems)} problem(s) found\n")
+        print(f"{len(problems)} problem(s):\n")
         for problem in problems:
             print(f"  FAIL  {problem}")
         return 1
