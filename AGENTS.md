@@ -1,6 +1,6 @@
 # Notes for coding agents
 
-Student group project, COMP 4310 at Lakehead. Five people, one term. Read this before
+Student group project, COMP 4310 at Lakehead. Four people, one term. Read this before
 changing anything.
 
 ## State
@@ -52,5 +52,5 @@ Say when something is broken or undecided instead of hedging around it.
 ## Don't add
 
 Code of conduct, security policy, changelog, badge rows, issue templates, architecture
-decision records. Five people don't need governance files, and an empty one is worse than
+decision records. Four people don't need governance files, and an empty one is worse than
 none. Don't create placeholder directories.
