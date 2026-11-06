@@ -1,0 +1,36 @@
+<svg viewBox="0 0 700 214" width="700" height="214" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kaizen processing steps">
+  <defs><marker id="b" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#000"/></marker></defs>
+  <rect width="100%" height="100%" fill="#fff"/>
+  <style>
+    text{font-family:Arial,Helvetica,sans-serif}
+    .s{stroke:#000;stroke-width:1;fill:#fff}
+    .o{fill:#e6e6e6}
+    .h{fill:#fff;stroke:#000;stroke-width:1.2;stroke-dasharray:3 2}
+    .k{font-size:10px;font-weight:bold}
+    .m{font-size:8.8px;fill:#333}
+    .ev{font-size:8.6px;font-style:italic;fill:#333}
+    .r{stroke:#000;stroke-width:1.1;fill:none;marker-end:url(#b)}
+  </style>
+  <g text-anchor="middle">
+  <rect class="s" x="4" y="8" width="104" height="50"/><text class="k" x="56" y="28">Feedback</text><text class="m" x="56" y="42">(FR1)</text>
+  <rect class="s" x="128" y="8" width="118" height="50"/><text class="k" x="187" y="26">1. De-identify</text><text class="m" x="187" y="40">personal details</text><text class="m" x="187" y="51">become tags (FR2)</text>
+  <rect class="s" x="266" y="8" width="132" height="50"/><text class="k" x="332" y="26">2. Classify</text><text class="m" x="332" y="40">sentiment, category,</text><text class="m" x="332" y="51">stage, urgency (FR3)</text>
+  <rect class="s" x="418" y="8" width="132" height="50"/><text class="k" x="484" y="26">3. Find issues</text><text class="m" x="484" y="40">group, name</text><text class="m" x="484" y="51">and rank (FR4)</text>
+  <rect class="s" x="570" y="8" width="126" height="50"/><text class="k" x="633" y="26">4. Compare</text><text class="m" x="633" y="40">patient vs staff</text><text class="m" x="633" y="51">(FR5)</text>
+  <text class="ev" x="187" y="72">test: de-id test set</text>
+  <text class="ev" x="332" y="72">test: F1 vs hand labels</text>
+  <text class="ev" x="484" y="72">test: reviewer ratings</text>
+  <text class="ev" x="633" y="72">test: known patterns</text>
+  <rect class="h" x="266" y="86" width="284" height="30" rx="10"/><text class="k" x="408" y="99">Person checks labels and issues</text><text class="m" x="408" y="110">confirms urgency, corrects, merges (FR6)</text>
+  <rect class="s" x="4" y="142" width="138" height="50"/><text class="k" x="73" y="162">Dashboard</text><text class="m" x="73" y="176">and export (FR8)</text>
+  <rect class="h" x="162" y="142" width="128" height="50" rx="10"/><text class="k" x="226" y="162">Person decides</text><text class="m" x="226" y="176">accept, edit, reject</text>
+  <rect class="s o" x="310" y="142" width="126" height="50"/><text class="k" x="373" y="160">6. Check quotes</text><text class="m" x="373" y="174">drop unsupported</text><text class="m" x="373" y="185">suggestions (NFR2)</text>
+  <rect class="s o" x="456" y="142" width="132" height="50"/><text class="k" x="522" y="160">5. Draft suggestions</text><text class="m" x="522" y="174">from 5 retrieved</text><text class="m" x="522" y="185">passages (FR7)</text>
+  <rect class="s" x="608" y="142" width="88" height="50"/><text class="k" x="652" y="162">QI staff</text><text class="m" x="652" y="176">pick an issue</text>
+  <text class="ev" x="449" y="207">test: two members score 40 suggestions</text>
+  </g>
+  <path class="r" d="M108,33 H126"/><path class="r" d="M246,33 H264"/><path class="r" d="M398,33 H416"/><path class="r" d="M550,33 H568"/>
+  <path class="r" d="M408,58 V84" style="stroke-dasharray:3 2"/>
+  <path class="r" d="M633,78 V140"/>
+  <path class="r" d="M608,167 H590"/><path class="r" d="M456,167 H438"/><path class="r" d="M310,167 H292"/><path class="r" d="M162,167 H144"/>
+</svg>
