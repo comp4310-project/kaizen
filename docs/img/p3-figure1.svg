@@ -1,0 +1,50 @@
+<svg viewBox="0 0 700 360" width="700" height="360" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kaizen system architecture">
+  <defs><marker id="a" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#000"/></marker></defs>
+  <rect width="100%" height="100%" fill="#fff"/>
+  <style>
+    text{font-family:Arial,Helvetica,sans-serif}
+    .lane{fill:none;stroke:#999}
+    .ln{font-size:10.5px;font-weight:bold}
+    .bx{fill:#fff;stroke:#000;stroke-width:1}
+    .sec{fill:#e6e6e6}
+    .tt{font-size:10px;font-weight:bold}
+    .ts{font-size:8.8px;fill:#333}
+    .ar{stroke:#000;stroke-width:1;fill:none;marker-end:url(#a)}
+  </style>
+  <rect class="lane" x="2" y="2" width="696" height="62"/><text class="ln" x="10" y="16">Front end (React)</text>
+  <rect class="lane" x="2" y="72" width="696" height="58"/><text class="ln" x="10" y="86">Back end (FastAPI)</text>
+  <rect class="lane" x="2" y="138" width="696" height="114"/><text class="ln" x="690" y="152" text-anchor="end">Text processing (Python, background jobs)</text>
+  <rect class="lane" x="2" y="260" width="696" height="96"/><text class="ln" x="10" y="274">Storage and outside services</text>
+  <g text-anchor="middle">
+    <rect class="bx" x="14" y="24" width="122" height="34"/><text class="tt" x="75" y="38">Feedback forms</text><text class="ts" x="75" y="50">(FR1)</text>
+    <rect class="bx" x="144" y="24" width="122" height="34"/><text class="tt" x="205" y="38">Upload, label checks</text><text class="ts" x="205" y="50">(FR1, FR6)</text>
+    <rect class="bx" x="274" y="24" width="132" height="34"/><text class="tt" x="340" y="38">Issues dashboard</text><text class="ts" x="340" y="50">(FR4, FR8)</text>
+    <rect class="bx" x="414" y="24" width="132" height="34"/><text class="tt" x="480" y="38">Patient vs staff view</text><text class="ts" x="480" y="50">(FR5)</text>
+    <rect class="bx sec" x="554" y="24" width="136" height="34"/><text class="tt" x="622" y="38">Suggestion review</text><text class="ts" x="622" y="50">(FR7)</text>
+
+    <rect class="bx" x="14" y="92" width="150" height="32"/><text class="tt" x="89" y="106">Login and roles</text><text class="ts" x="89" y="118">(NFR1)</text>
+    <rect class="bx" x="174" y="92" width="170" height="32"/><text class="tt" x="259" y="106">REST API</text><text class="ts" x="259" y="118">input checks, filters, export</text>
+    <rect class="bx" x="354" y="92" width="160" height="32"/><text class="tt" x="434" y="106">Job runner</text><text class="ts" x="434" y="118">runs processing in batches</text>
+    <rect class="bx" x="524" y="92" width="166" height="32"/><text class="tt" x="607" y="106">Activity log</text><text class="ts" x="607" y="118">views, changes, decisions</text>
+
+    <rect class="bx" x="14" y="160" width="124" height="46"/><text class="tt" x="76" y="175">De-identify</text><text class="ts" x="76" y="187">Presidio, spaCy,</text><text class="ts" x="76" y="198">own ID patterns</text>
+    <rect class="bx" x="150" y="160" width="124" height="46"/><text class="tt" x="212" y="175">Classify</text><text class="ts" x="212" y="187">LLM with labelling</text><text class="ts" x="212" y="198">guide and examples</text>
+    <rect class="bx" x="286" y="160" width="124" height="46"/><text class="tt" x="348" y="175">Find issues</text><text class="ts" x="348" y="187">embeddings and</text><text class="ts" x="348" y="198">BERTopic</text>
+    <rect class="bx" x="422" y="160" width="124" height="46"/><text class="tt" x="484" y="175">Compare</text><text class="ts" x="484" y="187">patient and staff</text><text class="ts" x="484" y="198">counts</text>
+    <rect class="bx sec" x="558" y="160" width="132" height="46"/><text class="tt" x="624" y="175">Suggest (RAG)</text><text class="ts" x="624" y="187">retrieve, draft,</text><text class="ts" x="624" y="198">check quotes</text>
+    <rect class="bx" x="286" y="216" width="260" height="30"/><text class="tt" x="416" y="229">Evaluation scripts</text><text class="ts" x="416" y="241">hand labels, test sets, rating sheets</text>
+
+    <rect class="bx" x="14" y="284" width="250" height="62"/><text class="tt" x="139" y="300">MySQL</text><text class="ts" x="139" y="313">users, de-identified comments, labels,</text><text class="ts" x="139" y="325">issues, suggestions, decisions, log</text>
+    <rect class="bx" x="276" y="284" width="190" height="62"/><text class="tt" x="371" y="300">Chroma</text><text class="ts" x="371" y="313">passages from policy</text><text class="ts" x="371" y="325">and QI documents</text>
+    <rect class="bx" x="478" y="284" width="212" height="62" style="stroke-dasharray:4 3"/><text class="tt" x="584" y="300">LLM (through LiteLLM)</text><text class="ts" x="584" y="313">outside service; only receives</text><text class="ts" x="584" y="325">de-identified text</text>
+  </g>
+  <path class="ar" d="M259,60 V90"/>
+  <path class="ar" d="M344,108 H352"/>
+  <path class="ar" d="M434,126 V140"/>
+  <path class="ar" d="M138,183 H148"/><path class="ar" d="M274,183 H284"/><path class="ar" d="M410,183 H420"/><path class="ar" d="M546,183 H556"/>
+  <path class="ar" d="M100,208 V282"/>
+  <path class="ar" d="M190,126 V134 H144 V282"/>
+  <path class="ar" d="M600,208 C600,250 400,250 390,282"/>
+  <path class="ar" d="M640,208 V282"/>
+  <path class="ar" d="M212,208 V231 H284"/>
+</svg>
