@@ -18,32 +18,44 @@ public.
 
 - **Narrower data:** only English written comments about adult inpatient and emergency care, from patients and families (survey comments and complaints) and from nurses and physicians (short feedback reports).
 - **Actionable suggestion defined:** it must name a specific change, who would own it, the stage of care it targets, a measure to check whether it worked, and at least one cited source.
-- **Priorities:** the minimum version (import, de-identify, classify, group into issues, compare, dashboard) must work and be evaluated first. Suggestions come second, and a tracker and trend charts are extras. Discharge stays our main test case, since it is one of Ontario hospitals' most chosen QI indicators [7].
+- **Priorities:** the minimum version (import, de-identify, classify, group into issues, compare, dashboard) must work and be evaluated first. Suggestions come second, and trend charts, a rising-issue flag and a tracker are extras. Discharge stays our main test case, since it is one of Ontario hospitals' most chosen QI indicators [7].
 
 ## 2. Functional and Non-Functional Requirements
 
-Patients, families and clinical staff submit feedback. QI staff are the main users: they import feedback, check labels, explore issues and decide on suggestions. Unit managers view issues for their ward, and an administrator manages accounts.
+The main users are QI staff. Unit managers view issues for their own unit, an administrator manages accounts, and patients, families and clinical staff submit feedback. Table 1 shows what each user needs, and Table 2 turns these needs into requirements. Priorities are **Must** (needed for the minimum version at P4), **Should** (after P4) and **Could** (only if time allows).
 
-**Table 1. Functional requirements**
+**Table 1. User stories**
+
+| As a... | I want to... | so that... | FR |
+|---|---|---|---|
+| QI analyst | upload a month of comments as a CSV | I analyse all of them, not a sample | FR1, FR2 |
+| QI analyst | see the top recurring issues with the comments behind each | I know what to work on first | FR3, FR4, FR8 |
+| QI analyst | see whether patients, staff or both report an issue | I catch problems one group misses | FR5 |
+| QI analyst | confirm or correct the urgency and stage the system suggests | I can trust the results | FR6 |
+| QI analyst | get draft improvement ideas with sources for an issue | I have a starting point for a PDSA cycle | FR7 |
+| Unit manager | filter issues to my unit | I see what affects my ward | FR8 |
+| Patient or nurse | submit feedback through a simple form | my concern is recorded with my details removed | FR1, FR2 |
+
+**Table 2. Functional requirements**
 
 | ID | Requirement | Users | Priority | How we will check it |
 |---|---|---|---|---|
-| FR1 | Accept feedback through a web form and CSV upload, recording the source (patient/family or staff), unit and date. | Patients, staff, QI staff | Minimum | A 1,000-row test file loads; bad rows are reported. |
-| FR2 | Replace names, dates, phone numbers, emails, health card and record numbers with tags before a comment is saved or sent to the LLM. | System | Minimum | De-identification test set (Section 5). |
-| FR3 | Label each comment with sentiment, one or more HCAT problem categories, a stage of care and a suggested urgency. | System | Minimum | Compare with hand-labelled test set. |
-| FR4 | Group similar comments into named issues, ranked by number of comments, negativity and urgency. | QI staff | Minimum | Reviewers rate the top issues. |
-| FR5 | Show patient and staff feedback side by side by topic, stage and unit, and mark where only one group reports a problem. | QI staff, managers | Minimum | Known patterns in the synthetic data appear correctly. |
-| FR6 | Let QI staff confirm urgency, correct labels, and rename or merge issues. Every change is logged. | QI staff | Minimum | Each change creates a log entry. |
-| FR7 | Draft two or three cited suggestions for a chosen issue, which QI staff accept, edit or reject. | QI staff | Second | Every shown suggestion passes the citation check. |
-| FR8 | Dashboard with ranked issues, filters, the comments behind each issue, and CSV export. | Managers, admin | Minimum | Export matches the filtered view. |
+| FR1 | Accept feedback through CSV upload and a web form, recording the source (patient/family or staff), unit and date. | Patients, staff, QI staff | Must (form: Should) | A 1,000-row test file loads; bad rows are reported. |
+| FR2 | Replace names, dates, phone numbers, emails, health card and record numbers with tags before a comment is saved or sent to the LLM. | System | Must | De-identification test set (Section 5). |
+| FR3 | Label each comment with sentiment, one or more HCAT problem categories, a stage of care and a suggested urgency. | System | Must | Compare with hand-labelled test set. |
+| FR4 | Group similar comments into named issues, ranked by number of comments, negativity and urgency. Flag issues whose weekly count rises sharply. | QI staff | Must (rising flag: Could) | Reviewers rate the top issues; a built-in rising problem is flagged. |
+| FR5 | Show patient and staff feedback side by side by topic, stage and unit, and mark where only one group reports a problem. | QI staff, managers | Must | Known patterns in the synthetic data appear correctly. |
+| FR6 | Let QI staff confirm urgency, correct labels, and rename or merge issues. Every change is logged. | QI staff | Must (rename, merge: Should) | Each change creates a log entry. |
+| FR7 | Draft two or three cited suggestions for a chosen issue, which QI staff accept, edit or reject. | QI staff | Should | Every shown suggestion passes the citation check. |
+| FR8 | Dashboard with ranked issues and the comments behind each, plus filters and CSV export. Trend charts and an improvement tracker are extras. | Managers, admin | Must (filters, export: Should; charts, tracker: Could) | Export matches the filtered view. |
 
-**Table 2. Non-functional requirements**
+**Table 3. Non-functional requirements**
 
 | ID | Quality | Requirement | How we will check it |
 |---|---|---|---|
 | NFR1 | Privacy and security | Original text is never stored or sent to the LLM. Role-based access, hashed passwords, and a log of who viewed or changed what. Designed around Ontario's PHIPA [8], though only synthetic and public data are used. | Inspect the database and LLM requests; test each role. |
 | NFR2 | Reliable AI output | No AI output is final until a person confirms it. Suggestions only use retrieved passages, and any suggestion whose quote is not found in its source is dropped. | Automatic citation check; manual review of 40 suggestions. |
-| NFR3 | Performance | 1,000 comments processed within 15 minutes; dashboard pages load within 2 seconds. | Timing script. |
+| NFR3 | Performance | 1,000 comments processed within 15 minutes; dashboard pages load within 2 seconds. Processing runs in batches because QI teams review feedback weekly or monthly, and 15 minutes leaves room for API rate limits on a student account. | Timing script. |
 | NFR4 | Usability and accessibility | The comments behind the top issue are reachable in three clicks or fewer; meets WCAG 2.1 AA contrast and keyboard rules. | Five-person task test with SUS questionnaire; accessibility scan. |
 | NFR5 | Reproducibility | Library and model versions, prompts, seeds and the labelling guide are saved; one command reruns the evaluation. | A second member reruns it and gets the same results. |
 
@@ -57,7 +69,7 @@ Kaizen has a React front end, a FastAPI back end, a MySQL database, and a Python
 
 *Figure 1. System architecture. Grey parts are second priority; everything else is the minimum version. Only the de-identify step sees original text.*
 
-**Table 3. Main components**
+**Table 4. Main components**
 
 | Component | Responsibility |
 |---|---|
@@ -79,7 +91,7 @@ Kaizen has a React front end, a FastAPI back end, a MySQL database, and a Python
 
 Instead of inventing categories, we use the Healthcare Complaints Analysis Tool (HCAT) [6], which has been tested for reliability. A labelling guide with a definition and two examples per label will be written in week 1.
 
-**Table 4. Labels**
+**Table 5. Labels**
 
 | Label | Options |
 |---|---|
@@ -88,12 +100,14 @@ Instead of inventing categories, we use the Healthcare Complaints Analysis Tool 
 | Stage of care | HCAT stages: admissions, examination and diagnosis, care on the ward, operations and procedures, discharge and transfers; plus "unclear" |
 | Urgency | low, medium, high (based on HCAT severity; always confirmed by a person) |
 
-- **Synthetic comments:** about 1,500 patient and 800 staff comments generated by an LLM from templates. Eight known problems are built in (for example, delayed discharge medications reported by both groups, and night noise reported only by patients) so we can check whether Kaizen finds them.
+- **Synthetic comments:** about 1,500 patient and 800 staff comments generated by an LLM from templates. Eight known problems are built in (for example, delayed discharge medications reported by both groups, and night noise reported only by patients) so we can check whether Kaizen finds them. One of them grows week by week, to test the rising-issue flag.
 - **Public comments:** the labelled NHS Friends and Family Test comments from pxtextmining [11], if the licence allows.
 - **Hand-labelled test set:** 400 comments labelled in Label Studio. 100 are used to refine the guide and as prompt examples; 300 are kept aside for testing only. Two members label the first 100 separately, and we aim for a Cohen's kappa of at least 0.6.
 - **Documents for suggestions:** 30-50 Ontario quality standards, QIP guidance and sample hospital policies we write ourselves.
 
 ## 4. Technology Selection and Justification
+
+**Table 6. Main technologies**
 
 | Technology | Role | Why |
 |---|---|---|
@@ -110,7 +124,7 @@ Instead of inventing categories, we use the Healthcare Complaints Analysis Tool 
 
 ## 5. Implementation and Evaluation Plan
 
-**Table 6. Timeline** (weeks from November 9; dates will be matched to D2L deadlines)
+**Table 7. Timeline** (weeks from November 9; dates will be matched to D2L deadlines)
 
 | Week | Tasks | Deliverable |
 |---|---|---|
@@ -121,7 +135,7 @@ Instead of inventing categories, we use the Healthcare Complaints Analysis Tool 
 | 5 (Dec 7) | Rate suggestions, usability and timing tests; extras only if time allows. | Final results |
 | 6 (Dec 14) | Final report, setup guide, demo video. | **Final project** |
 
-**Table 7. Responsibilities** (everyone helps label and reviews pull requests)
+**Table 8. Responsibilities** (everyone helps label and reviews pull requests)
 
 | Member | Area | Requirements |
 |---|---|---|
@@ -133,7 +147,9 @@ Instead of inventing categories, we use the Healthcare Complaints Analysis Tool 
 
 ### 5.1 Evaluation
 
-Model results come from the 300 held-out comments and are reported separately for public and synthetic data, since LLM-written comments may be easier for an LLM to label. Each requirement's check in Tables 1 and 2 is also written as an automated test where possible.
+Model results come from the 300 held-out comments and are reported separately for public and synthetic data, since LLM-written comments may be easier for an LLM to label. Each requirement's check in Tables 2 and 3 is also written as an automated test where possible.
+
+**Table 9. Evaluation targets**
 
 | What | Method | Target |
 |---|---|---|
@@ -147,6 +163,8 @@ Model results come from the 300 held-out comments and are reported separately fo
 | Usability | Five classmates do four tasks, then fill in the SUS questionnaire. | SUS ≥ 68 |
 
 ### 5.2 Risks
+
+**Table 10. Risks and mitigation**
 
 | Risk | Mitigation |
 |---|---|
