@@ -21,8 +21,8 @@
   <text class="ev" x="332" y="72">test: F1 vs hand labels</text>
   <text class="ev" x="484" y="72">test: reviewer ratings</text>
   <text class="ev" x="633" y="72">test: known patterns</text>
-  <rect class="h" x="266" y="86" width="284" height="30" rx="10"/><text class="k" x="408" y="99">Person checks labels and issues</text><text class="m" x="408" y="110">confirms urgency, corrects, merges (FR6)</text>
-  <rect class="s" x="4" y="142" width="138" height="50"/><text class="k" x="73" y="162">Dashboard</text><text class="m" x="73" y="176">and export (FR8)</text>
+  <rect class="h" x="266" y="86" width="284" height="30" rx="10"/><text class="k" x="408" y="99">Person checks labels</text><text class="m" x="408" y="110">confirms urgency, corrects stage (FR6)</text>
+  <rect class="s" x="4" y="142" width="138" height="50"/><text class="k" x="73" y="162">Dashboard</text><text class="m" x="73" y="176">(FR8)</text>
   <rect class="h" x="162" y="142" width="128" height="50" rx="10"/><text class="k" x="226" y="162">Person decides</text><text class="m" x="226" y="176">accept, edit, reject</text>
   <rect class="s o" x="310" y="142" width="126" height="50"/><text class="k" x="373" y="160">6. Check quotes</text><text class="m" x="373" y="174">drop unsupported</text><text class="m" x="373" y="185">suggestions (NFR2)</text>
   <rect class="s o" x="456" y="142" width="132" height="50"/><text class="k" x="522" y="160">5. Draft suggestions</text><text class="m" x="522" y="174">from 5 retrieved</text><text class="m" x="522" y="185">passages (FR7)</text>

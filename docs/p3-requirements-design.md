@@ -18,11 +18,11 @@ public.
 
 - **Narrower data:** only English written comments about adult inpatient and emergency care, from patients and families (survey comments and complaints) and from nurses and physicians (short feedback reports).
 - **Actionable suggestion defined:** it must name a specific change, who would own it, the stage of care it targets, a measure to check whether it worked, and at least one cited source.
-- **Priorities:** the minimum version (import, de-identify, classify, group into issues, compare, dashboard) must work and be evaluated first. Suggestions come second, and trend charts, a rising-issue flag and a tracker are extras. Discharge stays our main test case, since it is one of Ontario hospitals' most chosen QI indicators [7].
+- **Priorities:** we rank every feature as Must, Should or Could. The Must items make up the minimum version and must work and be evaluated by P4: CSV upload, de-identification, classification, grouping into issues, the patient vs staff view, confirming urgency and stage, and a dashboard of ranked issues with their comments. Should items come after P4: suggestions, the web form, renaming and merging issues, and dashboard filters and export. Could items are built only if time allows: trend charts, a rising-issue flag and an improvement tracker. Discharge stays our main test case, since it is one of Ontario hospitals' most chosen QI indicators [7].
 
 ## 2. Functional and Non-Functional Requirements
 
-The main users are QI staff. Unit managers view issues for their own unit, an administrator manages accounts, and patients, families and clinical staff submit feedback. Table 1 shows what each user needs, and Table 2 turns these needs into requirements. Priorities are **Must** (needed for the minimum version at P4), **Should** (after P4) and **Could** (only if time allows).
+The main users are QI staff. Unit managers view issues for their own unit, an administrator manages accounts, and patients, families and clinical staff submit feedback. Table 1 shows what each user needs, and Table 2 turns these needs into requirements. The Priority column uses the Must, Should and Could levels defined in Section 1.
 
 **Table 1. User stories**
 
@@ -47,7 +47,7 @@ The main users are QI staff. Unit managers view issues for their own unit, an ad
 | FR5 | Show patient and staff feedback side by side by topic, stage and unit, and mark where only one group reports a problem. | QI staff, managers | Must | Known patterns in the synthetic data appear correctly. |
 | FR6 | Let QI staff confirm urgency, correct labels, and rename or merge issues. Every change is logged. | QI staff | Must (rename, merge: Should) | Each change creates a log entry. |
 | FR7 | Draft two or three cited suggestions for a chosen issue, which QI staff accept, edit or reject. | QI staff | Should | Every shown suggestion passes the citation check. |
-| FR8 | Dashboard with ranked issues and the comments behind each, plus filters and CSV export. Trend charts and an improvement tracker are extras. | Managers, admin | Must (filters, export: Should; charts, tracker: Could) | Export matches the filtered view. |
+| FR8 | Dashboard with ranked issues and the comments behind each, plus filters and CSV export. Could: trend charts and an improvement tracker. | Managers, admin | Must (filters, export: Should; charts, tracker: Could) | Export matches the filtered view. |
 
 **Table 3. Non-functional requirements**
 
@@ -67,7 +67,7 @@ Kaizen has a React front end, a FastAPI back end, a MySQL database, and a Python
 
 ![Figure 1. System architecture](img/p3-figure1.svg)
 
-*Figure 1. System architecture. Grey parts are second priority; everything else is the minimum version. Only the de-identify step sees original text.*
+*Figure 1. System architecture. White parts are Must items (the minimum version) and grey parts are Should items. Could items are not shown. Only the de-identify step sees original text.*
 
 **Table 4. Main components**
 
@@ -85,7 +85,7 @@ Kaizen has a React front end, a FastAPI back end, a MySQL database, and a Python
 
 ![Figure 2. Processing steps](img/p3-figure2.svg)
 
-*Figure 2. Processing steps, human checks (dashed) and how each step is tested. Steps 5 and 6 (grey) are second priority.*
+*Figure 2. Processing steps, human checks (dashed) and how each step is tested. Steps 1 to 4 are Must items and steps 5 and 6 (grey) are Should items.*
 
 ### 3.1 Labels and data
 
@@ -129,10 +129,10 @@ Instead of inventing categories, we use the Healthcare Complaints Analysis Tool 
 | Week | Tasks | Deliverable |
 |---|---|---|
 | 1 (Nov 9) | Labelling guide, synthetic data, database and API design, project setup. | Guide and data in repo |
-| 2 (Nov 16) | Label 100 comments; build de-identification and classification; forms and upload. | Agreement score |
-| 3 (Nov 23) | Label test set; build issue grouping, comparison and dashboard; first evaluation. | **P4:** working minimum version with first results |
-| 4 (Nov 30) | Collect documents; build suggestions, citation check and review screen. | Suggestions working |
-| 5 (Dec 7) | Rate suggestions, usability and timing tests; extras only if time allows. | Final results |
+| 2 (Nov 16) | Label 100 comments; build de-identification and classification; CSV upload. | Agreement score |
+| 3 (Nov 23) | Label test set; build issue grouping, comparison and dashboard; first evaluation. | **P4:** all Must items working, with first results |
+| 4 (Nov 30) | Collect documents; build suggestions, citation check and review screen; add the web form, filters, export, and renaming and merging issues. | Should items working |
+| 5 (Dec 7) | Rate suggestions, usability and timing tests; Could items only if time allows. | Final results |
 | 6 (Dec 14) | Final report, setup guide, demo video. | **Final project** |
 
 **Table 8. Responsibilities** (everyone helps label and reviews pull requests)
@@ -170,8 +170,8 @@ Model results come from the 300 held-out comments and are reported separately fo
 |---|---|
 | Data may be unrealistic: we have no real staff feedback. | Hand-labelled test set, separate results for public and synthetic data, varied writing styles, and a clear statement of this limit. |
 | Labels, especially stage of care, may miss targets. | Prompt examples, an "unclear" option, falling back to the baseline if it does better, and human correction. Results are reported as they are. |
-| Suggestions may be wrong or unsupported. | Retrieved passages only, automatic quote checks, and a required human decision. As a second priority, this cannot block the minimum version. |
-| Falling behind at the end of term. | Strict priority order, an API agreed in week 1 so front and back end are built in parallel, weekly merges, and a P4 that covers only the minimum version. |
+| Suggestions may be wrong or unsupported. | Retrieved passages only, automatic quote checks, and a required human decision. As a Should item, it cannot hold up the Must items. |
+| Falling behind at the end of term. | Strict priority order, an API agreed in week 1 so front and back end are built in parallel, weekly merges, and a P4 that covers only the Must items. |
 
 ## References
 

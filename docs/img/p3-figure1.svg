@@ -16,7 +16,7 @@
   <rect class="lane" x="2" y="138" width="696" height="114"/><text class="ln" x="690" y="152" text-anchor="end">Text processing (Python, background jobs)</text>
   <rect class="lane" x="2" y="260" width="696" height="96"/><text class="ln" x="10" y="274">Storage and outside services</text>
   <g text-anchor="middle">
-    <rect class="bx" x="14" y="24" width="122" height="34"/><text class="tt" x="75" y="38">Feedback forms</text><text class="ts" x="75" y="50">(FR1)</text>
+    <rect class="bx sec" x="14" y="24" width="122" height="34"/><text class="tt" x="75" y="38">Feedback form</text><text class="ts" x="75" y="50">(FR1)</text>
     <rect class="bx" x="144" y="24" width="122" height="34"/><text class="tt" x="205" y="38">Upload, label checks</text><text class="ts" x="205" y="50">(FR1, FR6)</text>
     <rect class="bx" x="274" y="24" width="132" height="34"/><text class="tt" x="340" y="38">Issues dashboard</text><text class="ts" x="340" y="50">(FR4, FR8)</text>
     <rect class="bx" x="414" y="24" width="132" height="34"/><text class="tt" x="480" y="38">Patient vs staff view</text><text class="ts" x="480" y="50">(FR5)</text>
