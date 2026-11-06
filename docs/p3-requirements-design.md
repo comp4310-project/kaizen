@@ -33,19 +33,19 @@ The main users are QI staff. Unit managers view issues for their own unit, an ad
 | QI analyst | see whether patients, staff or both report an issue | I catch problems one group misses | FR5 |
 | QI analyst | confirm or correct the urgency and stage the system suggests | I can trust the results | FR6 |
 | QI analyst | get draft improvement ideas with sources for an issue | I have a starting point for a PDSA cycle | FR7 |
-| Unit manager | filter issues to my unit | I see what affects my ward | FR8 |
+| Unit manager | see the issues and comments for my unit only | I see what affects my ward | FR8, NFR1 |
 | Patient or nurse | submit feedback through a simple form | my concern is recorded with my details removed | FR1, FR2 |
 
 **Table 2. Functional requirements**
 
 | ID | Requirement | Users | Priority | How we will check it |
 |---|---|---|---|---|
-| FR1 | Accept feedback through CSV upload and a web form, recording the source (patient/family or staff), unit and date. | Patients, staff, QI staff | Must (form: Should) | A 1,000-row test file loads; bad rows are reported. |
-| FR2 | Replace names, dates, phone numbers, emails, health card and record numbers with tags before a comment is saved or sent to the LLM. | System | Must | De-identification test set (Section 5). |
+| FR1 | Accept feedback through CSV upload and a web form, recording the source (patient/family or staff), unit and date. Units come from a fixed list agreed in week 1. The form needs no login; spam protection is out of scope. | Patients, staff, QI staff | Must (form: Should) | A 1,000-row test file loads. Rows with no text, source or date, or a unit not on the list, are reported and skipped. |
+| FR2 | Replace names, calendar dates, phone numbers, emails, health card and record numbers with tags before a comment is saved or sent to the LLM. Lengths of time ("waited 3 days") and unit names are kept, because classification and the unit filters need them. | System | Must | De-identification test set (Section 5). |
 | FR3 | Label each comment with sentiment, one or more HCAT problem categories, a stage of care and a suggested urgency. | System | Must | Compare with hand-labelled test set. |
 | FR4 | Group similar comments into named issues, ranked by number of comments, negativity and urgency. Flag issues whose weekly count rises sharply. | QI staff | Must (rising flag: Could) | Reviewers rate the top issues; a built-in rising problem is flagged. |
 | FR5 | Show patient and staff feedback side by side by topic, stage and unit, and mark where only one group reports a problem. | QI staff, managers | Must | Known patterns in the synthetic data appear correctly. |
-| FR6 | Let QI staff confirm urgency, correct labels, and rename or merge issues. Every change is logged. | QI staff | Must (rename, merge: Should) | Each change creates a log entry. |
+| FR6 | Let QI staff confirm urgency, correct labels, redact a personal detail that de-identification missed, and rename or merge issues. Every change is logged. | QI staff | Must (rename, merge, redact: Should) | Each change creates a log entry. |
 | FR7 | Draft two or three cited suggestions for a chosen issue, which QI staff accept, edit or reject. | QI staff | Should | Every shown suggestion passes the citation check. |
 | FR8 | Dashboard with ranked issues and the comments behind each, plus filters and CSV export. Trend charts and an improvement tracker are extras. | Managers, admin | Must (filters, export: Should; charts, tracker: Could) | Export matches the filtered view. |
 
@@ -53,7 +53,7 @@ The main users are QI staff. Unit managers view issues for their own unit, an ad
 
 | ID | Quality | Requirement | How we will check it |
 |---|---|---|---|
-| NFR1 | Privacy and security | Original text is never stored or sent to the LLM. Role-based access, hashed passwords, and a log of who viewed or changed what. Designed around Ontario's PHIPA [8], though only synthetic and public data are used. | Inspect the database and LLM requests; test each role. |
+| NFR1 | Privacy and security | Original text is never stored or sent to the LLM. Role-based access (unit managers see only their own unit), hashed passwords, and a log of who viewed or changed what. Designed around Ontario's PHIPA [8], though only synthetic and public data are used. | An automated test imports comments containing known fake details, then searches the database and the logged LLM requests for them; it passes only if none are found. A second test checks what each role can see. |
 | NFR2 | Reliable AI output | No AI output is final until a person confirms it. Suggestions only use retrieved passages, and any suggestion whose quote is not found in its source is dropped. | Automatic citation check; manual review of 40 suggestions. |
 | NFR3 | Performance | 1,000 comments processed within 15 minutes; dashboard pages load within 2 seconds. Processing runs in batches because QI teams review feedback weekly or monthly, and 15 minutes leaves room for API rate limits on a student account. | Timing script. |
 | NFR4 | Usability and accessibility | The comments behind the top issue are reachable in three clicks or fewer; meets WCAG 2.1 AA contrast and keyboard rules. | Five-person task test with SUS questionnaire; accessibility scan. |
@@ -63,7 +63,7 @@ FR5 addresses the first part of the gap (patient and staff feedback together), F
 
 ## 3. System Design
 
-Kaizen has a React front end, a FastAPI back end, a MySQL database, and a Python text-processing package that the back end runs as a background job when feedback is imported (Figure 1). Each comment then moves through the steps in Figure 2, and the results are saved to MySQL for the dashboard.
+Kaizen has a React front end, a FastAPI back end, a MySQL database, and a Python text-processing package (Figure 1). De-identification runs inside the upload or form request, before anything is written, so original text is never queued or saved. The remaining steps then run as a background job. Each comment then moves through the steps in Figure 2, and the results are saved to MySQL for the dashboard.
 
 ![Figure 1. System architecture](img/p3-figure1.svg)
 
@@ -128,7 +128,7 @@ Instead of inventing categories, we use the Healthcare Complaints Analysis Tool 
 
 | Week | Tasks | Deliverable |
 |---|---|---|
-| 1 (Nov 9) | Labelling guide, synthetic data, database and API design, project setup. | Guide and data in repo |
+| 1 (Nov 9) | Labelling guide, synthetic data, database and API design, CSV columns and unit list, project setup. | Guide and data in repo |
 | 2 (Nov 16) | Label 100 comments; build de-identification and classification; forms and upload. | Agreement score |
 | 3 (Nov 23) | Label test set; build issue grouping, comparison and dashboard; first evaluation. | **P4:** working minimum version with first results |
 | 4 (Nov 30) | Collect documents; build suggestions, citation check and review screen. | Suggestions working |
@@ -139,7 +139,7 @@ Instead of inventing categories, we use the Healthcare Complaints Analysis Tool 
 
 | Member | Area | Requirements |
 |---|---|---|
-| Hemanth Reddy Basireddy | Import, de-identification, database | FR1, FR2, NFR1 |
+| Hemanth Reddy Basireddy | Import, de-identification and its test set, database | FR1, FR2, NFR1 |
 | Hujaifa Muaz | Classification, issue grouping, labelling guide | FR3, FR4 |
 | Mohammed Asrar Ali | Suggestions and document collection | FR7, NFR2 |
 | Aansh Amitabh Arora | Front end and dashboard | FR5, FR6, FR8, NFR4 |
@@ -153,7 +153,7 @@ Model results come from the 300 held-out comments and are reported separately fo
 
 | What | Method | Target |
 |---|---|---|
-| De-identification | 150 test comments with about 300 fake personal details, including hard cases such as names that are ordinary words ("Rose") and mixed date formats. Runs on every pull request. | Finds 95% overall and all ID numbers, phones and emails |
+| De-identification | 150 test comments with about 300 fake personal details, including hard cases such as names that are ordinary words ("Rose") and mixed date formats. We also count tags that remove text that is not personal, such as lengths of time or unit names. Runs on every pull request. | Finds 95% overall and all ID numbers, phones and emails; under 5% of tags remove text that is not personal; no unit names removed |
 | Sentiment | LLM and baseline vs hand labels | Macro F1 ≥ 0.75 |
 | Problem category | Same, also reported per category | Micro F1 ≥ 0.70 |
 | Stage of care | Agreement with hand labels, compared with 61-68% in [3] | ≥ 65% |
@@ -168,6 +168,7 @@ Model results come from the 300 held-out comments and are reported separately fo
 
 | Risk | Mitigation |
 |---|---|
+| De-identification may miss personal details, which would then be stored and sent to the LLM. | Our own patterns for ID numbers, phones and emails (target: all found), the test set on every pull request, synthetic and public data only, and LiteLLM can switch to a local model. QI staff can redact a comment if they spot a missed detail. |
 | Data may be unrealistic: we have no real staff feedback. | Hand-labelled test set, separate results for public and synthetic data, varied writing styles, and a clear statement of this limit. |
 | Labels, especially stage of care, may miss targets. | Prompt examples, an "unclear" option, falling back to the baseline if it does better, and human correction. Results are reported as they are. |
 | Suggestions may be wrong or unsupported. | Retrieved passages only, automatic quote checks, and a required human decision. As a second priority, this cannot block the minimum version. |
