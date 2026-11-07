@@ -9,3 +9,11 @@ GitHub only enforces branch protection for free on public repos, so a private on
 have meant the review rules were suggestions. Org rather than a personal account so the
 repo belongs to the team. The org name is deliberately generic because renaming an org
 breaks everyone's git remotes, while renaming a repo doesn't.
+
+## 2026-11-06 De-identification uses our own date and ID patterns
+
+Presidio's spaCy-based date recognizer also removed lengths of time ("waited 3 days"),
+and its location recognizer removed unit names. Both are things the classifier and the
+unit filters need, so we only use spaCy for names and match calendar dates, Ontario health
+card numbers, record numbers and phones with our own patterns. Names written in lower case
+are still missed.
