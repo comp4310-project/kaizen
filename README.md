@@ -54,6 +54,16 @@ To see the de-identification score and every miss on the test set:
 python -m kaizen.deid.evaluate tests/data/deid_test_set.jsonl
 ```
 
+To run the API locally (SQLite by default, set `KAIZEN_DATABASE_URL` for MySQL), create
+an admin account and start the server, then open http://localhost:8000/docs:
+
+```
+python -m kaizen.cli create-user admin --role admin
+uvicorn kaizen.api.app:create_app --factory --reload
+```
+
+The tables and endpoints are described in [docs/data-model.md](docs/data-model.md).
+
 ## Data
 
 Synthetic, public, or properly de-identified data only. No real patient information at any
