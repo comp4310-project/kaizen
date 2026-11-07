@@ -62,7 +62,18 @@ class DeidResult:
 @lru_cache(maxsize=2)
 def _analyzer(model: str) -> AnalyzerEngine:
     nlp_engine = NlpEngineProvider(
-        nlp_configuration={"nlp_engine_name": "spacy", "models": [{"lang_code": "en", "model_name": model}]}
+        nlp_configuration={
+            "nlp_engine_name": "spacy",
+            "models": [{"lang_code": "en", "model_name": model}],
+            # We only use spaCy for names; this stops a warning per comment for the rest.
+            "ner_model_configuration": {
+                "model_to_presidio_entity_mapping": {"PERSON": "PERSON", "PER": "PERSON"},
+                "labels_to_ignore": [
+                    "CARDINAL", "ORDINAL", "QUANTITY", "MONEY", "PERCENT", "DATE", "TIME", "GPE",
+                    "LOC", "FAC", "ORG", "NORP", "PRODUCT", "EVENT", "WORK_OF_ART", "LAW", "LANGUAGE",
+                ],
+            },
+        }
     ).create_engine()
     # Only the recognizers we chose. Presidio's defaults would also remove locations,
     # organisations and spaCy's dates, which takes out unit names and lengths of time.
