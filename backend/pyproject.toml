@@ -1,0 +1,30 @@
+[project]
+name = "kaizen"
+version = "0.1.0"
+description = "Back end and text processing for Kaizen (COMP 4310)"
+requires-python = ">=3.12"
+# Pinned so results can be rerun (NFR5). The spaCy model is a pinned wheel too.
+dependencies = [
+    "presidio-analyzer==2.2.366",
+    "spacy==3.8.18",
+    "en_core_web_lg @ https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl",
+    "fastapi==0.162.0",
+    "uvicorn==0.54.0",
+    "python-multipart==0.0.33",
+    "sqlalchemy==2.1.8",
+    "pymysql==1.2.3",
+    "bcrypt==5.0.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest==9.2.0", "httpx==0.28.1"]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["kaizen*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

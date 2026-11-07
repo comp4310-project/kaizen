@@ -2,8 +2,8 @@
 
 Group project for COMP 4310 (Web Health Informatics), Lakehead University.
 
-**Status: design done, build starting.** P0 to P2 are submitted and P3 (requirements and
-design) is in draft. There's no code yet; the plan is in
+**Status: build starting.** P0 to P2 are submitted and P3 (requirements and design) is in
+draft. De-identification is the first piece of code. The plan is in
 [docs/p3-requirements-design.md](docs/p3-requirements-design.md).
 
 ## The idea
@@ -37,7 +37,32 @@ through LiteLLM, and Chroma for the documents behind suggestions. See P3 section
 
 ## Running it
 
-Nothing to run yet. Setup instructions go here once there's code.
+Only the back end tests so far. You need Python 3.12 or later. The install pulls the spaCy
+English model, which is about 400MB.
+
+```
+cd backend
+python -m venv .venv
+.venv/Scripts/activate        # Windows; on macOS or Linux: source .venv/bin/activate
+pip install -e ".[dev]"
+pytest
+```
+
+To see the de-identification score and every miss on the test set:
+
+```
+python -m kaizen.deid.evaluate tests/data/deid_test_set.jsonl
+```
+
+To run the API locally (SQLite by default, set `KAIZEN_DATABASE_URL` for MySQL), create
+an admin account and start the server, then open http://localhost:8000/docs:
+
+```
+python -m kaizen.cli create-user admin --role admin
+uvicorn kaizen.api.app:create_app --factory --reload
+```
+
+The tables and endpoints are described in [docs/data-model.md](docs/data-model.md).
 
 ## Data
 
