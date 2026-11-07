@@ -8,10 +8,16 @@ dependencies = [
     "presidio-analyzer==2.2.366",
     "spacy==3.8.18",
     "en_core_web_lg @ https://github.com/explosion/spacy-models/releases/download/en_core_web_lg-3.8.0/en_core_web_lg-3.8.0-py3-none-any.whl",
+    "fastapi==0.162.0",
+    "uvicorn==0.54.0",
+    "python-multipart==0.0.33",
+    "sqlalchemy==2.1.8",
+    "pymysql==1.2.3",
+    "bcrypt==5.0.0",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest==9.2.0"]
+dev = ["pytest==9.2.0", "httpx==0.28.1"]
 
 [build-system]
 requires = ["setuptools>=68"]
