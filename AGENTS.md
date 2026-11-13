@@ -5,9 +5,9 @@ changing anything.
 
 ## State
 
-The build has started, following P3 (`docs/p3-requirements-design.md`). De-identification
-is the first piece of code. Each part has an owner in P3 Table 8, so check with them before
-changing their area.
+The build has started, following P3 (`docs/p3-requirements-design.md`). Import,
+de-identification and labelling are on `main`. Each part has an owner in P3 Table 8, so
+check with them before changing their area.
 
 ## Layout
 
