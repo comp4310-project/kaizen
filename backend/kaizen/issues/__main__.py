@@ -1,7 +1,7 @@
 """Command line for issue finding (FR4).
 
-Group the saved, labelled comments into ranked issues. Names come from Claude when
-ANTHROPIC_API_KEY is set; --keyword-names skips Claude and names issues from keywords:
+Group the saved, labelled comments into ranked issues. Names come from the LLM (Claude by
+default, needs ANTHROPIC_API_KEY); --keyword-names skips the LLM and names issues from keywords:
 
     python -m kaizen.issues build [--min-size 8] [--keyword-names]
 
@@ -93,7 +93,7 @@ def main() -> None:
 
     build = sub.add_parser("build", help="group labelled comments into ranked issues")
     build.add_argument("--min-size", type=int, default=8, help="smallest group that counts as an issue")
-    build.add_argument("--keyword-names", action="store_true", help="name issues from keywords, without Claude")
+    build.add_argument("--keyword-names", action="store_true", help="name issues from keywords, without the LLM")
     build.set_defaults(func=_build)
 
     sheet = sub.add_parser("rating-sheet", help="CSV of top issues for two members to rate")

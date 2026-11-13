@@ -81,7 +81,7 @@ issues. Praise and unlabelled comments are left out. Every run is kept in `issue
 | Table | Holds |
 |---|---|
 | `issues` | run, rank (1 is most pressing), name, keywords, size, negative and high-urgency shares, patient and staff counts, main stage, top 3 categories, comments in the last 7 days, rising flag, score |
-| `issue_comments` | issue and comment ids; `typical` marks the 10 comments closest to the issue's centre, which are the ones sent to Claude for the name |
+| `issue_comments` | issue and comment ids; `typical` marks the 10 comments closest to the issue's centre, which are the ones sent to the LLM for the name |
 
 Score is comments x (0.5 + negative share) x (1 + high-urgency share). An issue is rising when
 its last 7 days hold at least 3 comments and at least twice its weekly average over the 4

@@ -1,6 +1,6 @@
-"""Gives each issue a short name (FR4), with Claude or from its keywords.
+"""Gives each issue a short name (FR4), with an LLM through LiteLLM or from its keywords.
 
-Claude sees the issue's keywords and up to 10 of its most typical comments, all already
+The LLM sees the issue's keywords and up to 10 of its most typical comments, all already
 de-identified (NFR1). Without an API key, or if the request fails, the name is built from
 the top keywords so a run never stops because of naming.
 """
@@ -9,12 +9,14 @@ from __future__ import annotations
 
 import json
 import os
-from typing import Sequence
+from typing import Callable, Sequence
 
-import anthropic
+import litellm
 from pydantic import BaseModel, ValidationError
 
-DEFAULT_MODEL = "claude-haiku-5-5"
+from kaizen.classify.llm import LabelError, reply_text
+
+DEFAULT_MODEL = "anthropic/claude-haiku-5-5"
 MAX_WORDS = 8
 
 SYSTEM_PROMPT = """You name recurring problems found in written hospital feedback, for a
@@ -51,9 +53,9 @@ def _tidy(name: str) -> str:
 
 
 class IssueNamer:
-    def __init__(self, client=None, model: str | None = None) -> None:
+    def __init__(self, completion: Callable | None = None, model: str | None = None) -> None:
         self.model = model or os.environ.get("KAIZEN_NAME_MODEL", DEFAULT_MODEL)
-        self.client = client or anthropic.Anthropic(max_retries=4)
+        self.completion = completion or litellm.completion
 
     @property
     def name(self) -> str:
@@ -62,23 +64,17 @@ class IssueNamer:
     def name_issue(self, keywords: Sequence[str], comments: Sequence[str]) -> str:
         content = json.dumps({"keywords": list(keywords), "comments": list(comments)}, ensure_ascii=False)
         try:
-            response = self.client.messages.create(
+            # A wrong key or model name still raises, since every issue would fail the same way.
+            text = reply_text(
+                self.completion,
                 model=self.model,
                 max_tokens=2000,
-                system=SYSTEM_PROMPT,
-                messages=[{"role": "user", "content": content}],
-                output_config={"format": {"type": "json_schema", "schema": SCHEMA}, "effort": "low"},
+                messages=[{"role": "system", "content": SYSTEM_PROMPT}, {"role": "user", "content": content}],
+                response_format={"type": "json_schema", "json_schema": {"name": "issue_name", "schema": SCHEMA, "strict": True}},
+                reasoning_effort="low",
             )
-        except (anthropic.AuthenticationError, anthropic.PermissionDeniedError, anthropic.BadRequestError, anthropic.NotFoundError):
-            raise
-        except anthropic.APIError:
-            return keyword_name(keywords)
-        if response.stop_reason in ("refusal", "max_tokens"):
-            return keyword_name(keywords)
-        text = next((b.text for b in response.content if b.type == "text"), None)
-        try:
-            name = _tidy(_Name.model_validate_json(text or "").name)
-        except ValidationError:
+            name = _tidy(_Name.model_validate_json(text).name)
+        except (LabelError, ValidationError):
             return keyword_name(keywords)
         return name or keyword_name(keywords)
 
