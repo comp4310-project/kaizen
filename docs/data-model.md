@@ -52,6 +52,8 @@ serves the full, current docs at `/docs`.
 | `POST /imports` | QI, admin | CSV upload as a `file` field; returns counts and row errors |
 | `GET /comments` | QI, admin, manager | De-identified comments, filter by `unit` and `source`. Managers only get their own unit |
 | `POST /users` | admin | Create an account |
+| `GET /issues` | QI, admin, manager | The newest run's ranked issues. Managers only get issues with comments from their unit, with `unit_size` set |
+| `GET /issues/{id}/comments` | QI, admin, manager | The comments behind an issue with their labels, most typical first. Managers only get their unit's comments, and 404 for issues outside it |
 
 Create the first admin with `python -m kaizen.cli create-user admin --role admin`.
 
