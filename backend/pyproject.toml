@@ -14,7 +14,7 @@ dependencies = [
     "sqlalchemy==2.1.8",
     "pymysql==1.2.3",
     "bcrypt==5.0.0",
-    "anthropic==2.8.0",
+    "litellm==1.106.6",
     "scikit-learn==1.9.1",
 ]
 

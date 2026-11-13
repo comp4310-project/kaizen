@@ -1,12 +1,12 @@
 """Command line for labelling (FR3).
 
-Label every saved comment that has no labels yet (needs ANTHROPIC_API_KEY):
+Label every saved comment that has no labels yet (the default model needs ANTHROPIC_API_KEY):
 
     python -m kaizen.classify label
 
 Score a labeller against a hand-labelled file (P3 Table 9):
 
-    python -m kaizen.classify evaluate gold.jsonl --method claude
+    python -m kaizen.classify evaluate gold.jsonl --method llm
     python -m kaizen.classify evaluate gold.jsonl --method baseline --train synthetic.jsonl
 
 Each line of a labelled file is a JSON object with `text`, `source` ("patient_family" or
@@ -38,11 +38,11 @@ def load_labelled(path: Path) -> tuple[list[CommentInput], dict[int, Labels]]:
 
 
 def _label(args) -> None:
-    from kaizen.classify.claude import ClaudeLabeller
+    from kaizen.classify.llm import LLMLabeller
     from kaizen.classify.run import label_comments
     from kaizen.db import make_engine, make_sessionmaker
 
-    labeller = ClaudeLabeller()
+    labeller = LLMLabeller()
     with make_sessionmaker(make_engine())() as session:
         run = label_comments(session, labeller, batch_size=args.batch_size, workers=args.workers, limit=args.limit)
     print(f"{labeller.name}: labelled {run.labelled}, skipped by model {run.missed}, failed batches {run.failed_batches}")
@@ -59,9 +59,9 @@ def _evaluate(args) -> None:
         labeller = BaselineLabeller().fit(train_items, [train_labels[i.id] for i in train_items])
         predicted = labeller.label(items)
     else:
-        from kaizen.classify.claude import ClaudeLabeller, LabelError
+        from kaizen.classify.llm import LLMLabeller, LabelError
 
-        labeller = ClaudeLabeller()
+        labeller = LLMLabeller()
         predicted = {}
         for i in range(0, len(items), args.batch_size):
             try:
@@ -95,7 +95,7 @@ def main() -> None:
 
     evaluate = sub.add_parser("evaluate", help="score a labeller against hand labels")
     evaluate.add_argument("gold", type=Path)
-    evaluate.add_argument("--method", choices=["claude", "baseline"], default="claude")
+    evaluate.add_argument("--method", choices=["llm", "baseline"], default="llm")
     evaluate.add_argument("--train", type=Path, help="labelled file to train the baseline on")
     evaluate.add_argument("--batch-size", type=int, default=10)
     evaluate.add_argument("--out", type=Path, help="also write the full result as JSON")

@@ -130,7 +130,7 @@ class CommentLabel(Base):
         Enum(LabelStatus, values_callable=lambda e: [m.value for m in e]), default=LabelStatus.SUGGESTED
     )
     suggested: Mapped[dict] = mapped_column(JSON)
-    labeller: Mapped[str] = mapped_column(String(64))  # e.g. "claude-haiku-5-5/low" or "tfidf-logreg"
+    labeller: Mapped[str] = mapped_column(String(64))  # e.g. "anthropic/claude-haiku-5-5/low" or "tfidf-logreg"
     prompt_version: Mapped[str] = mapped_column(String(16))
     confirmed_by: Mapped[int | None] = mapped_column(ForeignKey("users.id"))
     confirmed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
