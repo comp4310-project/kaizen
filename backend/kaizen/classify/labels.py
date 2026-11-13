@@ -99,6 +99,7 @@ CLOSE_CALLS = [
     "A wait on its own is institutional_processes. Add communication only if the comment says nobody explained the wait.",
     "Short staffing is environment. If it led to harm or a near miss, add safety.",
     "Medication given late is quality. The wrong drug or dose, or a missed dose, is safety.",
+    "Staff comments about other teams or handovers usually fall under communication or institutional_processes.",
     "If a comment covers several stages, choose the stage the main problem is in.",
     "When unsure between two urgency levels, choose the higher one.",
 ]

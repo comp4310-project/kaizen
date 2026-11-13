@@ -226,3 +226,25 @@ def test_load_labelled_file(tmp_path) -> None:
     items, labels = load_labelled(path)
     assert items == [CommentInput(7, "Cold food.", "patient_family", "4B")]
     assert labels[7].stage is Stage.DISCHARGE_AND_TRANSFERS
+
+
+def test_config_error_stops_the_run_without_sending_the_rest(app) -> None:
+    """A wrong key or model name fails every batch, so the queued ones should not be sent."""
+    add_comments(app, [f"Comment {n}" for n in range(20)])
+
+    class BadKey:
+        name, version = "fake/bad-key", "x"
+
+        def __init__(self) -> None:
+            self.calls = 0
+
+        def label(self, items):
+            self.calls += 1
+            raise PermissionError("invalid api key")
+
+    labeller = BadKey()
+    with app.state.sessionmaker() as session:
+        with pytest.raises(PermissionError):
+            label_comments(session, labeller, batch_size=2, workers=1)
+    # One worker may pick up a second batch before the first error is seen, never all ten.
+    assert labeller.calls <= 2
