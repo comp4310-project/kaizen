@@ -1,4 +1,4 @@
-"""Labelling (FR3). Claude is replaced by a fake client, so these run without an API key."""
+"""Labelling (FR3). LiteLLM is replaced by a fake completion function, so these run without an API key."""
 
 from __future__ import annotations
 
@@ -6,13 +6,16 @@ import json
 from datetime import date
 from types import SimpleNamespace
 
+import kaizen.classify  # noqa: F401  (must load before litellm, see its __init__)
+import litellm
 import pytest
+from litellm.integrations.custom_logger import CustomLogger
 from sqlalchemy import select
 
 from kaizen.classify.__main__ import load_labelled
 from kaizen.classify.baseline import BaselineLabeller
-from kaizen.classify.claude import ClaudeLabeller, LabelError
 from kaizen.classify.labels import Category, Labels, Sentiment, Stage, Urgency
+from kaizen.classify.llm import LabelError, LLMLabeller
 from kaizen.classify.metrics import score
 from kaizen.classify.prompt import BATCH_SCHEMA, CommentInput
 from kaizen.classify.run import label_comments
@@ -22,31 +25,37 @@ from tests.test_import import make_csv
 from tests.test_privacy import CANARIES
 
 LABEL = {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}
+MODEL = "anthropic/claude-haiku-5-5"
 
 
-def reply(text: str, stop_reason: str = "end_turn"):
-    # Thinking comes first on current models, so the labeller has to look for the text block.
-    return SimpleNamespace(
-        stop_reason=stop_reason,
-        content=[SimpleNamespace(type="thinking", thinking=""), SimpleNamespace(type="text", text=text)],
-    )
+def reply(text: str | None, finish_reason: str = "stop"):
+    """The parts of a LiteLLM response the labeller reads."""
+    return SimpleNamespace(choices=[SimpleNamespace(finish_reason=finish_reason, message=SimpleNamespace(content=text))])
 
 
 def echo(kwargs):
     """Labels every comment in the request the same way."""
-    ids = [c["id"] for c in json.loads(kwargs["messages"][0]["content"])]
+    ids = [c["id"] for c in json.loads(kwargs["messages"][1]["content"])]
     return reply(json.dumps({"labels": [{"id": i, **LABEL} for i in ids]}))
 
 
-class FakeClient:
+class FakeCompletion:
+    """Stands in for litellm.completion and keeps every request."""
+
     def __init__(self, respond=echo):
         self.calls = []
-        self.messages = self
         self._respond = respond
 
-    def create(self, **kwargs):
+    def __call__(self, **kwargs):
         self.calls.append(kwargs)
         return self._respond(kwargs)
+
+
+def raises(exc):
+    def respond(_):
+        raise exc
+
+    return respond
 
 
 ITEMS = [
@@ -56,19 +65,48 @@ ITEMS = [
 
 
 def test_request_uses_cached_prompt_schema_and_low_effort() -> None:
-    client = FakeClient()
-    result = ClaudeLabeller(client=client, model="claude-haiku-5-5").label(ITEMS)
+    fake = FakeCompletion()
+    result = LLMLabeller(completion=fake, model=MODEL).label(ITEMS)
 
     assert set(result) == {1, 2}
     assert result[1] == Labels.model_validate(LABEL)
-    call = client.calls[0]
-    assert call["model"] == "claude-haiku-5-5"
-    assert call["output_config"] == {"format": {"type": "json_schema", "schema": BATCH_SCHEMA}, "effort": "low"}
-    assert call["system"][0]["cache_control"] == {"type": "ephemeral"}
-    # Sampling parameters are rejected by current models.
+    call = fake.calls[0]
+    assert call["model"] == MODEL
+    assert call["reasoning_effort"] == "low"
+    assert call["response_format"]["json_schema"]["schema"] == BATCH_SCHEMA
+    assert call["messages"][0]["content"][0]["cache_control"] == {"type": "ephemeral"}
+    assert call["num_retries"] > 0
+    # Sampling parameters are rejected by current Claude models.
     assert not {"temperature", "top_p", "top_k"} & set(call)
-    sent = json.loads(call["messages"][0]["content"])
+    sent = json.loads(call["messages"][1]["content"])
     assert [c["text"] for c in sent] == [i.text for i in ITEMS]
+
+
+class _Spy(CustomLogger):
+    def __init__(self):
+        super().__init__()
+        self.body = None
+
+    def log_pre_api_call(self, model, messages, kwargs):
+        self.body = kwargs["additional_args"]["complete_input_dict"]
+
+
+def test_litellm_sends_claude_the_schema_effort_and_cached_prompt(monkeypatch) -> None:
+    """Runs the real LiteLLM translation; the request goes to a closed local port, not Anthropic."""
+    fake = FakeCompletion()
+    LLMLabeller(completion=fake, model=MODEL).label(ITEMS)
+    spy = _Spy()
+    monkeypatch.setattr(litellm, "callbacks", [spy])
+    request = {**fake.calls[0], "num_retries": 0}
+    with pytest.raises(Exception):
+        litellm.completion(api_key="test", api_base="http://127.0.0.1:9", timeout=5, **request)
+
+    body = spy.body
+    assert body["model"] == "claude-haiku-5-5"
+    assert body["output_format"] == {"type": "json_schema", "schema": BATCH_SCHEMA}
+    assert body["output_config"] == {"effort": "low"}
+    assert body["system"][0]["cache_control"] == {"type": "ephemeral"}
+    assert not {"temperature", "top_p", "top_k"} & set(body)
 
 
 def test_schema_lists_every_label() -> None:
@@ -80,22 +118,29 @@ def test_schema_lists_every_label() -> None:
 
 
 @pytest.mark.parametrize(
-    "response",
+    "respond",
     [
-        reply("", stop_reason="refusal"),
-        reply('{"labels": [', stop_reason="max_tokens"),
-        reply('{"labels": [{"id": 1, "sentiment": "angry"}]}'),
-        SimpleNamespace(stop_reason="end_turn", content=[]),
+        lambda _: reply("", finish_reason="content_filter"),
+        lambda _: reply('{"labels": [', finish_reason="length"),
+        lambda _: reply('{"labels": [{"id": 1, "sentiment": "angry"}]}'),
+        lambda _: reply(None),
+        raises(litellm.RateLimitError("slow down", "anthropic", MODEL)),
+        raises(litellm.APIConnectionError("no route", "anthropic", MODEL)),
     ],
 )
-def test_unusable_replies_fail_the_batch(response) -> None:
+def test_unusable_replies_fail_the_batch(respond) -> None:
     with pytest.raises(LabelError):
-        ClaudeLabeller(client=FakeClient(lambda _: response)).label(ITEMS)
+        LLMLabeller(completion=FakeCompletion(respond)).label(ITEMS)
+
+
+def test_a_bad_key_stops_the_run() -> None:
+    with pytest.raises(litellm.AuthenticationError):
+        LLMLabeller(completion=FakeCompletion(raises(litellm.AuthenticationError("bad key", "anthropic", MODEL)))).label(ITEMS)
 
 
 def test_ids_not_asked_for_are_dropped_and_repeats_removed() -> None:
     labels = [{"id": 1, **LABEL, "categories": ["safety", "safety"]}, {"id": 99, **LABEL}]
-    result = ClaudeLabeller(client=FakeClient(lambda _: reply(json.dumps({"labels": labels})))).label(ITEMS)
+    result = LLMLabeller(completion=FakeCompletion(lambda _: reply(json.dumps({"labels": labels})))).label(ITEMS)
     assert set(result) == {1}
     assert result[1].categories == [Category.SAFETY]
 
@@ -116,26 +161,26 @@ def add_comments(app, texts: list[str]) -> list[int]:
 
 def test_run_labels_new_comments_once(app) -> None:
     ids = add_comments(app, [f"Comment {n} about discharge." for n in range(23)])
-    client = FakeClient()
-    labeller = ClaudeLabeller(client=client, model="claude-haiku-5-5")
+    fake = FakeCompletion()
+    labeller = LLMLabeller(completion=fake, model=MODEL)
 
     with app.state.sessionmaker() as session:
         run = label_comments(session, labeller, batch_size=10, workers=2)
         assert (run.labelled, run.missed, run.failed_batches) == (23, 0, 0)
-        assert len(client.calls) == 3
+        assert len(fake.calls) == 3
 
         rows = session.scalars(select(CommentLabel)).all()
         assert sorted(r.comment_id for r in rows) == ids
         row = rows[0]
         assert row.status is LabelStatus.SUGGESTED
         assert row.suggested == {**LABEL, "categories": ["communication"]}
-        assert row.labeller == "claude-haiku-5-5/low"
+        assert row.labeller == f"{MODEL}/low"
         assert row.prompt_version == labeller.version
 
         # Second run: nothing left to label, so no more API calls.
         again = label_comments(session, labeller)
         assert again.labelled == 0
-        assert len(client.calls) == 3
+        assert len(fake.calls) == 3
         log = session.scalars(select(ActivityLog).where(ActivityLog.action == "label_comments")).all()
         assert log[0].detail["labelled"] == 23
 
@@ -147,10 +192,10 @@ def test_failed_batches_are_left_for_the_next_run(app) -> None:
     def flaky(kwargs):
         calls["n"] += 1
         if calls["n"] == 1:
-            return reply("", stop_reason="refusal")
+            return reply("", finish_reason="content_filter")
         return echo(kwargs)
 
-    labeller = ClaudeLabeller(client=FakeClient(flaky))
+    labeller = LLMLabeller(completion=FakeCompletion(flaky))
     with app.state.sessionmaker() as session:
         first = label_comments(session, labeller, batch_size=2, workers=1)
         assert (first.labelled, first.failed_batches) == (2, 1)
@@ -160,15 +205,15 @@ def test_failed_batches_are_left_for_the_next_run(app) -> None:
 
 
 def test_llm_never_sees_original_text(app, client) -> None:
-    """The NFR1 canary check from test_privacy, applied to what is sent to Claude."""
+    """The NFR1 canary check from test_privacy, applied to what is sent to the LLM."""
     text = "My dad was seen by " + ", ".join(CANARIES.values()) + "."
     rows = [{"text": text, "source": "family", "unit": "4B", "date": "2026-10-02"}]
     response = client.post("/imports", files={"file": ("f.csv", make_csv(rows))}, headers=login(client, "analyst"))
     assert response.status_code == 201, response.text
 
-    fake = FakeClient()
+    fake = FakeCompletion()
     with app.state.sessionmaker() as session:
-        assert label_comments(session, ClaudeLabeller(client=fake)).labelled == 1
+        assert label_comments(session, LLMLabeller(completion=fake)).labelled == 1
 
     sent = json.dumps(fake.calls, default=str)
     for canary in CANARIES:

@@ -1,4 +1,4 @@
-"""The system prompt and output schema for labelling comments with Claude (FR3).
+"""The system prompt and output schema for labelling comments with the LLM (FR3).
 
 The prompt is the same for every request so it can be cached, and its hash is stored with
 each label as `prompt_version` (NFR5).

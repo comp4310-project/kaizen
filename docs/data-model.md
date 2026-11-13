@@ -66,7 +66,7 @@ values are the strings in `docs/labelling-guide.md`.
 | `categories` | A JSON list of HCAT categories, possibly empty |
 | `status` | `suggested` until a person checks it, then `confirmed` (FR6) |
 | `suggested` | What the model first said, kept after corrections so we can still score the model |
-| `labeller`, `prompt_version` | Model and effort (for example `claude-haiku-5-5/low`) and a hash of the prompt (NFR5) |
+| `labeller`, `prompt_version` | Model and effort (for example `anthropic/claude-haiku-5-5/low`) and a hash of the prompt (NFR5) |
 | `confirmed_by`, `confirmed_at` | Who checked it and when |
 
 Comments without a row are the ones still to label, so a rerun only sends those. Each run

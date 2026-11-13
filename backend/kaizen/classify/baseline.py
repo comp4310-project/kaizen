@@ -1,4 +1,4 @@
-"""TF-IDF and logistic regression, the simple model Claude has to beat (P3 section 4).
+"""TF-IDF and logistic regression, the simple model the LLM has to beat (P3 section 4).
 
 Trained on labelled comments, usually the synthetic set, whose labels come from the
 generator templates. One model per label; problem categories use one yes/no model each.

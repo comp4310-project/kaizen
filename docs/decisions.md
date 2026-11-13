@@ -18,15 +18,14 @@ unit filters need, so we only use spaCy for names and match calendar dates, Onta
 card numbers, record numbers and phones with our own patterns. Names written in lower case
 are still missed.
 
-## 2026-11-13 Labelling calls Claude through the Anthropic SDK, not LiteLLM
+## 2026-11-13 Labelling uses Claude Haiku 5.5 through LiteLLM
 
-P3 planned LiteLLM so we could swap providers. We have an Anthropic key and no plan to use
-another provider, and the official SDK gives us structured outputs (the reply always
-matches our label schema), prompt caching and typed errors without a translation layer.
-`ClaudeLabeller` takes a client argument, so tests use a fake and a different provider would
-only need a new labeller class. Bulk labelling uses Claude Haiku 5.5 at low effort, as P3
-planned a low-cost model for this step; `KAIZEN_LABEL_MODEL` and `KAIZEN_LABEL_EFFORT`
-change it, and both are stored with every label.
+As P3 planned, every LLM call goes through LiteLLM, so changing provider or moving to a
+local model is a change of model name. Bulk labelling uses Claude Haiku 5.5 at low effort,
+the low-cost model P3 asked for. The reply must match our label schema; LiteLLM passes the
+schema on to Claude, and we check every reply again with pydantic before saving it.
+`KAIZEN_LABEL_MODEL` and `KAIZEN_LABEL_EFFORT` change the model and effort, and both are
+stored with every label.
 
 ## 2026-11-13 Labels follow HCAT, urgency leans high
 
