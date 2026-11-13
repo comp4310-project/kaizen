@@ -17,6 +17,7 @@ backend/kaizen/deid/        de-identification (FR2), the only code that sees ori
 backend/kaizen/ingest/      CSV and form checks, then de-identify and save (FR1)
 backend/kaizen/api/         FastAPI app, login and roles (NFR1)
 backend/kaizen/classify/    labels each saved comment with an LLM through LiteLLM, plus a scikit-learn baseline (FR3)
+backend/kaizen/issues/      groups labelled comments into named, ranked issues (FR4)
 backend/kaizen/db.py        database tables, see docs/data-model.md
 docs/                       P0 to P3 deliverables, feedback, decisions
 docs/meetings/              meeting notes

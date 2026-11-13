@@ -35,3 +35,11 @@ results with Koh et al. We added an "unclear" stage so neither labellers nor the
 are forced to guess. Urgency is our own three levels; when unsure, labellers pick the
 higher one, since a missed urgent comment is the costly mistake and a person confirms it
 anyway. Details in `docs/labelling-guide.md`.
+
+## 2026-11-13 Issue finding without BERTopic's PyTorch
+
+P3 named BERTopic. Its sentence-transformers dependency installs PyTorch, which on CI is a
+download of over a gigabyte for every run. We use the same steps BERTopic does (sentence
+embeddings, UMAP, HDBSCAN, class-based TF-IDF keywords) with fastembed, which runs the
+same all-MiniLM-L6-v2 model through ONNX, and scikit-learn's HDBSCAN. On a hand-written
+test of 62 comments with 4 planted problems it found all 4, though one was split in two.
