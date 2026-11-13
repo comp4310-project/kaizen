@@ -14,7 +14,7 @@ from typing import Protocol, Sequence
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from kaizen.classify.claude import LabelError
+from kaizen.classify.llm import LabelError
 from kaizen.classify.labels import Labels
 from kaizen.classify.prompt import CommentInput
 from kaizen.db import ActivityLog, Comment, CommentLabel, LabelStatus

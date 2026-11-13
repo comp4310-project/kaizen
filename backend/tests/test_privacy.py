@@ -2,7 +2,7 @@
 
 The canary test imports comments holding known fake details through both the CSV upload
 and the public form, then reads every column of every table and checks that none of the
-details are there. test_classify.py runs the same check on what is sent to Claude.
+details are there. test_classify.py runs the same check on what is sent to the LLM.
 """
 
 from __future__ import annotations
