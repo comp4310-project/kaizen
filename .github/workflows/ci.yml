@@ -23,6 +23,27 @@ jobs:
       - name: Check secrets, file sizes, and internal links
         run: python3 scripts/check_repo.py
 
+  backend:
+    name: Back end tests
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: backend/pyproject.toml
+
+      - name: Install
+        run: pip install -e ".[dev]"
+
+      - name: Test (includes the de-identification targets from P3 Table 9)
+        run: pytest
+
   structure:
     name: Required documents
     runs-on: ubuntu-latest

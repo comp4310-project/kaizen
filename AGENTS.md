@@ -5,18 +5,27 @@ changing anything.
 
 ## State
 
-No application code yet. The repo currently holds the P0 deliverable draft and the
-collaboration setup. The topic is not approved yet, so don't scaffold an app.
+The build has started, following P3 (`docs/p3-requirements-design.md`). De-identification
+is the first piece of code. Each part has an owner in P3 Table 8, so check with them before
+changing their area.
 
 ## Layout
 
 ```
-docs/p0-team-formation.md   P0 deliverable draft
-docs/decisions.md           what we picked and why
+backend/                    Python package `kaizen`, tests and scripts
+backend/kaizen/deid/        de-identification (FR2), the only code that sees original text
+backend/kaizen/ingest/      CSV and form checks, then de-identify and save (FR1)
+backend/kaizen/api/         FastAPI app, login and roles (NFR1)
+backend/kaizen/db.py        database tables, see docs/data-model.md
+docs/                       P0 to P3 deliverables, feedback, decisions
 docs/meetings/              meeting notes
 scripts/check_repo.py       hygiene checks, also runs in CI
 .github/workflows/ci.yml    CI
 ```
+
+Back end tests: `cd backend`, `pip install -e ".[dev]"`, then `pytest`. Never pass
+original comment text to anything except `kaizen.deid.deidentify`, and never store or log
+it.
 
 ## Rules
 
