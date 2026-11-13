@@ -137,6 +137,54 @@ class CommentLabel(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
 
+class IssueRun(Base):
+    """One run of issue finding (FR4). The dashboard shows the newest run."""
+
+    __tablename__ = "issue_runs"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    embedder: Mapped[str] = mapped_column(String(80))
+    namer: Mapped[str] = mapped_column(String(64))
+    min_cluster_size: Mapped[int] = mapped_column(Integer)
+    comments_used: Mapped[int] = mapped_column(Integer)
+    outliers: Mapped[int] = mapped_column(Integer)
+    as_of: Mapped[date | None] = mapped_column(Date)  # newest comment date, for the rising flag
+    created_by: Mapped[int | None] = mapped_column(ForeignKey("users.id"))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, index=True)
+
+
+class Issue(Base):
+    """A recurring problem: a group of similar comments with a name and a rank (FR4)."""
+
+    __tablename__ = "issues"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    run_id: Mapped[int] = mapped_column(ForeignKey("issue_runs.id"), index=True)
+    rank: Mapped[int] = mapped_column(Integer)  # 1 is the most pressing
+    name: Mapped[str] = mapped_column(String(120))
+    keywords: Mapped[list] = mapped_column(JSON, default=list)
+    size: Mapped[int] = mapped_column(Integer)
+    negative_share: Mapped[float] = mapped_column()
+    high_share: Mapped[float] = mapped_column()
+    patient_count: Mapped[int] = mapped_column(Integer)
+    staff_count: Mapped[int] = mapped_column(Integer)
+    main_stage: Mapped[str] = mapped_column(String(32))
+    top_categories: Mapped[list] = mapped_column(JSON, default=list)
+    recent_count: Mapped[int] = mapped_column(Integer)
+    rising: Mapped[bool] = mapped_column(default=False)
+    score: Mapped[float] = mapped_column()
+
+
+class IssueComment(Base):
+    """Which comments belong to an issue. `typical` marks the ones closest to its centre."""
+
+    __tablename__ = "issue_comments"
+
+    issue_id: Mapped[int] = mapped_column(ForeignKey("issues.id"), primary_key=True)
+    comment_id: Mapped[int] = mapped_column(ForeignKey("comments.id"), primary_key=True, index=True)
+    typical: Mapped[bool] = mapped_column(default=False)
+
+
 def make_engine(url: str | None = None) -> Engine:
     url = url or os.environ.get("KAIZEN_DATABASE_URL", DEFAULT_URL)
     kwargs = {"connect_args": {"check_same_thread": False}} if url.startswith("sqlite") else {"pool_pre_ping": True}
