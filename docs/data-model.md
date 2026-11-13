@@ -55,12 +55,27 @@ serves the full, current docs at `/docs`.
 
 Create the first admin with `python -m kaizen.cli create-user admin --role admin`.
 
+## Labels (FR3)
+
+One `comment_labels` row per comment, written by `python -m kaizen.classify label`. The
+values are the strings in `docs/labelling-guide.md`.
+
+| Column | Holds |
+|---|---|
+| `sentiment`, `stage`, `urgency` | One value each |
+| `categories` | A JSON list of HCAT categories, possibly empty |
+| `status` | `suggested` until a person checks it, then `confirmed` (FR6) |
+| `suggested` | What the model first said, kept after corrections so we can still score the model |
+| `labeller`, `prompt_version` | Model and effort (for example `claude-haiku-5-5/low`) and a hash of the prompt (NFR5) |
+| `confirmed_by`, `confirmed_at` | Who checked it and when |
+
+Comments without a row are the ones still to label, so a rerun only sends those. Each run
+adds a `label_comments` row to the activity log with counts only.
+
 ## Still to add
 
 These belong to other members (P3 Table 8). The comment `id` is the key to join on.
 
-- **Labels** (Muaz, FR3 and FR6): sentiment, categories, stage and urgency per comment,
-  whether each was suggested by the model or confirmed by a person, and the model version.
 - **Issues** (Muaz, FR4): issue name, which comments belong to it, rank.
 - **Suggestions** (Asrar, FR7): issue, text, cited passage, and the accept, edit or reject
   decision with who made it.
