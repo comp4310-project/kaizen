@@ -72,11 +72,25 @@ values are the strings in `docs/labelling-guide.md`.
 Comments without a row are the ones still to label, so a rerun only sends those. Each run
 adds a `label_comments` row to the activity log with counts only.
 
+## Issues (FR4)
+
+`python -m kaizen.issues build` groups the labelled negative and neutral comments into
+issues. Praise and unlabelled comments are left out. Every run is kept in `issue_runs`
+(model, settings, how many comments and outliers) and the dashboard should show the newest.
+
+| Table | Holds |
+|---|---|
+| `issues` | run, rank (1 is most pressing), name, keywords, size, negative and high-urgency shares, patient and staff counts, main stage, top 3 categories, comments in the last 7 days, rising flag, score |
+| `issue_comments` | issue and comment ids; `typical` marks the 10 comments closest to the issue's centre, which are the ones sent to Claude for the name |
+
+Score is comments x (0.5 + negative share) x (1 + high-urgency share). An issue is rising when
+its last 7 days hold at least 3 comments and at least twice its weekly average over the 4
+weeks before. The patient and staff counts are there for the comparison view (FR5).
+
 ## Still to add
 
 These belong to other members (P3 Table 8). The comment `id` is the key to join on.
 
-- **Issues** (Muaz, FR4): issue name, which comments belong to it, rank.
 - **Suggestions** (Asrar, FR7): issue, text, cited passage, and the accept, edit or reject
   decision with who made it.
 - Label corrections, merges and suggestion decisions should each add an `activity_log` row.
