@@ -27,3 +27,12 @@ matches our label schema), prompt caching and typed errors without a translation
 only need a new labeller class. Bulk labelling uses Claude Haiku 5.5 at low effort, as P3
 planned a low-cost model for this step; `KAIZEN_LABEL_MODEL` and `KAIZEN_LABEL_EFFORT`
 change it, and both are stored with every label.
+
+## 2026-11-13 Labels follow HCAT, urgency leans high
+
+Categories and stages of care come from the Healthcare Complaints Analysis Tool instead of
+our own lists, because it has been tested for reliability and lets us compare our stage
+results with Koh et al. We added an "unclear" stage so neither labellers nor the model
+are forced to guess. Urgency is our own three levels; when unsure, labellers pick the
+higher one, since a missed urgent comment is the costly mistake and a person confirms it
+anyway. Details in `docs/labelling-guide.md`.
