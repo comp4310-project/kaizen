@@ -106,6 +106,37 @@ class ActivityLog(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, index=True)
 
 
+class LabelStatus(str, enum.Enum):
+    SUGGESTED = "suggested"  # from the model, not yet checked
+    CONFIRMED = "confirmed"  # a person checked it (FR6)
+
+
+class CommentLabel(Base):
+    """The four labels for one comment (FR3). Values are the strings in kaizen.classify.labels.
+
+    The current values can be corrected by a person (FR6). `suggested` keeps what the model
+    first said, so model accuracy can still be measured after corrections.
+    """
+
+    __tablename__ = "comment_labels"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    comment_id: Mapped[int] = mapped_column(ForeignKey("comments.id"), unique=True)
+    sentiment: Mapped[str] = mapped_column(String(16), index=True)
+    categories: Mapped[list] = mapped_column(JSON, default=list)
+    stage: Mapped[str] = mapped_column(String(32), index=True)
+    urgency: Mapped[str] = mapped_column(String(8), index=True)
+    status: Mapped[LabelStatus] = mapped_column(
+        Enum(LabelStatus, values_callable=lambda e: [m.value for m in e]), default=LabelStatus.SUGGESTED
+    )
+    suggested: Mapped[dict] = mapped_column(JSON)
+    labeller: Mapped[str] = mapped_column(String(64))  # e.g. "claude-haiku-5-5/low" or "tfidf-logreg"
+    prompt_version: Mapped[str] = mapped_column(String(16))
+    confirmed_by: Mapped[int | None] = mapped_column(ForeignKey("users.id"))
+    confirmed_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
 def make_engine(url: str | None = None) -> Engine:
     url = url or os.environ.get("KAIZEN_DATABASE_URL", DEFAULT_URL)
     kwargs = {"connect_args": {"check_same_thread": False}} if url.startswith("sqlite") else {"pool_pre_ping": True}
