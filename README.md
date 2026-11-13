@@ -3,8 +3,8 @@
 Group project for COMP 4310 (Web Health Informatics), Lakehead University.
 
 **Status: build starting.** P0 to P2 are submitted and P3 (requirements and design) is in
-draft. De-identification is the first piece of code. The plan is in
-[docs/p3-requirements-design.md](docs/p3-requirements-design.md).
+draft. Import, de-identification and labelling are on `main`; issue grouping is in
+review. The plan is in [docs/p3-requirements-design.md](docs/p3-requirements-design.md).
 
 ## The idea
 

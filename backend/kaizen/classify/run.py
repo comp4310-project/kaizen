@@ -71,6 +71,11 @@ def label_comments(
             except LabelError:
                 run.failed_batches += 1
                 continue
+            except Exception:
+                # A wrong key or model name fails every batch the same way. Without this the
+                # pool would still send every queued batch before the error reached the user.
+                pool.shutdown(cancel_futures=True)
+                raise
             for item in batch:
                 labels = results.get(item.id)
                 if labels is None:
