@@ -5,10 +5,9 @@ from __future__ import annotations
 import csv
 import json
 from datetime import date, timedelta
-from types import SimpleNamespace
 
-import anthropic
-import httpx
+import kaizen.classify  # noqa: F401  (must load before litellm, see its __init__)
+import litellm
 import numpy as np
 from sqlalchemy import select
 
@@ -21,6 +20,7 @@ from kaizen.issues.name import IssueNamer, KeywordNamer
 from kaizen.issues.pipeline import FoundIssue
 from kaizen.issues.rank import IssueComment as RankInput
 from kaizen.issues.rank import issue_stats
+from tests.test_classify import FakeCompletion, raises, reply
 
 TOPICS = {
     "pharmacy": "Discharge was delayed because pharmacy had not filled the pharmacy order",
@@ -166,35 +166,22 @@ def test_planted_recovery_needs_purity_and_coverage() -> None:
     assert result == {"found": 1, "planted": 2, "rank_of": {"a": 1, "b": None}}
 
 
-class FakeClient:
-    def __init__(self, respond):
-        self.messages = self
-        self.calls = []
-        self._respond = respond
-
-    def create(self, **kwargs):
-        self.calls.append(kwargs)
-        return self._respond(kwargs)
-
-
-def named(text, stop_reason="end_turn"):
-    return lambda _: SimpleNamespace(stop_reason=stop_reason, content=[SimpleNamespace(type="text", text=text)])
-
-
-def test_claude_names_are_trimmed_and_failures_fall_back_to_keywords() -> None:
+def test_llm_names_are_trimmed_and_failures_fall_back_to_keywords() -> None:
     keywords = ["pharmacy", "discharge", "pharmacy order"]
     long_name = json.dumps({"name": "Discharge delayed while waiting for pharmacy to fill take home orders."})
-    client = FakeClient(named(long_name))
-    assert IssueNamer(client=client).name_issue(keywords, ["<PERSON> waited for pharmacy"]) == (
+    fake = FakeCompletion(lambda _: reply(long_name))
+    assert IssueNamer(completion=fake).name_issue(keywords, ["<PERSON> waited for pharmacy"]) == (
         "Discharge delayed while waiting for pharmacy to fill"
     )
-    sent = json.loads(client.calls[0]["messages"][0]["content"])
-    assert sent == {"keywords": keywords, "comments": ["<PERSON> waited for pharmacy"]}
-    assert client.calls[0]["model"] == "claude-haiku-5-5"
+    call = fake.calls[0]
+    assert json.loads(call["messages"][1]["content"]) == {"keywords": keywords, "comments": ["<PERSON> waited for pharmacy"]}
+    assert call["model"] == "anthropic/claude-haiku-5-5"
+    assert call["response_format"]["json_schema"]["schema"]["required"] == ["name"]
 
-    assert IssueNamer(client=FakeClient(named("", "refusal"))).name_issue(keywords, []) == "Pharmacy, discharge"
-
-    def offline(_):
-        raise anthropic.APIConnectionError(request=httpx.Request("POST", "https://api.anthropic.com/v1/messages"))
-
-    assert IssueNamer(client=FakeClient(offline)).name_issue(keywords, []) == "Pharmacy, discharge"
+    fallback = "Pharmacy, discharge"
+    refused = FakeCompletion(lambda _: reply("", finish_reason="content_filter"))
+    assert IssueNamer(completion=refused).name_issue(keywords, []) == fallback
+    offline = FakeCompletion(raises(litellm.APIConnectionError("no route", "anthropic", "claude-haiku-5-5")))
+    assert IssueNamer(completion=offline).name_issue(keywords, []) == fallback
+    garbled = FakeCompletion(lambda _: reply("not json"))
+    assert IssueNamer(completion=garbled).name_issue(keywords, []) == fallback
