@@ -110,8 +110,24 @@ saved (NFR2).
 Each draft adds a `draft_suggestions` row to the activity log with how many were kept and
 dropped and why, but no suggestion text.
 
+The documents are Markdown files in `KAIZEN_CORPUS_DIR` (default `documents`), in the format
+described in `kaizen/suggest/corpus.py`. `python -m kaizen.suggest index` checks them and
+caches the passage vectors in `kaizen-passages.npz`; `python -m kaizen.suggest draft <issue id>`
+drafts from the command line.
+
+| Endpoint | Who | What |
+|---|---|---|
+| `POST /issues/{id}/suggestions` | QI, admin | Drafts and saves suggestions for an issue. 503 if no documents are loaded, 502 if the model gives no usable reply |
+| `GET /issues/{id}/suggestions` | QI, admin | Suggestions drafted for that issue row, newest first |
+| `GET /suggestions` | QI, admin | Review queue, filter with `status=suggested` |
+| `POST /suggestions/{id}/decision` | QI, admin | `{"decision": "accept"}`, `"reject"`, or `"edit"` with any of `change`, `owner`, `stage`, `measure` |
+
+Managers can't see suggestions; FR7 is for QI staff. Every decision adds a
+`decide_suggestion` row to the activity log with the decision and the names of edited fields,
+never the text.
+
 ## Still to add
 
 These belong to other members (P3 Table 8). The comment `id` is the key to join on.
 
-- Label corrections, merges and suggestion decisions should each add an `activity_log` row.
+- Label corrections and merges should each add an `activity_log` row.
