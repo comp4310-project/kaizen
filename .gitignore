@@ -45,6 +45,7 @@ pnpm-debug.log*
 *.bin
 *.pt
 *.onnx
+kaizen-passages.npz
 *.gguf
 
 # Editors
