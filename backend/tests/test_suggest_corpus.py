@@ -107,3 +107,8 @@ def test_search_text_includes_title_and_section() -> None:
     doc = Document(id="p", title="Discharge policy", source="S", kind="sample_policy", url=None, body="# Calls\n\nCall within 48 hours.")
     (passage,) = split_passages(doc)
     assert passage.search_text == "Discharge policy. Calls. Call within 48 hours."
+
+
+def test_missing_folder_is_an_error_not_an_empty_corpus(tmp_path) -> None:
+    with pytest.raises(CorpusError, match="no such folder"):
+        load_corpus(tmp_path / "documents")

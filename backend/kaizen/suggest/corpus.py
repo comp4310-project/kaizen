@@ -63,7 +63,10 @@ class Passage:
 
 
 def load_corpus(folder: Path) -> list[Document]:
-    return [_read(path) for path in sorted(Path(folder).glob("*.md"))]
+    folder = Path(folder)
+    if not folder.is_dir():
+        raise CorpusError(f"{folder}: no such folder")
+    return [_read(path) for path in sorted(folder.glob("*.md"))]
 
 
 def _read(path: Path) -> Document:
