@@ -43,3 +43,21 @@ download of over a gigabyte for every run. We use the same steps BERTopic does (
 embeddings, UMAP, HDBSCAN, class-based TF-IDF keywords) with fastembed, which runs the
 same all-MiniLM-L6-v2 model through ONNX, and scikit-learn's HDBSCAN. On a hand-written
 test of 62 comments with 4 planted problems it found all 4, though one was split in two.
+
+## 2026-11-13 Passage search without Chroma
+
+P3 named Chroma for searching the documents behind suggestions. Installing it next to our
+pinned packages adds 50 more, including a Kubernetes client, gRPC and OpenTelemetry
+exporters, to search a corpus P3 sizes at 30 to 50 documents. We embed each passage once and
+compare a query with every passage in numpy instead. At a few thousand passages that is
+exact and takes milliseconds. The vectors are saved with a fingerprint of the passage texts
+and model name, so they are rebuilt only when a document or the model changes. If the
+corpus ever grows past what fits in memory, Chroma is still the next step.
+
+## 2026-11-13 The citation check compares words, not characters
+
+NFR2 drops any suggestion whose quote is not in its source. A character-for-character match
+would drop good quotes over a curly apostrophe or a line break from PDF extraction, so the
+check compares the sequence of words and ignores case and punctuation. It still rejects a
+quote with any word changed, added or removed, a quote joined with "...", and quotes under
+six words, since a phrase that short is found in almost any passage.

@@ -89,10 +89,29 @@ Score is comments x (0.5 + negative share) x (1 + high-urgency share). An issue 
 its last 7 days hold at least 3 comments and at least twice its weekly average over the 4
 weeks before. The patient and staff counts are there for the comparison view (FR5).
 
+## Suggestions (FR7)
+
+`kaizen.suggest.draft` writes up to three `suggestions` rows for an issue. The model gets the
+issue's name, keywords and stage and the five closest document passages, never comment text.
+Any suggestion with a quote that is not word for word in its passage is dropped before it is
+saved (NFR2).
+
+| Column | Holds |
+|---|---|
+| `issue_id` | The issue row it was drafted for. Issue ids change on every `issues build`, so the next four columns keep a copy |
+| `issue_name`, `issue_keywords`, `issue_comment_ids` | The issue as it was when the suggestion was drafted |
+| `change`, `owner`, `stage`, `measure` | The parts P3 requires of an actionable suggestion |
+| `citations` | A JSON list of passage id, document id, title, section heading and quote |
+| `status` | `suggested` until a person accepts, edits or rejects it |
+| `drafted` | What the model first wrote, kept after edits so suggestions can still be scored |
+| `model`, `prompt_version` | Model and effort, and a hash of the prompt (NFR5) |
+| `created_by`, `decided_by`, `decided_at` | Who asked for it, and who decided and when |
+
+Each draft adds a `draft_suggestions` row to the activity log with how many were kept and
+dropped and why, but no suggestion text.
+
 ## Still to add
 
 These belong to other members (P3 Table 8). The comment `id` is the key to join on.
 
-- **Suggestions** (Asrar, FR7): issue, text, cited passage, and the accept, edit or reject
-  decision with who made it.
 - Label corrections, merges and suggestion decisions should each add an `activity_log` row.
