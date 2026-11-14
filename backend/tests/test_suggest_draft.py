@@ -12,7 +12,7 @@ from types import SimpleNamespace
 import pytest
 from sqlalchemy import select
 
-from kaizen.db import ActivityLog, Suggestion, SuggestionStatus
+from kaizen.db import ActivityLog, Issue, IssueRun, Suggestion, SuggestionStatus
 from kaizen.suggest.corpus import Passage
 from kaizen.suggest.draft import DraftError, IssueBrief, SuggestionDrafter, save_suggestions
 from kaizen.suggest.retrieve import PassageIndex
@@ -144,6 +144,18 @@ def test_saved_suggestions_keep_a_copy_of_the_issue(app) -> None:
     d = drafter(FakeCompletion([GOOD, {**GOOD, "citations": []}]))
     result = d.draft(BRIEF)
     with app.state.sessionmaker() as session:
+        # A real issue row, since suggestions.issue_id is a foreign key (MySQL enforces it).
+        run = IssueRun(embedder="fake", namer="keywords", min_cluster_size=5, comments_used=3, outliers=0)
+        session.add(run)
+        session.flush()
+        session.add(
+            Issue(
+                id=12, run_id=run.id, rank=1, name=BRIEF.name, keywords=list(BRIEF.keywords), size=3,
+                negative_share=1.0, high_share=0.0, patient_count=3, staff_count=0,
+                main_stage=BRIEF.main_stage, top_categories=[], recent_count=0, rising=False, score=4.5,
+            )
+        )
+        session.flush()
         saved = save_suggestions(session, BRIEF, result, d, user_id=None)
         assert len(saved) == 1
 
