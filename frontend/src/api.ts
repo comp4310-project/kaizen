@@ -141,7 +141,10 @@ export type Decision =
       measure?: string;
     };
 
-/** An error the API answered with. `status` is the HTTP code, `message` FastAPI's detail. */
+/**
+ * An error from the API. `status` is the HTTP code, `message` FastAPI's detail. Status 0
+ * means the request never got an answer (uvicorn not running, or the network is down).
+ */
 export class ApiError extends Error {
   status: number;
 
@@ -149,6 +152,14 @@ export class ApiError extends Error {
     super(message);
     this.status = status;
   }
+}
+
+// Called when a request that carried a token gets 401, so the app can drop the user and
+// send them to the login page. auth.tsx sets it.
+let unauthorizedHandler: (() => void) | null = null;
+
+export function onUnauthorized(handler: (() => void) | null): void {
+  unauthorizedHandler = handler;
 }
 
 export function getToken(): string | null {
@@ -189,14 +200,24 @@ async function request<T>(method: string, path: string, body?: unknown): Promise
   if (token) headers.Authorization = `Bearer ${token}`;
   if (body !== undefined) headers["Content-Type"] = "application/json";
 
-  const response = await fetch(BASE + path, {
-    method,
-    headers,
-    body: body === undefined ? undefined : JSON.stringify(body),
-  });
+  let response: Response;
+  try {
+    response = await fetch(BASE + path, {
+      method,
+      headers,
+      body: body === undefined ? undefined : JSON.stringify(body),
+    });
+  } catch {
+    throw new ApiError(0, "no answer from the server");
+  }
   const data: unknown = await response.json().catch(() => null);
   if (!response.ok) {
-    if (response.status === 401) setToken(null);
+    // The Vite proxy answers 500 or 502 with no JSON body when uvicorn is not running.
+    if (data === null && response.status >= 500) throw new ApiError(0, "no answer from the API");
+    if (response.status === 401 && token) {
+      setToken(null);
+      unauthorizedHandler?.();
+    }
     throw new ApiError(response.status, detailMessage(data, `${response.status} ${response.statusText}`));
   }
   return data as T;

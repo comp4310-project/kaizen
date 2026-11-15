@@ -1,15 +1,28 @@
 import type { ReactNode } from "react";
 import { Navigate, NavLink, Route, Routes, useLocation } from "react-router-dom";
 import { canReviewSuggestions, useAuth } from "./auth";
+import { roleName } from "./format";
 import { IssueDetailPage } from "./pages/IssueDetailPage";
 import { IssuesPage } from "./pages/IssuesPage";
 import { LoginPage } from "./pages/LoginPage";
 import { SuggestionsPage } from "./pages/SuggestionsPage";
+import { ErrorNotice } from "./states";
 
 function RequireLogin({ children }: { children: ReactNode }) {
-  const { me, checking } = useAuth();
+  const { me, checking, startupError } = useAuth();
   const location = useLocation();
-  if (checking) return <p role="status">Checking your login...</p>;
+  if (checking) return <p role="status">Checking your login.</p>;
+  if (!me && startupError !== null) {
+    return (
+      <section>
+        <h1>Kaizen</h1>
+        <ErrorNotice error={startupError} />
+        <button type="button" className="btn btn-secondary" onClick={() => window.location.reload()}>
+          Try again
+        </button>
+      </section>
+    );
+  }
   if (!me) return <Navigate to="/login" replace state={{ from: location.pathname }} />;
   return children;
 }
@@ -19,19 +32,22 @@ function Header() {
   if (!me) return null;
   return (
     <header className="site-header">
-      <nav aria-label="Main">
+      <div className="container header-inner">
         <span className="brand">Kaizen</span>
-        <NavLink to="/issues">Issues</NavLink>
-        {canReviewSuggestions(me) && <NavLink to="/suggestions">Suggestions</NavLink>}
-      </nav>
-      <div className="who">
-        <span>
-          {me.username} ({me.role}
-          {me.unit ? `, unit ${me.unit}` : ""})
-        </span>
-        <button type="button" className="secondary" onClick={logout}>
-          Log out
-        </button>
+        <nav aria-label="Main" className="nav">
+          <NavLink to="/issues">Issues</NavLink>
+          {canReviewSuggestions(me) && <NavLink to="/suggestions">Suggestions</NavLink>}
+        </nav>
+        <div className="who">
+          <span className="who-name">{me.username}</span>
+          <span className="who-role">
+            {roleName(me.role)}
+            {me.unit ? `, ${me.unit}` : ""}
+          </span>
+          <button type="button" className="btn btn-secondary btn-small" onClick={logout}>
+            Log out
+          </button>
+        </div>
       </div>
     </header>
   );
@@ -45,7 +61,7 @@ export function App() {
         Skip to content
       </a>
       <Header />
-      <main id="main" tabIndex={-1}>
+      <main id="main" tabIndex={-1} className="container">
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route
