@@ -70,3 +70,16 @@ def require(*roles: Role):
         return user
 
     return check
+
+
+def unit_scope(user: User, unit: str | None) -> str | None:
+    """The unit filter a request may use. Managers only get their own unit (NFR1).
+
+    A manager who asks for another unit gets 403, and one who asks for none gets their own.
+    Everyone else gets the unit they asked for, upper-cased, or None for all units.
+    """
+    if user.role is Role.MANAGER:
+        if unit and unit.upper() != user.unit:
+            raise HTTPException(status.HTTP_403_FORBIDDEN, "managers can only view their own unit")
+        return user.unit
+    return unit.upper() if unit else None
