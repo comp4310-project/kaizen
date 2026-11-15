@@ -61,3 +61,24 @@ would drop good quotes over a curly apostrophe or a line break from PDF extracti
 check compares the sequence of words and ignores case and punctuation. It still rejects a
 quote with any word changed, added or removed, a quote joined with "...", and quotes under
 six words, since a phrase that short is found in almost any passage.
+
+## 2026-11-14 How suggestion ratings are scored
+
+P3 Table 9 asks for 70% of suggestions to "score 5 or 6" from two raters without saying how
+two raters combine. We average the two totals, so a 6 and a 4 counts and a 5 and a 4 does
+not, and a suggestion is unsafe if either rater says so, since one missed unsafe suggestion
+is the costly mistake. The comparison model gets the same issues and prompt with no
+documents, so it has nothing to cite; its citation support is "n/a" and it is compared on
+relevance and actionability only. Both sets go into one shuffled sheet with the answers in a
+separate key. Raters can still spot most comparison items by their empty citations, so this
+reduces bias from rating one set in a block rather than removing it.
+
+## 2026-11-14 The first documents are sample policies only
+
+P3 planned 30 to 50 documents: Ontario quality standards, QIP guidance and sample policies
+we write ourselves. There was no time before the deadline to collect the Ontario documents
+and check whether their licences let us copy them into a public repo, so `documents/` holds
+16 sample policies we wrote for a fictional hospital, each marked as such in its header. They
+cover the problems built into the synthetic data and the HCAT categories. Suggestions cited
+from them show the method works, but they are not evidence of what Ontario guidance says,
+and the report has to say so. Adding a real document is one Markdown file with a header.

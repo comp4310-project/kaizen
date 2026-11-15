@@ -110,7 +110,7 @@ saved (NFR2).
 Each draft adds a `draft_suggestions` row to the activity log with how many were kept and
 dropped and why, but no suggestion text.
 
-The documents are Markdown files in `KAIZEN_CORPUS_DIR` (default `documents`), in the format
+The documents are Markdown files in `KAIZEN_CORPUS_DIR` (default `documents/` at the repo root), in the format
 described in `kaizen/suggest/corpus.py`. `python -m kaizen.suggest index` checks them and
 caches the passage vectors in `kaizen-passages.npz`; `python -m kaizen.suggest draft <issue id>`
 drafts from the command line.
