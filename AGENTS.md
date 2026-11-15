@@ -27,6 +27,8 @@ scripts/check_repo.py       hygiene checks, also runs in CI
 .github/workflows/ci.yml    CI
 ```
 
+Working on the front end: read `frontend/AGENTS.md` too, and `frontend/TASKS.md` for what is left.
+
 Back end tests: `cd backend`, `pip install -e ".[dev]"`, then `pytest`. Never pass
 original comment text to anything except `kaizen.deid.deidentify`, and never store or log
 it.
