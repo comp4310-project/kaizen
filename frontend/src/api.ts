@@ -109,6 +109,30 @@ export interface IssueCommentsOut {
   comments: IssueComment[];
 }
 
+export interface CommentFilters {
+  unit?: string;
+  source?: Source;
+}
+
+export const CATEGORIES = [
+  "quality", "safety", "environment", "institutional_processes",
+  "listening", "communication", "respect_and_rights",
+] as const;
+
+export type LabelsIn = Partial<{
+  sentiment: "positive" | "neutral" | "negative";
+  stage: Stage;
+  urgency: "low" | "medium" | "high";
+  categories: (typeof CATEGORIES)[number][];
+}>;
+
+interface LabelsOut extends CommentLabels {
+  comment_id: number;
+  suggested: Omit<CommentLabels, "status">;
+  confirmed_by: number | null;
+  confirmed_at: string | null;
+}
+
 export interface Citation {
   passage_id: string;
   document_id: string;
@@ -205,8 +229,9 @@ function detailMessage(body: unknown, fallback: string): string {
   return fallback;
 }
 
-async function request<T>(method: string, path: string, body?: unknown): Promise<T> {
+async function request<T>(method: string, path: string, body?: unknown, csv = false): Promise<T> {
   const headers: Record<string, string> = { Accept: "application/json" };
+  if (csv) headers.Accept = "text/csv";
   const token = getToken();
   if (token) headers.Authorization = `Bearer ${token}`;
   if (body !== undefined) headers["Content-Type"] = "application/json";
@@ -220,6 +245,12 @@ async function request<T>(method: string, path: string, body?: unknown): Promise
     });
   } catch {
     throw new ApiError(0, "no answer from the server");
+  }
+  if (csv && response.ok) {
+    if (!response.headers.get("Content-Type")?.startsWith("text/csv")) {
+      throw new ApiError(0, "no CSV response from the API");
+    }
+    return (await response.text()) as T;
   }
   const data: unknown = await response.json().catch(() => null);
   if (!response.ok) {
@@ -263,8 +294,40 @@ export const api = {
 
   issues: (limit?: number) => request<IssuesOut>("GET", "/issues" + query({ limit })),
 
-  issueComments: (issueId: number, options: { limit?: number; offset?: number } = {}) =>
-    request<IssueCommentsOut>("GET", `/issues/${issueId}/comments` + query(options)),
+  issueComments: (issueId: number, options: CommentFilters & { limit?: number; offset?: number } = {}) =>
+    request<IssueCommentsOut>("GET", `/issues/${issueId}/comments` + query({ ...options })),
+
+  async downloadIssueComments(issueId: number, filters: CommentFilters, count: number): Promise<void> {
+    const parts: string[] = [];
+    for (let offset = 0; offset < count; offset += 500) {
+      const params = query({ ...filters, limit: Math.min(500, count - offset), offset, format: "csv" });
+      const page = await request<string>("GET", `/issues/${issueId}/comments` + params, undefined, true);
+      // Only the header line is stripped. Quoted comment cells can contain newlines.
+      parts.push(offset ? page.slice(page.indexOf("\n") + 1) : page);
+    }
+    const url = URL.createObjectURL(new Blob(parts, { type: "text/csv;charset=utf-8" }));
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `issue-${issueId}-comments.csv`;
+    document.body.append(link);
+    link.click();
+    link.remove();
+    window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+  },
+
+  confirmLabels: (commentId: number, labels: LabelsIn) =>
+    request<LabelsOut>("POST", `/comments/${commentId}/labels`, labels),
+
+  redactComment: (commentId: number, start: number, end: number) =>
+    request<{ id: number; text: string }>("POST", `/comments/${commentId}/redact`, { start, end }),
+
+  renameIssue: (issueId: number, name: string) =>
+    request<IssueCommentsOut["issue"]>("POST", `/issues/${issueId}/rename`, { name }),
+
+  mergeIssue: (issueId: number, into: number) =>
+    request<IssueCommentsOut["issue"] & Pick<IssueSummary, "size" | "patient_count" | "staff_count" | "score">>(
+      "POST", `/issues/${issueId}/merge`, { into },
+    ),
 
   issueSuggestions: (issueId: number) => request<SuggestionsOut>("GET", `/issues/${issueId}/suggestions`),
 

@@ -33,6 +33,7 @@ src/auth.tsx                AuthProvider, useAuth(), canReviewSuggestions()
 src/states.tsx              ErrorNotice, EmptyState, SkeletonRows, SkeletonBlocks, describeError()
 src/format.ts               words(), percent(), sourceName(), roleName(), dateTime()
 src/SuggestionCard.tsx      one suggestion: fields, citations, accept / edit / reject
+src/IssueReview.tsx        issue and comment correction forms for QI and admin
 src/pages/LoginPage.tsx
 src/pages/IssuesPage.tsx        ranked table
 src/pages/ComparePage.tsx       patient and staff counts by category, stage or unit
@@ -52,9 +53,8 @@ All requests go through `request()` in `src/api.ts`, which:
 - uses `status` 0 when there was no answer at all (uvicorn not running);
 - on a 401 for a request that sent a token, clears the token and calls the handler `auth.tsx` registers, which sends the user to `/login`.
 
-Pages call the `api` object, never `fetch` directly. The one exception will be file
-downloads (CSV export), which need the token header but a blob instead of JSON; add a
-`download()` helper next to `request()` for that.
+Pages call the `api` object, never `fetch` directly. CSV export uses the same authenticated
+request helper, reads the CSV response, and downloads it as a file.
 
 The types in `api.ts` mirror the dicts the FastAPI handlers return. They are copied by hand,
 so when a handler changes, change the type in the same PR:

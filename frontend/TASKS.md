@@ -39,6 +39,8 @@ Done when:
 
 ## FR6: confirm and correct labels, redact, rename, merge
 
+Implemented on issue detail for QI and admin. Managers see the comments without correction controls.
+
 P3: "Let QI staff confirm urgency, correct labels, redact a personal detail that
 de-identification missed, and rename or merge issues. Every change is logged." Priority:
 Must, with rename, merge and redact Should. User story: a QI analyst wants to "confirm or
@@ -67,12 +69,7 @@ interface LabelsOut extends Required<LabelsIn> {
 }
 ```
 
-Build: in `IssueDetailPage.tsx`, give each comment's `Labels` block a "Confirm" button and
-an "Edit labels" button that opens a small form, the same pattern as the edit form in
-`SuggestionCard.tsx` (selects for sentiment, stage and urgency, checkboxes in a
-`<fieldset>` with a `<legend>` for categories). Send only changed fields. Replace the
-comment's labels with the reply so "suggested by the model" turns into "checked by a
-person".
+The issue detail page sends only changed fields and displays the confirmed values.
 
 ### Redact
 
@@ -80,10 +77,8 @@ person".
 `end` exclusive. 422 if the range is empty or past the end. Returns `{ id, text }` with the
 range replaced by `<REDACTED>`.
 
-Build: a "Redact" button per comment that opens a form with the text in a read-only
-`<textarea>`; the person selects the detail and the form reads `selectionStart` and
-`selectionEnd`. Show the selected text and ask to confirm before sending. Replace the
-comment text with the reply. Don't log or keep the selected text anywhere.
+The redaction form previews the selected range before confirmation and shows the stored
+text returned by the API. It converts browser offsets to Python character offsets.
 
 ### Rename and merge
 
@@ -95,10 +90,8 @@ suggestions into `into`, recomputes its counts and score, re-ranks the run and d
 this issue. 422 for merging into itself or across runs. Returns
 `{ id, rank, name, size, patient_count, staff_count, score }` for the merged issue.
 
-Build: on the issue detail page header, "Rename" (inline form like the suggestion edit) and
-"Merge into" (a select of the other issues from `api.issues()`, then a confirm step saying
-this issue will be deleted). After a merge, navigate to `/issues/{into}`. After a rename,
-update the heading.
+The heading updates after renaming. Merging requires confirmation and opens the issue
+that kept the comments.
 
 Done when:
 - Each change creates a log entry (P3 Table 2 check). Verify with `SELECT action, detail FROM activity_log ORDER BY id DESC LIMIT 5` after each action: `confirm_labels` or `correct_labels`, `redact_comment`, `rename_issue`, `merge_issue`.
@@ -106,6 +99,9 @@ Done when:
 - Every form has labels, works by keyboard, and shows the API's 409 and 422 messages through `ErrorNotice`.
 
 ## FR8: filters and CSV export
+
+Implemented on issue detail. Filters stay applied through pagination, and CSV export includes
+all currently displayed comments under those filters.
 
 P3: "Dashboard with ranked issues and the comments behind each, plus filters and CSV
 export." Priority: Must, with filters and export Should. User story: a unit manager wants
@@ -120,17 +116,8 @@ id,source,unit,date,typical,sentiment,categories,stage,urgency,status,text
 ```
 
 `typical` is `yes` or `no`, categories are joined with `;`, and cells starting with `=`,
-`+`, `-` or `@` get a leading `'`. `limit` is capped at 500, so an issue with more
-comments needs several requests or a back end change. Agree which with whoever reviews the back end
-branch before building it.
-
-Build: add `unit` and `source` to `api.issueComments` options and a toolbar above the
-comments in `IssueDetailPage.tsx` (unit select for QI and admin, source select for
-everyone). Add a `download(path, filename)` helper in `api.ts` that fetches with the token
-header, turns the reply into a blob and clicks a temporary `<a download>`; a plain link
-cannot send the token. "Download CSV" is a `btn-secondary` that uses the current filters.
-`GET /issues` has no filters on the back end yet, so issue-table filters (by stage or
-rising) would be client-side for now.
+`+`, `-` or `@` get a leading `'`. The client exports displayed rows in batches of
+up to 500 and writes the CSV header once. Select Show more to include further comments.
 
 Done when:
 - Export matches the filtered view (P3 Table 2 check): with a filter set, the CSV has the same comment ids as the page.
@@ -138,6 +125,9 @@ Done when:
 - The filters keep working after "Show more".
 
 ## NFR4: accessibility scan and SUS test
+
+See [the accessibility and usability evaluation](../docs/frontend-usability.md) for the
+automated checks and the participant study plan.
 
 P3 Table 3: "The comments behind the top issue are reachable in three clicks or fewer;
 meets WCAG 2.1 AA contrast and keyboard rules." Checked by "Five-person task test with SUS
