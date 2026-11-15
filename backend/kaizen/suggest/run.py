@@ -1,8 +1,8 @@
 """What the command line and the API share: loading the drafter, and drafting for one issue (FR7).
 
-The documents are read from KAIZEN_CORPUS_DIR (default `documents`), and the passage vectors
-are cached in KAIZEN_INDEX_PATH (default `kaizen-passages.npz`), next to where the SQLite
-database goes by default.
+The documents are read from KAIZEN_CORPUS_DIR (default: `documents/` at the top of the repo),
+and the passage vectors are cached in KAIZEN_INDEX_PATH (default `kaizen-passages.npz` in the
+current folder, like the default SQLite database).
 """
 
 from __future__ import annotations
@@ -18,7 +18,8 @@ from kaizen.suggest.corpus import load_corpus, split_passages
 from kaizen.suggest.draft import DraftResult, IssueBrief, SuggestionDrafter, save_suggestions
 from kaizen.suggest.retrieve import Embedder, PassageIndex
 
-DEFAULT_CORPUS_DIR = "documents"
+# backend/kaizen/suggest/run.py -> the repo root
+DEFAULT_CORPUS_DIR = Path(__file__).resolve().parents[3] / "documents"
 DEFAULT_INDEX_PATH = "kaizen-passages.npz"
 
 

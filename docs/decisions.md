@@ -72,3 +72,13 @@ documents, so it has nothing to cite; its citation support is "n/a" and it is co
 relevance and actionability only. Both sets go into one shuffled sheet with the answers in a
 separate key. Raters can still spot most comparison items by their empty citations, so this
 reduces bias from rating one set in a block rather than removing it.
+
+## 2026-11-14 The first documents are sample policies only
+
+P3 planned 30 to 50 documents: Ontario quality standards, QIP guidance and sample policies
+we write ourselves. There was no time before the deadline to collect the Ontario documents
+and check whether their licences let us copy them into a public repo, so `documents/` holds
+16 sample policies we wrote for a fictional hospital, each marked as such in its header. They
+cover the problems built into the synthetic data and the HCAT categories. Suggestions cited
+from them show the method works, but they are not evidence of what Ontario guidance says,
+and the report has to say so. Adding a real document is one Markdown file with a header.
