@@ -185,6 +185,46 @@ class IssueComment(Base):
     typical: Mapped[bool] = mapped_column(default=False)
 
 
+class SuggestionStatus(str, enum.Enum):
+    SUGGESTED = "suggested"  # drafted by the model, nobody has decided yet (NFR2)
+    ACCEPTED = "accepted"
+    EDITED = "edited"  # accepted after a person changed it
+    REJECTED = "rejected"
+
+
+class Suggestion(Base):
+    """One cited improvement suggestion for an issue (FR7).
+
+    Every `issues build` makes new issue rows, so a suggestion keeps a copy of the issue it was
+    drafted for (name, keywords, comment ids) and still makes sense after a rebuild. `drafted`
+    keeps what the model first wrote, so suggestions can still be scored after a person edits
+    them (P3 Table 9).
+    """
+
+    __tablename__ = "suggestions"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    issue_id: Mapped[int | None] = mapped_column(ForeignKey("issues.id"), index=True)  # the issue row at drafting time
+    issue_name: Mapped[str] = mapped_column(String(120))
+    issue_keywords: Mapped[list] = mapped_column(JSON, default=list)
+    issue_comment_ids: Mapped[list] = mapped_column(JSON, default=list)
+    change: Mapped[str] = mapped_column(Text)
+    owner: Mapped[str] = mapped_column(String(120))
+    stage: Mapped[str] = mapped_column(String(32))
+    measure: Mapped[str] = mapped_column(Text)
+    citations: Mapped[list] = mapped_column(JSON)  # passage id, document id, title, heading, quote
+    status: Mapped[SuggestionStatus] = mapped_column(
+        Enum(SuggestionStatus, values_callable=lambda e: [m.value for m in e]), default=SuggestionStatus.SUGGESTED, index=True
+    )
+    drafted: Mapped[dict] = mapped_column(JSON)
+    model: Mapped[str] = mapped_column(String(80))  # e.g. "anthropic/claude-opus-5-5/medium"
+    prompt_version: Mapped[str] = mapped_column(String(16))
+    created_by: Mapped[int | None] = mapped_column(ForeignKey("users.id"))
+    decided_by: Mapped[int | None] = mapped_column(ForeignKey("users.id"))
+    decided_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
+
+
 def make_engine(url: str | None = None) -> Engine:
     url = url or os.environ.get("KAIZEN_DATABASE_URL", DEFAULT_URL)
     kwargs = {"connect_args": {"check_same_thread": False}} if url.startswith("sqlite") else {"pool_pre_ping": True}

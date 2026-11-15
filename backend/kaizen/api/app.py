@@ -17,6 +17,7 @@ from sqlalchemy.orm import Session
 
 from kaizen.api.auth import current_user, get_session, hash_password, issue_token, require, verify_password
 from kaizen.api.issues import router as issues_router
+from kaizen.api.suggestions import router as suggestions_router
 from kaizen.db import ActivityLog, Channel, Comment, Role, Source, User, make_engine, make_sessionmaker
 from kaizen.ingest.csv_import import CsvFormatError, check_row, parse_csv
 from kaizen.ingest.save import save_feedback
@@ -62,6 +63,7 @@ def create_app(database_url: str | None = None) -> FastAPI:
     app = FastAPI(title="Kaizen", version="0.1.0")
     app.state.sessionmaker = make_sessionmaker(make_engine(database_url))
     app.include_router(issues_router)
+    app.include_router(suggestions_router)
 
     @app.post("/auth/login")
     def login(body: LoginIn, session: Session = Depends(get_session)):
