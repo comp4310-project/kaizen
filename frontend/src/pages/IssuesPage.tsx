@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api, type IssuesOut } from "../api";
 import { useAuth } from "../auth";
-import { errorText, percent, words } from "../format";
+import { dateTime, errorText, percent, words } from "../format";
 
 export function IssuesPage() {
   const { me } = useAuth();
@@ -28,7 +28,7 @@ export function IssuesPage() {
       {data?.run && (
         <>
           <p className="muted">
-            From issue run {data.run.id} on {new Date(data.run.created_at).toLocaleString()}:{" "}
+            From issue run {data.run.id} on {dateTime(data.run.created_at)}:{" "}
             {data.run.comments_used} comments grouped, {data.run.outliers} left out as outliers.
             {isManager && ` Showing only issues with comments from unit ${me?.unit}.`}
           </p>

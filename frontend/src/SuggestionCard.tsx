@@ -1,6 +1,6 @@
 import { useId, useState, type FormEvent } from "react";
 import { api, STAGES, type Decision, type Stage, type Suggestion } from "./api";
-import { errorText, words } from "./format";
+import { dateTime, errorText, words } from "./format";
 
 interface Props {
   suggestion: Suggestion;
@@ -128,7 +128,7 @@ export function SuggestionCard({ suggestion: s, onDecided, showIssue = true }: P
       {decided && (
         <p className="muted">
           {s.status} by {s.decided_by ?? "unknown"}
-          {s.decided_at ? ` on ${new Date(s.decided_at).toLocaleString()}` : ""}
+          {s.decided_at ? ` on ${dateTime(s.decided_at)}` : ""}
         </p>
       )}
 

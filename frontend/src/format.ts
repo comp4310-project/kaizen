@@ -11,6 +11,15 @@ export function sourceName(source: string): string {
   return source === "patient_family" ? "patient or family" : source;
 }
 
+/**
+ * The API writes UTC times, but SQLite drops the offset, so "2026-11-15T04:13:10" arrives
+ * with no zone and the browser would read it as local time. Treat a bare time as UTC.
+ */
+export function dateTime(iso: string): string {
+  const hasZone = /(Z|[+-]\d\d:\d\d)$/.test(iso);
+  return new Date(hasZone ? iso : `${iso}Z`).toLocaleString();
+}
+
 export function errorText(error: unknown): string {
   return error instanceof Error ? error.message : String(error);
 }
