@@ -15,7 +15,9 @@ from pydantic import BaseModel
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from kaizen.api.auth import current_user, get_session, hash_password, issue_token, require, verify_password
+from kaizen.api.auth import current_user, get_session, hash_password, issue_token, require, unit_scope, verify_password
+from kaizen.api.compare import router as compare_router
+from kaizen.api.corrections import router as corrections_router
 from kaizen.api.issues import router as issues_router
 from kaizen.api.suggestions import router as suggestions_router
 from kaizen.db import ActivityLog, Channel, Comment, Role, Source, User, make_engine, make_sessionmaker
@@ -62,6 +64,8 @@ def log(session: Session, user: User | None, action: str, entity_type=None, enti
 def create_app(database_url: str | None = None) -> FastAPI:
     app = FastAPI(title="Kaizen", version="0.1.0")
     app.state.sessionmaker = make_sessionmaker(make_engine(database_url))
+    app.include_router(compare_router)
+    app.include_router(corrections_router)
     app.include_router(issues_router)
     app.include_router(suggestions_router)
 
@@ -121,13 +125,10 @@ def create_app(database_url: str | None = None) -> FastAPI:
         session: Session = Depends(get_session),
     ):
         """De-identified comments. Unit managers only see their own unit (NFR1)."""
-        if user.role is Role.MANAGER:
-            if unit and unit.upper() != user.unit:
-                raise HTTPException(status.HTTP_403_FORBIDDEN, "managers can only view their own unit")
-            unit = user.unit
+        unit = unit_scope(user, unit)
         query = select(Comment)
         if unit:
-            query = query.where(Comment.unit == unit.upper())
+            query = query.where(Comment.unit == unit)
         if source:
             query = query.where(Comment.source == source)
         total = session.scalar(select(func.count()).select_from(query.subquery()))

@@ -6,12 +6,16 @@ their own unit, and only those comments (NFR1).
 
 from __future__ import annotations
 
-from fastapi import APIRouter, Depends, HTTPException, Query, status
+import csv
+import io
+from typing import Literal
+
+from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
-from kaizen.api.auth import get_session, require
-from kaizen.db import ActivityLog, Comment, CommentLabel, Issue, IssueComment, IssueRun, Role, User
+from kaizen.api.auth import get_session, require, unit_scope
+from kaizen.db import ActivityLog, Comment, CommentLabel, Issue, IssueComment, IssueRun, Role, Source, User
 
 router = APIRouter()
 readers = require(Role.QI, Role.ADMIN, Role.MANAGER)
@@ -77,55 +81,120 @@ def list_issues(
     }
 
 
+def _count(session: Session, query) -> int:
+    return session.scalar(select(func.count()).select_from(query.subquery()))
+
+
+CSV_COLUMNS = ("id", "source", "unit", "date", "typical", "sentiment", "categories", "stage", "urgency", "status", "text")
+
+
+def _cell(value) -> str:
+    """One CSV cell. Text that a spreadsheet would run as a formula gets a leading quote.
+
+    Comments come from a public form, so "=HYPERLINK(...)" is possible input (CSV injection).
+    """
+    text = "" if value is None else str(value)
+    return "'" + text if text[:1] in ("=", "+", "-", "@", "\t", "\r") else text
+
+
+def _csv(comments: list[dict]) -> str:
+    out = io.StringIO()
+    writer = csv.writer(out, lineterminator="\n")
+    writer.writerow(CSV_COLUMNS)
+    for c in comments:
+        labels = c["labels"] or {}
+        writer.writerow(
+            _cell(v)
+            for v in (
+                c["id"],
+                c["source"],
+                c["unit"],
+                c["date"],
+                "yes" if c["typical"] else "no",
+                labels.get("sentiment"),
+                ";".join(labels.get("categories", [])),
+                labels.get("stage"),
+                labels.get("urgency"),
+                labels.get("status"),
+                c["text"],
+            )
+        )
+    return out.getvalue()
+
+
 @router.get("/issues/{issue_id}/comments")
 def issue_comments(
     issue_id: int,
+    unit: str | None = None,
+    source: Source | None = None,
     limit: int = Query(50, ge=1, le=500),
     offset: int = Query(0, ge=0),
+    format: Literal["json", "csv"] = "json",
     user: User = Depends(readers),
     session: Session = Depends(get_session),
 ):
-    """The de-identified comments behind one issue, most typical first, with their labels."""
+    """The de-identified comments behind one issue, most typical first, with their labels.
+
+    `format=csv` returns the same rows, under the same filters and paging, as a CSV file
+    (FR8). Categories are joined with ";" and `typical` is yes or no.
+    """
     issue = session.get(Issue, issue_id)
+    unit = unit_scope(user, unit)
     query = (
         select(Comment, CommentLabel, IssueComment.typical)
         .join(IssueComment, IssueComment.comment_id == Comment.id)
         .outerjoin(CommentLabel, CommentLabel.comment_id == Comment.id)
         .where(IssueComment.issue_id == issue_id)
     )
-    if user.role is Role.MANAGER:
-        query = query.where(Comment.unit == user.unit)
-    total = session.scalar(select(func.count()).select_from(query.subquery())) if issue else 0
-    if issue is None or (total == 0 and user.role is Role.MANAGER):
+    if unit:
+        query = query.where(Comment.unit == unit)
+    # Checked before the source filter, so a filter that matches nothing is an empty list, not a 404.
+    if issue is None or (user.role is Role.MANAGER and _count(session, query) == 0):
         # Same answer whether the issue doesn't exist or belongs to another unit.
         raise HTTPException(status.HTTP_404_NOT_FOUND, "no such issue")
+    if source:
+        query = query.where(Comment.source == source)
+    total = _count(session, query)
 
     rows = session.execute(query.order_by(IssueComment.typical.desc(), Comment.id).limit(limit).offset(offset)).all()
+    comments = [
+        {
+            "id": c.id,
+            "source": c.source.value,
+            "unit": c.unit,
+            "date": c.feedback_date.isoformat(),
+            "text": c.text,
+            "typical": typical,
+            "labels": None
+            if label is None
+            else {
+                "sentiment": label.sentiment,
+                "categories": label.categories,
+                "stage": label.stage,
+                "urgency": label.urgency,
+                "status": label.status.value,
+            },
+        }
+        for c, label, typical in rows
+    ]
     session.add(
-        ActivityLog(user_id=user.id, action="view_issue_comments", entity_type="issue", entity_id=issue_id, detail={"count": len(rows)})
+        ActivityLog(
+            user_id=user.id,
+            action="export_issue_comments" if format == "csv" else "view_issue_comments",
+            entity_type="issue",
+            entity_id=issue_id,
+            detail={"count": len(rows), "unit": unit, "source": source and source.value},
+        )
     )
     session.commit()
+    if format == "csv":
+        return Response(
+            _csv(comments),
+            media_type="text/csv; charset=utf-8",
+            headers={"Content-Disposition": f'attachment; filename="issue-{issue_id}-comments.csv"'},
+        )
     return {
         "issue": {"id": issue.id, "rank": issue.rank, "name": issue.name},
         "total": total,
-        "comments": [
-            {
-                "id": c.id,
-                "source": c.source.value,
-                "unit": c.unit,
-                "date": c.feedback_date.isoformat(),
-                "text": c.text,
-                "typical": typical,
-                "labels": None
-                if label is None
-                else {
-                    "sentiment": label.sentiment,
-                    "categories": label.categories,
-                    "stage": label.stage,
-                    "urgency": label.urgency,
-                    "status": label.status.value,
-                },
-            }
-            for c, label, typical in rows
-        ],
+        "comments": comments,
     }

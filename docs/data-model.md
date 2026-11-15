@@ -53,7 +53,12 @@ serves the full, current docs at `/docs`.
 | `GET /comments` | QI, admin, manager | De-identified comments, filter by `unit` and `source`. Managers only get their own unit |
 | `POST /users` | admin | Create an account |
 | `GET /issues` | QI, admin, manager | The newest run's ranked issues. Managers only get issues with comments from their unit, with `unit_size` set |
-| `GET /issues/{id}/comments` | QI, admin, manager | The comments behind an issue with their labels, most typical first. Managers only get their unit's comments, and 404 for issues outside it |
+| `GET /issues/{id}/comments` | QI, admin, manager | The comments behind an issue with their labels, most typical first. Filter by `unit` and `source`. Managers only get their unit's comments, and 404 for issues outside it. `format=csv` returns the same rows as a CSV file (FR8) |
+| `GET /compare` | QI, admin, manager | Patient and staff comment counts side by side, grouped by `by=category` (default), `stage` or `unit`. Filter by `unit`, `date_from`, `date_to`. Each row has `only` set to `patient` or `staff` when the other group has none (FR5). Managers only get their own unit |
+| `POST /comments/{id}/labels` | QI, admin | Confirms the labels, or corrects any of `sentiment`, `categories`, `stage`, `urgency`. Sets `status` to `confirmed`; `suggested` is never changed (FR6) |
+| `POST /comments/{id}/redact` | QI, admin | `{"start": 10, "end": 20}` replaces that character range of the stored text with `<REDACTED>`. 422 if the range is empty or past the end |
+| `POST /issues/{id}/rename` | QI, admin | `{"name": "..."}`, 1 to 120 characters |
+| `POST /issues/{id}/merge` | QI, admin | `{"into": other_id}` moves this issue's comments and suggestions into another issue from the same run, recomputes its counts and score, re-ranks the run and deletes this issue |
 
 Create the first admin with `python -m kaizen.cli create-user admin --role admin`.
 
@@ -126,8 +131,18 @@ Managers can't see suggestions; FR7 is for QI staff. Every decision adds a
 `decide_suggestion` row to the activity log with the decision and the names of edited fields,
 never the text.
 
-## Still to add
+## Corrections (FR6)
 
-These belong to other members (P3 Table 8). The comment `id` is the key to join on.
+Each correction adds one `activity_log` row with ids, field names and counts, never text:
+`confirm_labels` or `correct_labels` with the names of the changed fields, `redact_comment`
+with the length of the removed range, `rename_issue`, and `merge_issue` with the merged
+issue's id and how many comments moved. A redaction also adds 1 to `REDACTED` in the
+comment's `deid_counts`.
 
-- Label corrections and merges should each add an `activity_log` row.
+A merge recomputes size, shares, patient and staff counts, main stage, top categories, recent
+count, rising flag and score from the current labels. The merged issue keeps its own name and
+keywords, and each comment keeps its `typical` flag, so it can end up with more than 10
+typical comments. Rename it after merging if the name no longer fits.
+
+Viewing the comparison adds a `view_compare` row, and a CSV export adds
+`export_issue_comments`.
