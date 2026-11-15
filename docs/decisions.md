@@ -82,3 +82,29 @@ and check whether their licences let us copy them into a public repo, so `docume
 cover the problems built into the synthetic data and the HCAT categories. Suggestions cited
 from them show the method works, but they are not evidence of what Ontario guidance says,
 and the report has to say so. Adding a real document is one Markdown file with a header.
+
+## 2026-11-14 Real comments from the NHS FFT, real text from Ontario law
+
+P3 planned public comments from pxtextmining "if the licence allows". The repository is
+MIT licensed and its README says the two trusts in `v6framework_230831.csv` agreed to publish
+their comments. We use only North East Ambulance Service's "See and Convey" comments (1,625
+with text), filed under `ED`, because the rest are mental health, forensic, children's,
+NHS 111 and patient transport services, outside P3's scope and in places more sensitive. The
+Care Opinion file in the same repository is CC BY-NC-SA and covers the same community and
+mental health services, so it is not used. The comments are fetched by script from a pinned
+commit with a SHA-256 check and are not committed. Their dates mix day-first and month-first
+formats; 691 could be read either way and are read day first, which only affects the
+rising-issue flag.
+
+Ontario Health's terms require written permission to reproduce its quality standards and QIP
+guidance outside personal use, so none are in `documents/`. Ontario statutes may be
+reproduced without permission if the text is accurate, credited to the King's Printer and
+marked as not official, so sections 2 to 8 of the Excellent Care for All Act (quality
+committees, surveys, patient relations, the patient declaration of values and annual quality
+improvement plans) are included, checked line by line against the official Word file.
+
+Running the real comments through de-identification showed a problem the synthetic test set
+did not: of about 35 PERSON tags, only two or three were names. The rest removed words such
+as Mum, Dad, Gran, the hospital (RVI), the ambulance service (NEAS) and drug names (Entonox,
+midazolam, dexamethasone). That is far above the P3 target of under 5% of tags removing text
+that is not personal, and it should go in the evaluation as found.
