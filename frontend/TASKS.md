@@ -1,10 +1,8 @@
 # Front end tasks
 
-What is left to build, all owned by Aansh (P3 Table 8: FR5, FR6, FR8, NFR4). The endpoints
-for FR5, FR6 and FR8 are on the back end branch `feat/compare-and-corrections`, not yet on
-`main`; the shapes below are read from that branch's `backend/kaizen/api/compare.py`,
-`corrections.py` and `issues.py`. Check them against `/docs` once it merges. How to add a
-page and the rules every page follows are in `AGENTS.md`.
+Front end work owned by Aansh (P3 Table 8: FR5, FR6, FR8, NFR4). The endpoints for
+FR5, FR6 and FR8 are on `main`. How to add a page and the rules every page follows
+are in `AGENTS.md`.
 
 ## FR5: patient and staff comparison
 
@@ -30,11 +28,9 @@ interface CompareOut {
 Rows come sorted by total, largest first. A comment with two categories counts in both
 rows, so category rows can add up to more than `totals`; say so under the table.
 
-Build: a new `ComparePage.tsx` copied from `IssuesPage.tsx`. A toolbar with a `by` select
-(category, stage, unit), a unit select from `api.units()` (hidden for managers) and two
-date inputs, all with labels. Table columns: key (`words()`), patient count, staff count,
-each with a `share` bar relative to the largest count, and a `badge` "Only patients" or
-"Only staff" when `only` is set. Add a nav link for everyone.
+Implemented at `/compare` for QI, admin and managers. The unit choices come from
+`api.units()`, and managers see only their assigned unit. Both count columns share
+the same bar scale. The table shows which groups reported each category, stage or unit.
 
 Done when:
 - Known patterns in the synthetic data appear correctly (P3 Table 2 check). With the current NHS data every comment is patient or family, so every row should show "Only patients"; check a staff pattern once Bhavya's synthetic staff comments are loaded.

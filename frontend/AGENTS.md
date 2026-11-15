@@ -35,6 +35,7 @@ src/format.ts               words(), percent(), sourceName(), roleName(), dateTi
 src/SuggestionCard.tsx      one suggestion: fields, citations, accept / edit / reject
 src/pages/LoginPage.tsx
 src/pages/IssuesPage.tsx        ranked table
+src/pages/ComparePage.tsx       patient and staff counts by category, stage or unit
 src/pages/IssueDetailPage.tsx   comments with labels, suggestions beside them for QI
 src/pages/SuggestionsPage.tsx   review queue with a status filter
 src/styles.css              every style, with the design tokens at the top
@@ -61,6 +62,7 @@ so when a handler changes, change the type in the same PR:
 | Types | Backend file |
 |---|---|
 | `LoginOut`, `Me`, `Unit` | `backend/kaizen/api/app.py` (`login`, `me`, `units`) |
+| `CompareBy`, `CompareOut` | `backend/kaizen/api/compare.py` (`compare`) |
 | `IssuesOut`, `IssueSummary`, `IssueRun`, `IssueCommentsOut`, `IssueComment`, `CommentLabels` | `backend/kaizen/api/issues.py` |
 | `Suggestion`, `Citation`, `SuggestionsOut`, `DraftOut`, `Decision` | `backend/kaizen/api/suggestions.py` (`_out`, `DecisionIn`) |
 | `Stage`, `STAGES` | `backend/kaizen/classify/labels.py` |

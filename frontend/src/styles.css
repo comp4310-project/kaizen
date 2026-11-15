@@ -166,6 +166,25 @@ main:focus {
   }
 }
 
+@media (max-width: 30rem) {
+  .header-inner {
+    flex-wrap: wrap;
+    height: auto;
+    row-gap: 0;
+    padding-top: 8px;
+  }
+
+  .nav {
+    min-height: 44px;
+  }
+
+  .who {
+    flex-basis: 100%;
+    justify-content: flex-end;
+    padding-bottom: 8px;
+  }
+}
+
 /* Type */
 
 h1 {
@@ -257,6 +276,14 @@ code {
   justify-content: space-between;
   gap: 12px;
   margin-bottom: 16px;
+}
+
+.compare-filters {
+  justify-content: flex-start;
+}
+
+.compare-filters .field {
+  margin-bottom: 0;
 }
 
 /* Focus: visible on every focusable element, both modes. */

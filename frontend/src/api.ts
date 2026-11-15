@@ -1,5 +1,5 @@
 // Typed client for the Kaizen API. The shapes below are copied from what the FastAPI
-// handlers return (backend/kaizen/api/app.py, issues.py, suggestions.py), so change them
+// handlers return (backend/kaizen/api/app.py, compare.py, issues.py, suggestions.py), so change them
 // together. Every call goes through /api, which the Vite dev server forwards to uvicorn.
 
 const BASE = "/api";
@@ -40,6 +40,17 @@ export interface Me {
 export interface Unit {
   code: string;
   name: string;
+}
+
+export type CompareBy = "category" | "stage" | "unit";
+
+export interface CompareOut {
+  by: CompareBy;
+  unit: string | null;
+  date_from: string | null;
+  date_to: string | null;
+  totals: { patient: number; staff: number };
+  rows: { key: string; patient: number; staff: number; only: "patient" | "staff" | null }[];
 }
 
 export interface IssueRun {
@@ -246,6 +257,9 @@ export const api = {
   me: () => request<Me>("GET", "/me"),
 
   units: () => request<Unit[]>("GET", "/units"),
+
+  compare: (options: { by: CompareBy; unit?: string; date_from?: string; date_to?: string }) =>
+    request<CompareOut>("GET", "/compare" + query(options)),
 
   issues: (limit?: number) => request<IssuesOut>("GET", "/issues" + query({ limit })),
 
