@@ -2,6 +2,7 @@ import type { ReactNode } from "react";
 import { Navigate, NavLink, Route, Routes, useLocation } from "react-router-dom";
 import { canReviewSuggestions, useAuth } from "./auth";
 import { roleName } from "./format";
+import { ComparePage } from "./pages/ComparePage";
 import { IssueDetailPage } from "./pages/IssueDetailPage";
 import { IssuesPage } from "./pages/IssuesPage";
 import { LoginPage } from "./pages/LoginPage";
@@ -36,6 +37,7 @@ function Header() {
         <span className="brand">Kaizen</span>
         <nav aria-label="Main" className="nav">
           <NavLink to="/issues">Issues</NavLink>
+          <NavLink to="/compare">Compare</NavLink>
           {canReviewSuggestions(me) && <NavLink to="/suggestions">Suggestions</NavLink>}
         </nav>
         <div className="who">
@@ -77,6 +79,14 @@ export function App() {
             element={
               <RequireLogin>
                 <IssueDetailPage />
+              </RequireLogin>
+            }
+          />
+          <Route
+            path="/compare"
+            element={
+              <RequireLogin>
+                <ComparePage />
               </RequireLogin>
             }
           />
