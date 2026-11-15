@@ -15,6 +15,7 @@ dependencies = [
     "pymysql==1.2.3",
     "bcrypt==5.0.0",
     "litellm==1.106.6",
+    "tenacity==9.2.1",  # LiteLLM needs it for num_retries but does not install it
     "scikit-learn==1.9.1",
     "fastembed==0.9.1",
     "umap-learn==0.6.0",
