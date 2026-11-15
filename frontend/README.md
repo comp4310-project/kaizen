@@ -34,44 +34,33 @@ set up yet.
 `npm run build` runs `tsc --noEmit` and then `vite build` into `dist/`. CI runs the same
 command in the "Front end build" job, so a type error fails the PR.
 
-## Layout
+## How it is built
 
-```
-index.html                 page shell, loads src/main.tsx
-vite.config.ts             dev server on 5173 and the /api proxy
-src/main.tsx               mounts the app inside the router and login state
-src/App.tsx                header, routes, and the login guard
-src/api.ts                 every API call and the TypeScript types for its replies
-src/auth.tsx               who is logged in, from /me; the token is in sessionStorage
-src/format.ts              small text helpers (label values, percentages, UTC times)
-src/SuggestionCard.tsx     one suggestion with citations, accept, edit and reject
-src/pages/LoginPage.tsx
-src/pages/IssuesPage.tsx       ranked issues table (FR4, FR8)
-src/pages/IssueDetailPage.tsx  comments behind an issue with their labels, and drafting (FR7)
-src/pages/SuggestionsPage.tsx  review queue, filtered by status (FR7, NFR2)
-src/styles.css             all styles
-```
+Four pages: login, the ranked issues table, an issue's comments with their labels (and,
+for QI staff, its suggestions beside them), and the suggestion review queue. Every view
+has a loading skeleton, an empty state that says how to fill it, and an inline error that
+says what the status code means. Light and dark follow the system setting.
 
-The types in `src/api.ts` are copied by hand from the handlers in
-`backend/kaizen/api/`. When a reply changes on the back end, change the type in the same
-PR.
-
-Roles come from `/me`. Managers see the issues table and issue comments for their own unit
-only, which the API already enforces. They get no Suggestions link, no "Draft suggestions"
-button, and `/suggestions` sends them back to the issues page, since those endpoints return
-403 for them.
+Managers only get their own unit's issues and comments from the API, and the app hides the
+Suggestions link, the draft button and the review queue from them, since those endpoints
+return 403 for managers.
 
 Logging out only forgets the token in the browser. The API has no logout endpoint, so the
 token stays valid on the server until it expires after 12 hours.
 
+The folder layout, how the API client and its types work, the design tokens and classes,
+the accessibility rules and a recipe for adding a page are in [AGENTS.md](AGENTS.md).
+It is written for coding agents, but it is the reference for people too.
+
+Screenshots of each page in light, dark and at 375px wide are in `docs/screenshots/`.
+
 ## Accessibility (NFR4)
 
-Every input has a `<label>`, every action is a `<button>`, and the issues table uses
-`<caption>`, `<th scope>` and a row header for the issue name. Keyboard focus shows a 3px
-orange outline. Text colours are at least 4.5:1 against their background; the values are
-noted at the top of `styles.css`. A skip link jumps past the header. The top issue's
-comments are one click from the issues page. Nobody has run an automated scan or a screen
-reader over it yet.
+Labels on every input, real buttons, tables with captions and header cells, a visible
+focus ring, a skip link, and colour pairs checked for WCAG 2.1 AA in both light and dark
+(the numbers are at the top of `src/styles.css`). The top issue's comments are one click
+from the issues page. Nobody has run an automated scan, a screen reader pass or the SUS
+test yet; those are in [TASKS.md](TASKS.md).
 
 ## Not tested yet
 
@@ -81,18 +70,7 @@ drafting calls the LLM and the local test database has none.
 
 ## Next steps
 
-These pages still need building. The endpoints are being added on a separate back end
-branch, so check the final request and reply shapes in `/docs` before writing the types.
-
-| Page or control | Endpoint | Requirement |
-|---|---|---|
-| Patient and staff comparison by category, stage or unit, marking where only one group reports a problem | `GET /compare?by=category\|stage\|unit` | FR5 |
-| Confirm or correct a comment's labels (urgency, stage, categories), on the issue detail page | `POST /comments/{id}/labels` | FR6 |
-| Redact a personal detail that de-identification missed | `POST /comments/{id}/redact` | FR6 |
-| Rename an issue | `POST /issues/{id}/rename` | FR6 |
-| Merge two issues | `POST /issues/{id}/merge` | FR6 |
-| Download an issue's comments as CSV, matching the filtered view | CSV export of issue comments | FR8 |
-
-FR8 also asks for filters on the dashboard (by unit, source and stage), which the issues
-table doesn't have yet. The FR6 controls are QI only, so hide them for managers the same
-way the draft button is hidden.
+The comparison view (FR5), label correction, redaction, rename and merge (FR6), comment
+filters and CSV export (FR8), and the accessibility scan and SUS test (NFR4) are still to
+do. [TASKS.md](TASKS.md) has each one with its endpoint, reply shape, which page to copy
+and how to check it.
