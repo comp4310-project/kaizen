@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import { api, type IssueComment, type IssueCommentsOut, type Suggestion } from "../api";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { api, type IssueComment, type IssueCommentsOut, type Source, type Suggestion, type Unit } from "../api";
 import { canReviewSuggestions, useAuth } from "../auth";
 import { sourceName, words } from "../format";
 import { EmptyState, ErrorNotice, SkeletonBlocks } from "../states";
 import { SuggestionCard } from "../SuggestionCard";
+import { CommentReview, IssueReview } from "../IssueReview";
 
 const PAGE_SIZE = 50;
 
@@ -99,26 +100,73 @@ function Suggestions({ issueId }: { issueId: number }) {
 }
 
 export function IssueDetailPage() {
-  const { me } = useAuth();
   const issueId = Number(useParams().issueId);
+  return <IssueDetail key={issueId} issueId={issueId} />;
+}
+
+function IssueDetail({ issueId }: { issueId: number }) {
+  const { me } = useAuth();
+  const navigate = useNavigate();
+  const canReview = canReviewSuggestions(me);
   const [data, setData] = useState<IssueCommentsOut | null>(null);
   const [error, setError] = useState<unknown>(null);
   const [moreError, setMoreError] = useState<unknown>(null);
   const [loadingMore, setLoadingMore] = useState(false);
+  const [unit, setUnit] = useState("");
+  const [source, setSource] = useState<Source | "">("");
+  const [units, setUnits] = useState<Unit[] | null>(null);
+  const [unitsError, setUnitsError] = useState<unknown>(null);
+  const [exporting, setExporting] = useState(false);
+  const [exportError, setExportError] = useState<unknown>(null);
+  const [filtering, setFiltering] = useState(false);
+  const scopedUnit = me?.role === "manager" ? me.unit ?? undefined : unit || undefined;
+  const hasResults = data !== null && !filtering && error === null;
 
   useEffect(() => {
-    setData(null);
+    if (!canReview) return;
+    let current = true;
+    api.units().then(
+      (rows) => { if (current) setUnits(rows); },
+      (cause: unknown) => { if (current) setUnitsError(cause); },
+    );
+    return () => { current = false; };
+  }, [canReview]);
+
+  useEffect(() => {
+    let current = true;
+    api.issueComments(issueId, { unit: scopedUnit, source: source || undefined, limit: PAGE_SIZE }).then(
+      (out) => {
+        if (current) {
+          setData(out);
+          setFiltering(false);
+        }
+      },
+      (cause: unknown) => {
+        if (current) {
+          setError(cause);
+          setFiltering(false);
+        }
+      },
+    );
+    return () => { current = false; };
+  }, [issueId, scopedUnit, source]);
+
+  function resetComments() {
     setError(null);
-    api.issueComments(issueId, { limit: PAGE_SIZE }).then(setData, setError);
-  }, [issueId]);
+    setMoreError(null);
+    setExportError(null);
+    setFiltering(true);
+  }
 
   async function loadMore() {
     if (!data) return;
     setLoadingMore(true);
     setMoreError(null);
     try {
-      const next = await api.issueComments(issueId, { limit: PAGE_SIZE, offset: data.comments.length });
-      setData({ ...next, comments: [...data.comments, ...next.comments] });
+      const next = await api.issueComments(issueId, {
+        unit: scopedUnit, source: source || undefined, limit: PAGE_SIZE, offset: data.comments.length,
+      });
+      setData((old) => old && { ...old, total: next.total, comments: [...old.comments, ...next.comments] });
     } catch (e) {
       setMoreError(e);
     } finally {
@@ -126,7 +174,25 @@ export function IssueDetailPage() {
     }
   }
 
-  const showSuggestions = canReviewSuggestions(me);
+  async function exportComments() {
+    if (!data?.comments.length) return;
+    setExporting(true);
+    setExportError(null);
+    try {
+      await api.downloadIssueComments(issueId, { unit: scopedUnit, source: source || undefined }, data.comments.length);
+    } catch (cause) {
+      setExportError(cause);
+    } finally {
+      setExporting(false);
+    }
+  }
+
+  function updateComment(id: number, changes: Partial<Pick<IssueComment, "text" | "labels">>) {
+    setData((old) => old && {
+      ...old,
+      comments: old.comments.map((row) => row.id === id ? { ...row, ...changes } : row),
+    });
+  }
 
   return (
     <section>
@@ -135,8 +201,13 @@ export function IssueDetailPage() {
       </p>
       <div className="page-head">
         <h1>{data ? `${data.issue.rank}. ${data.issue.name}` : error ? "Issue" : "Loading issue"}</h1>
+        {canReview && data && (
+          <IssueReview issue={data.issue}
+            onRename={(issue) => setData((old) => old && { ...old, issue })}
+            onMerge={(id) => navigate(`/issues/${id}`, { replace: true })} />
+        )}
         {/* On narrow screens the suggestions sit below 50 comments, so give a way there. */}
-        {showSuggestions && !error && (
+        {canReview && !error && (
           <p className="narrow-only small">
             <a href="#suggestions-heading">Go to suggestions</a>
           </p>
@@ -144,25 +215,52 @@ export function IssueDetailPage() {
       </div>
       <ErrorNotice error={error} />
 
-      {!error && (
-        <div className={showSuggestions ? "detail-layout" : undefined}>
+      {(!error || data) && (
+        <div className={canReview ? "detail-layout" : undefined}>
           <section aria-labelledby="comments-heading" className="detail-main">
             <div className="section-head">
-              <h2 id="comments-heading">Comments{data ? ` (${data.total})` : ""}</h2>
+              <h2 id="comments-heading">Comments{hasResults && data ? ` (${data.total})` : ""}</h2>
             </div>
-            {data && (
-              <p className="muted small">
+            <div className="toolbar compare-filters">
+              {canReview && (
+                <div className="field">
+                  <label htmlFor="comment-unit">Unit</label>
+                  <select id="comment-unit" value={unit} disabled={!units || loadingMore || exporting}
+                    onChange={(event) => { resetComments(); setUnit(event.target.value); }}>
+                    <option value="">All units</option>
+                    {units?.map(({ code, name }) => <option key={code} value={code}>{code} ({name})</option>)}
+                  </select>
+                </div>
+              )}
+              <div className="field">
+                <label htmlFor="comment-source">Source</label>
+                <select id="comment-source" value={source} disabled={loadingMore || exporting}
+                  onChange={(event) => { resetComments(); setSource(event.target.value as Source | ""); }}>
+                  <option value="">All sources</option>
+                  <option value="patient_family">Patient or family</option>
+                  <option value="staff">Staff</option>
+                </select>
+              </div>
+              <button type="button" className="btn btn-secondary" disabled={!hasResults || !data?.comments.length || exporting || loadingMore}
+                onClick={exportComments}>
+                {exporting ? "Downloading" : "Download displayed comments as CSV"}
+              </button>
+            </div>
+            <ErrorNotice error={unitsError} />
+            <ErrorNotice error={exportError} />
+            {hasResults && data && (
+              <p className="muted small" role="status">
                 Showing {data.comments.length} of {data.total}, most typical first. All text is de-identified.
                 {me?.role === "manager" && ` Only comments from unit ${me.unit}.`}
               </p>
             )}
-            {!data && <SkeletonBlocks count={4} label="Loading comments" />}
-            {data && data.comments.length === 0 && (
+            {!error && (!data || filtering) && <SkeletonBlocks count={4} label="Loading comments" />}
+            {hasResults && data && data.comments.length === 0 && (
               <EmptyState>
-                <p>No comments in this issue.</p>
+                <p>No comments match these filters.</p>
               </EmptyState>
             )}
-            {data && data.comments.length > 0 && (
+            {hasResults && data && data.comments.length > 0 && (
               <ol className="comment-list">
                 {data.comments.map((c) => (
                   <li key={c.id}>
@@ -175,18 +273,19 @@ export function IssueDetailPage() {
                     </p>
                     <p className="comment-text">{c.text}</p>
                     <Labels comment={c} />
+                    {canReview && <CommentReview comment={c} onUpdate={updateComment} />}
                   </li>
                 ))}
               </ol>
             )}
             <ErrorNotice error={moreError} />
-            {data && data.comments.length < data.total && (
-              <button type="button" className="btn btn-secondary" onClick={loadMore} disabled={loadingMore}>
+            {hasResults && data && data.comments.length < data.total && (
+              <button type="button" className="btn btn-secondary" onClick={loadMore} disabled={loadingMore || exporting}>
                 {loadingMore ? "Loading" : `Show ${Math.min(PAGE_SIZE, data.total - data.comments.length)} more`}
               </button>
             )}
           </section>
-          {showSuggestions && <Suggestions issueId={issueId} />}
+          {canReview && <Suggestions issueId={issueId} />}
         </div>
       )}
     </section>

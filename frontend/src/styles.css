@@ -286,6 +286,39 @@ code {
   margin-bottom: 0;
 }
 
+.review-controls {
+  margin-block: 12px;
+}
+
+.review-controls fieldset {
+  min-width: 0;
+  border: 1px solid var(--border-control);
+  border-radius: var(--radius-control);
+  margin: 0 0 12px;
+  padding: 12px;
+}
+
+.review-controls textarea {
+  width: 100%;
+}
+
+.review-controls mark {
+  color: var(--text);
+  background: var(--warn-bg);
+}
+
+.review-actions,
+.review-categories {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.review-categories input {
+  margin-right: 4px;
+}
+
 /* Focus: visible on every focusable element, both modes. */
 
 :focus-visible {
