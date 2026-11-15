@@ -293,3 +293,10 @@ def test_config_error_stops_the_run_without_sending_the_rest(app) -> None:
             label_comments(session, labeller, batch_size=2, workers=1)
     # One worker may pick up a second batch before the first error is seen, never all ten.
     assert labeller.calls <= 2
+
+
+def test_tenacity_is_installed() -> None:
+    # reply_text passes num_retries, and LiteLLM then imports tenacity for the retry loop.
+    # LiteLLM does not install it, and the fakes above never reach LiteLLM, so without this
+    # the first real labelling call is where we would find out.
+    import tenacity  # noqa: F401
