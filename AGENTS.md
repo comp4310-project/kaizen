@@ -20,11 +20,14 @@ backend/kaizen/classify/    labels each saved comment with an LLM through LiteLL
 backend/kaizen/issues/      groups labelled comments into named, ranked issues (FR4)
 backend/kaizen/suggest/     drafts cited suggestions from the documents, with the citation check (FR7, NFR2)
 backend/kaizen/db.py        database tables, see docs/data-model.md
+frontend/                   React and TypeScript app built with Vite, see frontend/README.md (FR5, FR6, FR8, NFR4)
 docs/                       P0 to P3 deliverables, feedback, decisions
 docs/meetings/              meeting notes
 scripts/check_repo.py       hygiene checks, also runs in CI
 .github/workflows/ci.yml    CI
 ```
+
+Working on the front end: read `frontend/AGENTS.md` too, and `frontend/TASKS.md` for what is left.
 
 Back end tests: `cd backend`, `pip install -e ".[dev]"`, then `pytest`. Never pass
 original comment text to anything except `kaizen.deid.deidentify`, and never store or log
