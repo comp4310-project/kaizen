@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { api, type Suggestion, type SuggestionStatus } from "../api";
-import { errorText } from "../format";
+import { EmptyState, ErrorNotice, SkeletonBlocks } from "../states";
 import { SuggestionCard } from "../SuggestionCard";
 
 const FILTERS: { value: SuggestionStatus | ""; label: string }[] = [
@@ -14,51 +15,62 @@ const FILTERS: { value: SuggestionStatus | ""; label: string }[] = [
 export function SuggestionsPage() {
   const [status, setStatus] = useState<SuggestionStatus | "">("suggested");
   const [rows, setRows] = useState<Suggestion[] | null>(null);
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState<unknown>(null);
 
   useEffect(() => {
     setRows(null);
     setError(null);
-    api.suggestions({ status: status || undefined, limit: 100 }).then(
-      (out) => setRows(out.suggestions),
-      (e) => setError(errorText(e)),
-    );
+    api.suggestions({ status: status || undefined, limit: 100 }).then((out) => setRows(out.suggestions), setError);
   }, [status]);
 
-  // A decided suggestion leaves the "waiting" list but stays visible under the other filters.
+  // Keep a decided card on screen with its new status, so the person sees what happened.
+  // It drops out of the "waiting" list the next time the list loads.
   function decided(updated: Suggestion) {
-    setRows((old) =>
-      (old ?? [])
-        .map((s) => (s.id === updated.id ? updated : s))
-        .filter((s) => !status || s.status === status),
-    );
+    setRows((old) => (old ?? []).map((s) => (s.id === updated.id ? updated : s)));
   }
 
   return (
     <section>
-      <h1>Suggestion review</h1>
-      <p className="muted">
-        Nothing the model drafts is final. Each suggestion stays waiting until someone accepts, edits or rejects it, and
-        every decision is logged.
-      </p>
-      <label htmlFor="status-filter">Show</label>
-      <select id="status-filter" value={status} onChange={(e) => setStatus(e.target.value as SuggestionStatus | "")}>
-        {FILTERS.map((f) => (
-          <option key={f.label} value={f.value}>
-            {f.label}
-          </option>
-        ))}
-      </select>
-      {error && (
-        <p className="error" role="alert">
-          {error}
+      <div className="page-head">
+        <h1>Suggestion review</h1>
+        <p className="muted">
+          Nothing the model drafts is final. A suggestion waits here until someone accepts, edits or rejects it, and
+          every decision is logged.
         </p>
+      </div>
+      <div className="toolbar">
+        <div className="field field-inline">
+          <label htmlFor="status-filter">Show</label>
+          <select id="status-filter" value={status} onChange={(e) => setStatus(e.target.value as SuggestionStatus | "")}>
+            {FILTERS.map((f) => (
+              <option key={f.label} value={f.value}>
+                {f.label}
+              </option>
+            ))}
+          </select>
+        </div>
+        {rows && rows.length > 0 && (
+          <p className="muted small" role="status">
+            {rows.length} shown
+          </p>
+        )}
+      </div>
+      <ErrorNotice error={error} />
+      {!rows && !error && <SkeletonBlocks count={2} label="Loading suggestions" card />}
+      {rows && rows.length === 0 && (
+        <EmptyState>
+          <p>{status === "suggested" ? "Nothing is waiting for a decision." : "No suggestions with this status."}</p>
+          <p className="muted">
+            Suggestions are drafted from an issue's page. Open one from <Link to="/issues">Issues</Link> and use Draft
+            suggestions.
+          </p>
+        </EmptyState>
       )}
-      {!rows && !error && <p role="status">Loading suggestions...</p>}
-      {rows && rows.length === 0 && <p>No suggestions here.</p>}
-      {rows?.map((s) => (
-        <SuggestionCard key={s.id} suggestion={s} onDecided={decided} />
-      ))}
+      <div className="card-grid">
+        {rows?.map((s) => (
+          <SuggestionCard key={s.id} suggestion={s} onDecided={decided} />
+        ))}
+      </div>
     </section>
   );
 }

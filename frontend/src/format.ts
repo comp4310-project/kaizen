@@ -1,3 +1,5 @@
+import type { Role } from "./api";
+
 /** "care_on_the_ward" becomes "care on the ward". Label values are stored with underscores. */
 export function words(value: string): string {
   return value.replace(/_/g, " ");
@@ -8,7 +10,11 @@ export function percent(share: number): string {
 }
 
 export function sourceName(source: string): string {
-  return source === "patient_family" ? "patient or family" : source;
+  return source === "patient_family" ? "Patient or family" : "Staff";
+}
+
+export function roleName(role: Role): string {
+  return { qi: "QI", manager: "Manager", admin: "Admin" }[role];
 }
 
 /**
@@ -17,9 +23,5 @@ export function sourceName(source: string): string {
  */
 export function dateTime(iso: string): string {
   const hasZone = /(Z|[+-]\d\d:\d\d)$/.test(iso);
-  return new Date(hasZone ? iso : `${iso}Z`).toLocaleString();
-}
-
-export function errorText(error: unknown): string {
-  return error instanceof Error ? error.message : String(error);
+  return new Date(hasZone ? iso : `${iso}Z`).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
 }
