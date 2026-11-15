@@ -16,6 +16,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session
 
 from kaizen.api.auth import current_user, get_session, hash_password, issue_token, require, unit_scope, verify_password
+from kaizen.api.compare import router as compare_router
 from kaizen.api.issues import router as issues_router
 from kaizen.api.suggestions import router as suggestions_router
 from kaizen.db import ActivityLog, Channel, Comment, Role, Source, User, make_engine, make_sessionmaker
@@ -62,6 +63,7 @@ def log(session: Session, user: User | None, action: str, entity_type=None, enti
 def create_app(database_url: str | None = None) -> FastAPI:
     app = FastAPI(title="Kaizen", version="0.1.0")
     app.state.sessionmaker = make_sessionmaker(make_engine(database_url))
+    app.include_router(compare_router)
     app.include_router(issues_router)
     app.include_router(suggestions_router)
 
