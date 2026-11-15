@@ -1,0 +1,342 @@
+/* Every text colour here is at least 4.5:1 against its background (WCAG 2.1 AA, NFR4).
+   Body text #1a1a1a on white is about 17:1, muted #4d4d4d about 8:1, links and the primary
+   button #0b5394 about 7.6:1. */
+:root {
+  --text: #1a1a1a;
+  --muted: #4d4d4d;
+  --bg: #ffffff;
+  --panel: #f4f6f8;
+  --border: #8a8f96;
+  --primary: #0b5394;
+  --primary-dark: #083d6e;
+  --danger: #a4161a;
+  --focus: #b34700;
+  --ok-bg: #e3f1e5;
+  --ok-text: #1d5e26;
+  --warn-bg: #fdecd2;
+  --warn-text: #7a3d00;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  line-height: 1.5;
+  color: var(--text);
+  background: var(--bg);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+}
+
+main {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+main:focus {
+  outline: none;
+}
+
+a {
+  color: var(--primary);
+}
+
+/* Visible keyboard focus on everything that can take it. */
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  left: 0.5rem;
+  top: -3rem;
+  padding: 0.5rem 1rem;
+  background: var(--bg);
+  border: 2px solid var(--primary);
+  z-index: 10;
+}
+
+.skip-link:focus {
+  top: 0.5rem;
+}
+
+.site-header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--panel);
+}
+
+.site-header nav {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+.site-header nav a {
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.25rem 0;
+}
+
+.site-header nav a.active {
+  text-decoration: underline;
+  text-underline-offset: 0.3rem;
+}
+
+.brand {
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+.who {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+h1 {
+  font-size: 1.6rem;
+  margin: 0.5rem 0 1rem;
+}
+
+h2 {
+  font-size: 1.25rem;
+  margin-top: 2rem;
+}
+
+h3,
+h4 {
+  margin: 0.5rem 0;
+}
+
+.muted {
+  color: var(--muted);
+}
+
+.error {
+  color: var(--danger);
+  font-weight: 600;
+}
+
+button {
+  font: inherit;
+  padding: 0.45rem 1rem;
+  border: 2px solid var(--primary);
+  border-radius: 4px;
+  background: var(--primary);
+  color: #ffffff;
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: var(--primary-dark);
+  border-color: var(--primary-dark);
+}
+
+button.secondary {
+  background: var(--bg);
+  color: var(--primary);
+}
+
+button.secondary:hover:not(:disabled) {
+  background: var(--panel);
+  color: var(--primary-dark);
+}
+
+button.danger {
+  background: var(--bg);
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+button.danger:hover:not(:disabled) {
+  background: #fbe9e9;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin: 0.75rem 0 0.25rem;
+}
+
+input,
+select,
+textarea {
+  font: inherit;
+  color: var(--text);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 0.4rem 0.5rem;
+}
+
+input,
+textarea {
+  width: 100%;
+}
+
+.login {
+  max-width: 24rem;
+  margin: 3rem auto;
+}
+
+.login button {
+  margin-top: 1rem;
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+caption {
+  text-align: left;
+  font-weight: 600;
+  padding-bottom: 0.5rem;
+}
+
+th,
+td {
+  text-align: left;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+thead th {
+  background: var(--panel);
+}
+
+tbody th {
+  font-weight: 400;
+}
+
+.num {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+
+.tag {
+  display: inline-block;
+  margin-left: 0.5rem;
+  padding: 0 0.5rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: var(--panel);
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.tag.rising,
+.tag.status-suggested {
+  background: var(--warn-bg);
+  color: var(--warn-text);
+}
+
+.tag.status-accepted,
+.tag.status-edited {
+  background: var(--ok-bg);
+  color: var(--ok-text);
+}
+
+.tag.status-rejected {
+  background: #fbe9e9;
+  color: var(--danger);
+}
+
+.card {
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+  background: var(--bg);
+}
+
+.card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.comments {
+  list-style: none;
+  padding: 0;
+}
+
+.comment-meta {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.comment-text {
+  margin: 0.4rem 0;
+  white-space: pre-wrap;
+}
+
+.labels {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem 1rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.fields {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 0.25rem 1rem;
+}
+
+.fields dt {
+  font-weight: 600;
+}
+
+.fields dd {
+  margin: 0;
+}
+
+.citations blockquote {
+  margin: 0;
+  padding-left: 0.75rem;
+  border-left: 4px solid var(--primary);
+}
+
+.citations p {
+  margin: 0.25rem 0 0.75rem;
+  font-size: 0.9rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+@media (max-width: 40rem) {
+  .fields {
+    grid-template-columns: 1fr;
+  }
+}
