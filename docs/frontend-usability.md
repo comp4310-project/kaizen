@@ -18,17 +18,43 @@ confirmation and correction, selection and redaction, renaming and merging. CSV
 comment IDs matched the filtered list both before and after Show more. The manager
 could export their own unit's feedback and saw no correction controls.
 
+A separate keyboard-only Chromium walkthrough checked visible focus and the skip
+link. It covered login, opening the top issue, choosing filters, triggering a CSV
+download, and switching comparison grouping as QI and as a manager. The QI walkthrough
+also reached the first label field one Tab after opening the editor, cancelled the
+edit by keyboard, and used the suggestion queue filter. No keyboard blocker occurred
+on those paths.
+
+## Set up a session
+
+Use a fresh, local SQLite database for each participant so one session's changes cannot
+affect another. After installing the project as described in the [README](../README.md),
+run this from `backend/` in PowerShell:
+
+```powershell
+python scripts/seed_usability.py study-P1.db
+$env:KAIZEN_DATABASE_URL = 'sqlite:///./study-P1.db'
+uvicorn kaizen.api.app:create_app --factory
+```
+
+Start the frontend with `npm run dev` from `frontend/` in a second terminal. Open
+`http://localhost:5173` in a private browser window and sign in as `study-qi` with the
+password entered when seeding the database. For the next participant, stop the API,
+close the private window, and repeat with a new filename such as `study-P2.db`. The
+seeder refuses to overwrite an existing database. No model keys or real data are needed.
+
 ## Task study
 
-Give each participant the same starting data and a QI account. Reset the fixture between
-participants so a previous label correction cannot change the next session.
+Read one task at a time. Start on the Issues page each time. Ask the participant to say
+when they think they have finished. Start the timer when you hand over the task and stop
+when they finish or give up. Keep the success criteria for the facilitator.
 
 | Task | Success criterion |
 |---|---|
-| From the issues page, find the comments behind the highest ranked issue. | Opens the correct issue and identifies a comment. Record clicks from the issues page. |
-| Find a category reported by patients or families only, then compare the same period by care stage. | Names a correct category and switches the comparison to stage. |
-| Correct the urgency of a specified comment and confirm its labels. | The requested urgency and the confirmed status appear on that comment. |
-| Show staff comments for unit 4B and download the displayed comments. | CSV comment IDs match the displayed list and all rows are staff feedback from 4B. |
+| Find the comments behind the highest ranked issue and tell me how many there are. | Opens Delayed discharge instructions and reports four comments. Record clicks from the issues page. |
+| Find a category reported only by patients or families, then compare the same feedback by care stage. | Identifies environment and switches the grouping to stage of care. |
+| Change the urgency of Comment 1 on the top issue from low to high and confirm its labels. | Comment 1 shows high urgency and checked by a person. |
+| On the top issue, show staff comments for unit 4B and download the displayed comments. | Two rows appear. Their IDs match the CSV and both rows are staff feedback from 4B. |
 
 For each task, record completion, elapsed seconds, navigation actions and any help
 given. After all four tasks, give the participant the ten-item
@@ -46,4 +72,14 @@ the individual forms out of the repository.
 | P4 | | | |
 | P5 | | | |
 
-Participant sessions and a manual screen reader check are pending.
+## Screen reader check
+
+Use the same fixture with Windows Narrator or NVDA. From Issues, navigate by headings,
+links and table cells. Verify that issue names are announced as links and numbers are
+read with their column headers. Open the top issue and read the comment heading, source
+and unit selectors, a comment and its labels. Open Edit labels and check the field names,
+the Categories group, and the confirmation announcement. Repeat the issue list and
+detail checks as `study-manager`, which is scoped to unit 4B. Record the browser and
+screen reader versions, observed speech and any blockers.
+
+Participant results and live screen reader speech checks are pending.
