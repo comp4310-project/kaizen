@@ -25,7 +25,7 @@ import re
 from dataclasses import dataclass
 from pathlib import Path
 
-KINDS = ("quality_standard", "qip_guidance", "sample_policy")
+KINDS = ("legislation", "quality_standard", "qip_guidance", "sample_policy")
 
 # all-MiniLM-L6-v2 reads at most 256 word pieces. 150 words leaves room for the title and
 # section that are searched along with the text.

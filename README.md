@@ -73,6 +73,16 @@ API keys either.
 This repo is public, so no student IDs and no personal email addresses anywhere in it.
 Those go in the D2L submission, not here.
 
+Public data we use, fetched by script rather than committed:
+
+- `backend/scripts/fetch_fft_comments.py` downloads 1,625 real NHS Friends and Family Test
+  comments (North East Ambulance Service, "See and Convey") from NHS England's
+  [pxtextmining](https://github.com/The-Strategy-Unit/pxtextmining) and converts them to our
+  CSV upload format in `data/raw/`, which is gitignored. They are ambulance comments, not ward
+  comments, and they go through de-identification on upload like any other file.
+- `documents/ontario-excellent-care-for-all-act.md` is sections 2 to 8 of Ontario's
+  Excellent Care for All Act, 2010, reproduced under the King's Printer's terms for statutes.
+
 ## Deliverables
 
 | Deliverable | Status | Document |
