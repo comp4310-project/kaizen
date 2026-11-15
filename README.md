@@ -37,7 +37,7 @@ through LiteLLM, and Chroma for the documents behind suggestions. See P3 section
 
 ## Running it
 
-Only the back end tests so far. You need Python 3.12 or later. The install pulls the spaCy
+Back end first. You need Python 3.12 or later. The install pulls the spaCy
 English model, which is about 400MB.
 
 ```
@@ -63,6 +63,11 @@ uvicorn kaizen.api.app:create_app --factory --reload
 ```
 
 The tables and endpoints are described in [docs/data-model.md](docs/data-model.md).
+
+The front end is a React and TypeScript app in `frontend/` with login, the ranked issues
+table, an issue's comments, and suggestion review. With the API running on port 8000, run
+`npm install` and `npm run dev` in `frontend/` and open http://localhost:5173. Details and
+the pages still to build are in [frontend/README.md](frontend/README.md).
 
 ## Data
 
