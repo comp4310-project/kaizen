@@ -10,6 +10,12 @@ gives the same file.
 Hard cases built in: names that are ordinary words ("Rose", "Will", "Bird"), names
 written in lower case, mixed date formats, and numbers that look like IDs but are not
 (doses, pain scores, room numbers).
+
+Hard negatives come from what spaCy wrongly tagged as names in real ambulance feedback:
+kinship words ("Mum", "my Dad", "Dads"), acronyms for hospitals and services, drug names
+and conditions (some misspelt), and typos or kisses ("Fromm", "fone", "Xx"). They are
+written for this file, not copied from real comments, and are "keep" spans, so a tag on
+one counts toward P3's "under 5% of tags remove text that is not personal".
 """
 
 from __future__ import annotations
@@ -90,6 +96,31 @@ STAFF = [
     "Transfer from ICU to {unit} delayed {dur} waiting on cleaning.",
     "{full} NP covering {unit} today, page if needed.",
 ]
+# Hard negatives, mostly in the style of ambulance and ED feedback. Several also hold a
+# real name, so a rule that drops too much shows up as a missed name.
+HARD_NEGATIVE = [
+    "{kin} was taken in by the crew and {nurse} looked after {kin_obj} brilliantly.",
+    "{kin} had a fall at home on {date}. The paramedics took {kin_obj} to the {acronym} within the hour.",
+    "{kin} has {condition} and the crew were so patient. Gave {drug} for the pain.",
+    "{typo} the moment they arrived they were kind. {kiss}",
+    "Waited {dur} for {acronym} to send anyone. {kin} was in agony until {drug} was given.",
+    "{acronym} crew were fantastic with {kin_obj} on {date}. Thank you all. {kiss}",
+    "{first} the paramedic explained the {drug} to {kin_obj} before giving it.",
+    "Ambulance took {dur} after my {typo_mid} call. {kin} needed {drug} straight away.",
+    "With {kin_obj} having {condition}, the {acronym} team still took great care.",
+    "{full} from {acronym} sat with {kin_obj} until the doctor came. {kiss}",
+]
+KIN_SUBJECT = ["Mum", "My Mum", "Dad", "My Dad", "Gran", "My Nan", "Grandad", "My Mam", "Nana"]
+KIN_OBJECT = ["my Dad", "Mum", "my Gran", "my Dads leg", "Nan", "my Mum's arm", "Grandad", "Dad"]
+ACRONYMS = ["RVI", "NEAS", "NGH", "QEH", "UHND", "JCUH", "GP", "A&E"]
+# Real drug names and conditions, some misspelt the way patients spell them.
+DRUGS = ["Entonox", "Entinox", "midazolam", "Medazalam", "Dexamethasone", "Morphine", "Paracetamol",
+         "Salbutamol", "Penthrox"]
+CONDITIONS = ["covid", "Covid", "Croup", "Deafblind", "dementia", "COPD", "Sepsis"]
+TYPOS_START = ["Fromm", "Frm", "Fron"]  # "from" at the start of a sentence, mistyped
+TYPOS_MID = ["fone", "phne", "tel"]  # "phone" mistyped mid-sentence
+KISSES = ["Xx", "Xxx", "xx", "X"]
+
 # Complaint forms and incident reports often end with contact or ID details.
 PATIENT_ENDINGS = [
     " Please call me at {phone}.", " My email is {email}.", " - {full}", " My health card is {hcn}.",
@@ -195,6 +226,33 @@ class Filler:
     def dur(self):
         return self._whole(self.r.choice(DURATIONS), "DURATION", "keep")
 
+    def _keep(self, choices: list[str], typ: str):
+        return self._whole(self.r.choice(choices), typ, "keep")
+
+    def kin(self):
+        return self._keep(KIN_SUBJECT, "KINSHIP")
+
+    def kin_obj(self):
+        return self._keep(KIN_OBJECT, "KINSHIP")
+
+    def acronym(self):
+        return self._keep(ACRONYMS, "ACRONYM")
+
+    def drug(self):
+        return self._keep(DRUGS, "DRUG")
+
+    def condition(self):
+        return self._keep(CONDITIONS, "DRUG")
+
+    def typo(self):
+        return self._keep(TYPOS_START, "TYPO")
+
+    def typo_mid(self):
+        return self._keep(TYPOS_MID, "TYPO")
+
+    def kiss(self):
+        return self._keep(KISSES, "TYPO")
+
 
 def expand(template: str, filler: Filler) -> tuple[str, list[dict], list[dict]]:
     out, details, keep, pos = [], [], [], 0
@@ -215,7 +273,11 @@ def expand(template: str, filler: Filler) -> tuple[str, list[dict], list[dict]]:
 def main() -> None:
     rng = random.Random(SEED)
     filler = Filler(rng)
-    templates = [("patient", t) for t in PATIENT] + [("staff", t) for t in STAFF]
+    templates = (
+        [("patient", t) for t in PATIENT]
+        + [("staff", t) for t in STAFF]
+        + [("patient", t) for t in HARD_NEGATIVE]
+    )
     rows = []
     for i in range(N_COMMENTS):
         voice, template = templates[i] if i < len(templates) else rng.choice(templates)
@@ -230,7 +292,8 @@ def main() -> None:
             f.write(json.dumps(row) + "\n")
 
     n_details = sum(len(r["details"]) for r in rows)
-    print(f"wrote {len(rows)} comments with {n_details} personal details to {OUT}")
+    n_keep = sum(len(r["keep"]) for r in rows)
+    print(f"wrote {len(rows)} comments with {n_details} personal details and {n_keep} keep spans to {OUT}")
 
 
 if __name__ == "__main__":
