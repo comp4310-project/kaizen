@@ -124,4 +124,4 @@ def test_evaluate_smoke(tmp_path) -> None:
     saved = json.loads((out / "results.json").read_text(encoding="utf-8"))
     assert saved["checks"] == results["checks"]
     md = (out / "results.md").read_text(encoding="utf-8")
-    assert "## Against the P3 targets" in md and "—" not in md
+    assert "## Against the P3 targets" in md and chr(0x2014) not in md  # no em dashes (AGENTS.md)
