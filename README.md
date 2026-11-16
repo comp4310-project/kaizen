@@ -108,3 +108,10 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Branch, open a PR, get one review, squas
 ## License
 
 [MIT](LICENSE)
+
+## Data and evaluation
+
+Bhavya's seeded synthetic dataset, P3 scoring, human annotation workflow and performance
+benchmark are documented in [Data and evaluation](docs/data-evaluation.md). Run
+`bash scripts/evaluate.sh --with-public` after installing the evaluation environment.
+Measured results and limitations are saved in [the evaluation summary](reports/bhavya/summary.md).

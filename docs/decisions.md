@@ -108,3 +108,5 @@ did not: of about 35 PERSON tags, only two or three were names. The rest removed
 as Mum, Dad, Gran, the hospital (RVI), the ambulance service (NEAS) and drug names (Entonox,
 midazolam, dexamethasone). That is far above the P3 target of under 5% of tags removing text
 that is not personal, and it should go in the evaluation as found.
+
+- 2026-11-15: Evaluation uses the existing TF-IDF baseline and keyword issue names when no provider key is available. Synthetic intent scores, public FFT sentiment scores and future human-label scores stay separate. NFR3 timings use real processing and SQLite through FastAPI TestClient, so they do not establish browser or hosted-model performance.

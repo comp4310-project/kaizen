@@ -1,0 +1,1057 @@
+{
+  "classification_run": {
+    "failed_batches": 0,
+    "labelled": 2300,
+    "missed": 0
+  },
+  "configuration": {
+    "batch_size": 50,
+    "method": "baseline",
+    "min_cluster_size": 8,
+    "seed": 4310,
+    "workers": 1
+  },
+  "dashboard": {
+    "comparison_integrity": {
+      "category": {
+        "operator": "==",
+        "status": "PASS",
+        "target": true,
+        "value": true
+      },
+      "stage": {
+        "operator": "==",
+        "status": "PASS",
+        "target": true,
+        "value": true
+      },
+      "unit": {
+        "operator": "==",
+        "status": "PASS",
+        "target": true,
+        "value": true
+      }
+    },
+    "endpoints": {
+      "/comments?limit=50": {
+        "http_200": {
+          "operator": "==",
+          "status": "PASS",
+          "target": true,
+          "value": true
+        },
+        "maximum": {
+          "operator": "<=",
+          "status": "PASS",
+          "target": 2,
+          "value": 0.009159
+        },
+        "p50_seconds": 0.006081,
+        "p95_seconds": 0.008597,
+        "samples": 10,
+        "seconds": [
+          0.007911,
+          0.006412,
+          0.005657,
+          0.005539,
+          0.005424,
+          0.00561,
+          0.009159,
+          0.006279,
+          0.005985,
+          0.006176
+        ]
+      },
+      "/compare?by=category": {
+        "http_200": {
+          "operator": "==",
+          "status": "PASS",
+          "target": true,
+          "value": true
+        },
+        "maximum": {
+          "operator": "<=",
+          "status": "PASS",
+          "target": 2,
+          "value": 0.016345
+        },
+        "p50_seconds": 0.011615,
+        "p95_seconds": 0.014764,
+        "samples": 10,
+        "seconds": [
+          0.016345,
+          0.012832,
+          0.011677,
+          0.011552,
+          0.011804,
+          0.011891,
+          0.010815,
+          0.010605,
+          0.011351,
+          0.010709
+        ]
+      },
+      "/compare?by=stage": {
+        "http_200": {
+          "operator": "==",
+          "status": "PASS",
+          "target": true,
+          "value": true
+        },
+        "maximum": {
+          "operator": "<=",
+          "status": "PASS",
+          "target": 2,
+          "value": 0.01187
+        },
+        "p50_seconds": 0.011398,
+        "p95_seconds": 0.011815,
+        "samples": 10,
+        "seconds": [
+          0.011635,
+          0.011507,
+          0.01187,
+          0.011312,
+          0.010931,
+          0.011483,
+          0.011152,
+          0.011201,
+          0.010999,
+          0.011748
+        ]
+      },
+      "/compare?by=unit": {
+        "http_200": {
+          "operator": "==",
+          "status": "PASS",
+          "target": true,
+          "value": true
+        },
+        "maximum": {
+          "operator": "<=",
+          "status": "PASS",
+          "target": 2,
+          "value": 0.014276
+        },
+        "p50_seconds": 0.011509,
+        "p95_seconds": 0.013277,
+        "samples": 10,
+        "seconds": [
+          0.011503,
+          0.011514,
+          0.012056,
+          0.011263,
+          0.011005,
+          0.011345,
+          0.011899,
+          0.011591,
+          0.011184,
+          0.014276
+        ]
+      },
+      "/issues": {
+        "http_200": {
+          "operator": "==",
+          "status": "PASS",
+          "target": true,
+          "value": true
+        },
+        "maximum": {
+          "operator": "<=",
+          "status": "PASS",
+          "target": 2,
+          "value": 0.011123
+        },
+        "p50_seconds": 0.007907,
+        "p95_seconds": 0.010142,
+        "samples": 10,
+        "seconds": [
+          0.011123,
+          0.007872,
+          0.008943,
+          0.007943,
+          0.007088,
+          0.00701,
+          0.00676,
+          0.007242,
+          0.008012,
+          0.008028
+        ]
+      },
+      "/issues/1/comments": {
+        "http_200": {
+          "operator": "==",
+          "status": "PASS",
+          "target": true,
+          "value": true
+        },
+        "maximum": {
+          "operator": "<=",
+          "status": "PASS",
+          "target": 2,
+          "value": 0.009393
+        },
+        "p50_seconds": 0.005818,
+        "p95_seconds": 0.00845,
+        "samples": 10,
+        "seconds": [
+          0.009393,
+          0.006766,
+          0.005753,
+          0.005883,
+          0.007298,
+          0.006199,
+          0.005604,
+          0.005423,
+          0.005387,
+          0.005363
+        ]
+      },
+      "/issues/1/comments?format=csv": {
+        "http_200": {
+          "operator": "==",
+          "status": "PASS",
+          "target": true,
+          "value": true
+        },
+        "maximum": {
+          "operator": "<=",
+          "status": "PASS",
+          "target": 2,
+          "value": 0.005686
+        },
+        "p50_seconds": 0.005014,
+        "p95_seconds": 0.005561,
+        "samples": 10,
+        "seconds": [
+          0.005276,
+          0.005068,
+          0.00498,
+          0.00497,
+          0.004924,
+          0.005041,
+          0.004986,
+          0.004987,
+          0.005686,
+          0.005408
+        ]
+      },
+      "/suggestions": {
+        "http_200": {
+          "operator": "==",
+          "status": "PASS",
+          "target": true,
+          "value": true
+        },
+        "maximum": {
+          "operator": "<=",
+          "status": "PASS",
+          "target": 2,
+          "value": 0.00666
+        },
+        "p50_seconds": 0.004168,
+        "p95_seconds": 0.006329,
+        "samples": 10,
+        "seconds": [
+          0.00666,
+          0.004158,
+          0.004177,
+          0.003932,
+          0.003951,
+          0.00383,
+          0.0038,
+          0.004227,
+          0.005923,
+          0.004194
+        ]
+      }
+    },
+    "issue_detail_covered": true,
+    "scope": "in-process FastAPI TestClient; real SQLite and routes; no network/browser/rendering or MySQL",
+    "suggestion_rows": 1
+  },
+  "data": {
+    "date_max": "2026-11-01",
+    "date_min": "2026-09-21",
+    "issues": {
+      "background": 800,
+      "call_bell": 180,
+      "cleanliness_equipment": 180,
+      "discharge_instructions": 180,
+      "discharge_medication": 220,
+      "ed_wait": 200,
+      "handover": 180,
+      "night_noise": 180,
+      "transport": 180
+    },
+    "narrative_seeds": 190,
+    "realism_limit": "AI-authored scenario combinations; unique text does not establish human realism. Repeated narrative seeds remain. Human review required.",
+    "rows": 2300,
+    "sentiment_intent": {
+      "negative": 1772,
+      "neutral": 202,
+      "positive": 326
+    },
+    "short_rows_up_to_15_words": 503,
+    "source": {
+      "family": 595,
+      "nurse": 496,
+      "patient": 905,
+      "physician": 304
+    },
+    "source_group": {
+      "patient_family": 1500,
+      "staff": 800
+    },
+    "split": {
+      "test": 734,
+      "train": 1566
+    },
+    "top_five_word_openings": [
+      [
+        "i left with the papers",
+        23
+      ],
+      [
+        "the nurse made time to",
+        23
+      ],
+      [
+        "someone brought an extra blanket",
+        23
+      ],
+      [
+        "i used the side entrance",
+        23
+      ],
+      [
+        "small thing, but remembering how",
+        23
+      ],
+      [
+        "thanks to the volunteer who",
+        23
+      ],
+      [
+        "the meal was cold by",
+        23
+      ],
+      [
+        "finding a parking space took",
+        23
+      ],
+      [
+        "we went through the consent",
+        23
+      ],
+      [
+        "the theatre team explained the",
+        23
+      ],
+      [
+        "reception pointed me to the",
+        23
+      ],
+      [
+        "i tried explaining what worried",
+        23
+      ],
+      [
+        "leaving was well organised and",
+        23
+      ],
+      [
+        "the physio helped me feel",
+        23
+      ],
+      [
+        "the person doing my scan",
+        23
+      ]
+    ],
+    "transport_weekly": {
+      "1": 8,
+      "2": 12,
+      "3": 18,
+      "4": 28,
+      "5": 42,
+      "6": 72
+    },
+    "unique_texts": 2300,
+    "units": {
+      "2A": 264,
+      "3A": 273,
+      "4A": 281,
+      "4B": 271,
+      "5A": 287,
+      "6A": 279,
+      "ED": 381,
+      "ICU": 264
+    },
+    "words_min_median_max": [
+      7,
+      20,
+      39
+    ]
+  },
+  "dataset_sha256": "f4fb33aec8ed877ad28a4f87700d389d8293994d46f862c0268db98cb3c8d96b",
+  "deidentification": {
+    "comments": 150,
+    "details": 315,
+    "extra_tags": 0,
+    "found_by_type": {
+      "DATE": 59,
+      "EMAIL": 26,
+      "HEALTH_CARD": 23,
+      "PERSON": 119,
+      "PHONE": 47,
+      "RECORD_NUMBER": 36
+    },
+    "mandatory_types": {
+      "EMAIL": {
+        "operator": "==",
+        "status": "PASS",
+        "target": 1,
+        "value": 1.0
+      },
+      "HEALTH_CARD": {
+        "operator": "==",
+        "status": "PASS",
+        "target": 1,
+        "value": 1.0
+      },
+      "PHONE": {
+        "operator": "==",
+        "status": "PASS",
+        "target": 1,
+        "value": 1.0
+      },
+      "RECORD_NUMBER": {
+        "operator": "==",
+        "status": "PASS",
+        "target": 1,
+        "value": 1.0
+      }
+    },
+    "over_removal": {
+      "operator": "<",
+      "status": "PASS",
+      "target": 0.05,
+      "value": 0.0
+    },
+    "recall": {
+      "operator": ">=",
+      "status": "PASS",
+      "target": 0.95,
+      "value": 0.984127
+    },
+    "tags": 310,
+    "total_by_type": {
+      "DATE": 59,
+      "EMAIL": 26,
+      "HEALTH_CARD": 23,
+      "PERSON": 124,
+      "PHONE": 47,
+      "RECORD_NUMBER": 36
+    },
+    "unit_names_removed": {
+      "operator": "==",
+      "status": "PASS",
+      "target": 0,
+      "value": 0
+    }
+  },
+  "environment": {
+    "commit": "27263601d5f3f467cb8503fec0a4ea6f57fd2b67",
+    "logical_cpus": 3,
+    "machine": "x86_64",
+    "memory_gib": 9.73,
+    "packages": {
+      "Jinja2": "3.1.6",
+      "MarkupSafe": "3.0.4",
+      "PyMySQL": "1.2.3",
+      "PyYAML": "6.0.3",
+      "Pygments": "2.21.0",
+      "SQLAlchemy": "2.1.8",
+      "aiohappyeyeballs": "2.7.1",
+      "aiohttp": "3.14.5",
+      "aiosignal": "1.4.0",
+      "annotated-doc": "0.0.6",
+      "annotated-types": "0.8.0",
+      "anyio": "4.16.0",
+      "attrs": "26.1.0",
+      "bcrypt": "5.0.0",
+      "blis": "1.3.4",
+      "boto3": "1.44.3",
+      "botocore": "1.44.3",
+      "catalogue": "2.0.10",
+      "certifi": "2026.10.23",
+      "charset-normalizer": "3.5.2",
+      "click": "8.5.1",
+      "cloudpathlib": "0.26.0",
+      "cloudpickle": "3.1.2",
+      "confection": "1.3.4",
+      "cymem": "2.0.16",
+      "distro": "1.9.0",
+      "en_core_web_lg": "3.8.0",
+      "fastapi": "0.162.0",
+      "fastembed": "0.9.1",
+      "fastuuid": "0.14.0",
+      "filelock": "3.32.7",
+      "flatbuffers": "25.12.19",
+      "frozenlist": "1.8.0",
+      "fsspec": "2026.9.0",
+      "h11": "0.16.0",
+      "h2": "4.4.1",
+      "hf-xet": "1.8.0",
+      "hpack": "4.2.0",
+      "httpcore": "1.0.9",
+      "httpx": "0.28.1",
+      "huggingface_hub": "1.33.0",
+      "hyperframe": "6.1.0",
+      "idna": "3.20",
+      "importlib_metadata": "8.9.0",
+      "iniconfig": "2.3.1",
+      "jiter": "0.19.0",
+      "jmespath": "1.1.0",
+      "joblib": "1.6.0",
+      "jsonschema": "4.26.0",
+      "jsonschema-specifications": "2025.9.1",
+      "kaizen": "0.1.0",
+      "litellm": "1.106.6",
+      "llvmlite": "0.50.0",
+      "loguru": "0.7.3",
+      "markdown-it-py": "4.3.0",
+      "mdurl": "0.1.2",
+      "mmh3": "5.3.1",
+      "multidict": "7.2.1",
+      "murmurhash": "1.0.16",
+      "narwhals": "2.28.0",
+      "numba": "0.68.1",
+      "numpy": "2.4.6",
+      "onnxruntime": "1.32.0",
+      "openai": "2.54.0",
+      "opentelemetry-api": "1.45.2",
+      "packaging": "26.3",
+      "phonenumbers": "9.0.43",
+      "pillow": "13.0.0",
+      "pip": "25.0.1",
+      "pluggy": "1.7.0",
+      "preshed": "3.0.13",
+      "presidio_analyzer": "2.2.366",
+      "propcache": "0.5.4",
+      "protobuf": "7.36.2",
+      "py_rust_stemmers": "0.1.8",
+      "pydantic": "2.14.3",
+      "pydantic-settings": "2.16.3",
+      "pydantic_core": "2.50.4",
+      "pynndescent": "0.7.0",
+      "pytest": "9.2.0",
+      "python-dateutil": "2.9.0.post0",
+      "python-dotenv": "1.2.4",
+      "python-multipart": "0.0.33",
+      "referencing": "0.37.0",
+      "regex": "2026.11.15",
+      "requests": "2.34.2",
+      "requests-file": "3.0.1",
+      "rich": "15.0.0",
+      "rpds-py": "2026.9.1",
+      "s3transfer": "0.19.3",
+      "scikit-learn": "1.9.1",
+      "scipy": "1.18.1",
+      "setuptools": "84.2.1",
+      "shellingham": "1.5.4",
+      "six": "1.17.0",
+      "smart_open": "9.0.4",
+      "sniffio": "1.3.1",
+      "spacy": "3.8.18",
+      "spacy-legacy": "3.0.12",
+      "spacy-loggers": "1.0.5",
+      "srsly": "2.5.6",
+      "starlette": "1.10.0",
+      "tenacity": "9.2.1",
+      "thinc": "8.3.14",
+      "threadpoolctl": "3.8.0",
+      "tiktoken": "0.14.0",
+      "tldextract": "5.4.0",
+      "tokenizers": "0.23.3",
+      "tqdm": "4.70.1",
+      "typer": "0.29.1",
+      "typing-inspection": "0.4.5",
+      "typing_extensions": "4.16.0",
+      "umap-learn": "0.6.0",
+      "urllib3": "2.8.0",
+      "uvicorn": "0.54.0",
+      "wasabi": "1.1.3",
+      "weasel": "1.0.1",
+      "wrapt": "2.5.2",
+      "yarl": "1.25.1",
+      "zipp": "4.1.2"
+    },
+    "platform": "Linux-6.18.57-x86_64-with-glibc2.41",
+    "python": "3.12.14",
+    "threads": {
+      "NUMBA_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "PYTHONHASHSEED": "4310",
+      "TOKENIZERS_PARALLELISM": "false"
+    },
+    "utc": "2026-11-16T00:14:05+00:00",
+    "working_tree_dirty": true
+  },
+  "human_synthetic": {
+    "reason": "400-row blank annotation workflow exported; no human labels supplied",
+    "status": "NOT_MEASURED"
+  },
+  "import": {
+    "batch_id": 1,
+    "errors": [],
+    "rejected": 0,
+    "saved": 2300,
+    "seconds": 12.805181
+  },
+  "issues": {
+    "adjusted_rand_index_planted": 0.110186,
+    "ari_note": "diagnostic only; outliers/unselected rows share -1",
+    "embedder": "sentence-transformers/all-MiniLM-L6-v2",
+    "human_quality": {
+      "reason": "two members must rate ten comments from each top issue",
+      "status": "NOT_MEASURED"
+    },
+    "issues": 144,
+    "model_files_sha256": {
+      "models--Qdrant--all-MiniLM-L6-v2-onnx/snapshots/d13954661f83248295ba75c1ed411eef3b7b936e/config.json": "1b4d8e2a3988377ed8b519a31d8d31025a25f1c5f8606998e8014111438efcd7",
+      "models--Qdrant--all-MiniLM-L6-v2-onnx/snapshots/d13954661f83248295ba75c1ed411eef3b7b936e/model.onnx": "bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5",
+      "models--Qdrant--all-MiniLM-L6-v2-onnx/snapshots/d13954661f83248295ba75c1ed411eef3b7b936e/special_tokens_map.json": "5d5b662e421ea9fac075174bb0688ee0d9431699900b90662acd44b2a350503a",
+      "models--Qdrant--all-MiniLM-L6-v2-onnx/snapshots/d13954661f83248295ba75c1ed411eef3b7b936e/tokenizer.json": "851ca67100d372ca3ae031a6abd168f53489eebfd7d89523f35c5c9b4d372c3c",
+      "models--Qdrant--all-MiniLM-L6-v2-onnx/snapshots/d13954661f83248295ba75c1ed411eef3b7b936e/tokenizer_config.json": "abda01c8c14c5151ae498aceb30db406d6b91242c394fd88d3b6fd5a63a101e6"
+    },
+    "namer": "keywords",
+    "patterns": {
+      "discharge_medication": {
+        "reason": "planted issue not recovered in top 15",
+        "status": "FAIL"
+      },
+      "night_noise": {
+        "reason": "planted issue not recovered in top 15",
+        "status": "FAIL"
+      },
+      "transport": {
+        "reason": "planted issue not recovered in top 15",
+        "status": "FAIL"
+      }
+    },
+    "recovery": {
+      "found": 0,
+      "planted": 8,
+      "rank_of": {
+        "call_bell": null,
+        "cleanliness_equipment": null,
+        "discharge_instructions": null,
+        "discharge_medication": null,
+        "ed_wait": null,
+        "handover": null,
+        "night_noise": null,
+        "transport": null
+      },
+      "target": {
+        "operator": ">=",
+        "status": "FAIL",
+        "target": 6,
+        "value": 0
+      }
+    },
+    "seconds_including_model_load": 29.781223,
+    "unassigned_rows": 338
+  },
+  "performance": {
+    "batch_size": 50,
+    "complete": true,
+    "dashboard": {
+      "comparison_integrity": {
+        "category": {
+          "operator": "==",
+          "status": "PASS",
+          "target": true,
+          "value": true
+        },
+        "stage": {
+          "operator": "==",
+          "status": "PASS",
+          "target": true,
+          "value": true
+        },
+        "unit": {
+          "operator": "==",
+          "status": "PASS",
+          "target": true,
+          "value": true
+        }
+      },
+      "endpoints": {
+        "/comments?limit=50": {
+          "http_200": {
+            "operator": "==",
+            "status": "PASS",
+            "target": true,
+            "value": true
+          },
+          "maximum": {
+            "operator": "<=",
+            "status": "PASS",
+            "target": 2,
+            "value": 0.007495
+          },
+          "p50_seconds": 0.005427,
+          "p95_seconds": 0.006661,
+          "samples": 10,
+          "seconds": [
+            0.007495,
+            0.00559,
+            0.004949,
+            0.00496,
+            0.004571,
+            0.005074,
+            0.005308,
+            0.005547,
+            0.005642,
+            0.005636
+          ]
+        },
+        "/compare?by=category": {
+          "http_200": {
+            "operator": "==",
+            "status": "PASS",
+            "target": true,
+            "value": true
+          },
+          "maximum": {
+            "operator": "<=",
+            "status": "PASS",
+            "target": 2,
+            "value": 0.009107
+          },
+          "p50_seconds": 0.007318,
+          "p95_seconds": 0.008552,
+          "samples": 10,
+          "seconds": [
+            0.009107,
+            0.007562,
+            0.007874,
+            0.007464,
+            0.007424,
+            0.006756,
+            0.007072,
+            0.00714,
+            0.006809,
+            0.007212
+          ]
+        },
+        "/compare?by=stage": {
+          "http_200": {
+            "operator": "==",
+            "status": "PASS",
+            "target": true,
+            "value": true
+          },
+          "maximum": {
+            "operator": "<=",
+            "status": "PASS",
+            "target": 2,
+            "value": 0.009267
+          },
+          "p50_seconds": 0.006946,
+          "p95_seconds": 0.008499,
+          "samples": 10,
+          "seconds": [
+            0.007431,
+            0.006956,
+            0.007179,
+            0.006884,
+            0.006936,
+            0.009267,
+            0.00756,
+            0.006839,
+            0.006861,
+            0.006803
+          ]
+        },
+        "/compare?by=unit": {
+          "http_200": {
+            "operator": "==",
+            "status": "PASS",
+            "target": true,
+            "value": true
+          },
+          "maximum": {
+            "operator": "<=",
+            "status": "PASS",
+            "target": 2,
+            "value": 0.00761
+          },
+          "p50_seconds": 0.00717,
+          "p95_seconds": 0.007585,
+          "samples": 10,
+          "seconds": [
+            0.007474,
+            0.00761,
+            0.006816,
+            0.006754,
+            0.006921,
+            0.007197,
+            0.006765,
+            0.007143,
+            0.007553,
+            0.007379
+          ]
+        },
+        "/issues": {
+          "http_200": {
+            "operator": "==",
+            "status": "PASS",
+            "target": true,
+            "value": true
+          },
+          "maximum": {
+            "operator": "<=",
+            "status": "PASS",
+            "target": 2,
+            "value": 0.008004
+          },
+          "p50_seconds": 0.005564,
+          "p95_seconds": 0.007288,
+          "samples": 10,
+          "seconds": [
+            0.008004,
+            0.006414,
+            0.005539,
+            0.005268,
+            0.005154,
+            0.005241,
+            0.005503,
+            0.005708,
+            0.005939,
+            0.005589
+          ]
+        },
+        "/issues/1/comments": {
+          "http_200": {
+            "operator": "==",
+            "status": "PASS",
+            "target": true,
+            "value": true
+          },
+          "maximum": {
+            "operator": "<=",
+            "status": "PASS",
+            "target": 2,
+            "value": 0.009961
+          },
+          "p50_seconds": 0.006964,
+          "p95_seconds": 0.008989,
+          "samples": 10,
+          "seconds": [
+            0.009961,
+            0.007567,
+            0.006478,
+            0.006367,
+            0.006288,
+            0.007134,
+            0.0078,
+            0.006957,
+            0.006714,
+            0.00697
+          ]
+        },
+        "/issues/1/comments?format=csv": {
+          "http_200": {
+            "operator": "==",
+            "status": "PASS",
+            "target": true,
+            "value": true
+          },
+          "maximum": {
+            "operator": "<=",
+            "status": "PASS",
+            "target": 2,
+            "value": 0.008865
+          },
+          "p50_seconds": 0.006834,
+          "p95_seconds": 0.008547,
+          "samples": 10,
+          "seconds": [
+            0.008865,
+            0.006969,
+            0.007024,
+            0.008158,
+            0.006807,
+            0.006423,
+            0.00686,
+            0.006674,
+            0.006436,
+            0.006212
+          ]
+        },
+        "/suggestions": {
+          "http_200": {
+            "operator": "==",
+            "status": "PASS",
+            "target": true,
+            "value": true
+          },
+          "maximum": {
+            "operator": "<=",
+            "status": "PASS",
+            "target": 2,
+            "value": 0.008368
+          },
+          "p50_seconds": 0.004273,
+          "p95_seconds": 0.006975,
+          "samples": 10,
+          "seconds": [
+            0.008368,
+            0.005271,
+            0.004145,
+            0.004721,
+            0.004249,
+            0.004667,
+            0.004296,
+            0.004065,
+            0.004029,
+            0.003995
+          ]
+        }
+      },
+      "issue_detail_covered": true,
+      "scope": "in-process FastAPI TestClient; real SQLite and routes; no network/browser/rendering or MySQL",
+      "suggestion_rows": 1
+    },
+    "database": "temporary SQLite",
+    "embedder": "sentence-transformers/all-MiniLM-L6-v2",
+    "excluded": "baseline training, model setup/download, account setup, suggestions, browser and network latency",
+    "failed_batches": 0,
+    "group_seconds": 7.244095,
+    "import_seconds": 5.382345,
+    "issues_input_rows": 893,
+    "label_seconds": 0.418519,
+    "labelled": 1000,
+    "labeller": "tfidf-logreg",
+    "min_cluster_size": 8,
+    "missed": 0,
+    "model_cache": "warm; full dataset evaluation ran first",
+    "namer": "keywords",
+    "processing_target": {
+      "operator": "<=",
+      "status": "PASS",
+      "target": 900,
+      "value": 13.04496
+    },
+    "rows": 1000,
+    "scope": "CSV HTTP import with real de-identification, persisted classification, embedding, clustering and keyword naming",
+    "seed": 4310,
+    "source_groups": {
+      "family": 251,
+      "nurse": 215,
+      "patient": 390,
+      "physician": 144
+    },
+    "total_seconds": 13.04496,
+    "workers": 1
+  },
+  "public_data": {
+    "comments_scored": 1388,
+    "extract_sha256": "620dd04841f639d206f7352f6010f70b923e81a73984def610670229c1bed807",
+    "gold_distribution": {
+      "negative": 328,
+      "neutral": 130,
+      "positive": 930
+    },
+    "hcat_category_stage_urgency": {
+      "reason": "FFT extract has no labels for these dimensions",
+      "status": "NOT_MEASURED"
+    },
+    "labeller": "tfidf-logreg",
+    "mapping": {
+      "1": "positive",
+      "2": "positive",
+      "3": "neutral",
+      "4": "negative",
+      "5": "negative"
+    },
+    "missing_predictions": 0,
+    "privacy": "no public text, identifiers, or per-comment predictions written to report",
+    "scope": "external published sentiment labels; diagnostic domain transfer, not Kaizen's 300-comment HCAT validation",
+    "sentiment_macro_f1": {
+      "operator": ">=",
+      "status": "FAIL",
+      "target": 0.75,
+      "value": 0.129082
+    },
+    "source": "pxtextmining pinned extract; NHS NEAS See and Convey; ambulance feedback, not inpatient ward feedback",
+    "unlabelled_excluded": 237
+  },
+  "suggestions": {
+    "reason": "no provider credentials or two completed 40-item rating sheets",
+    "status": "NOT_MEASURED"
+  },
+  "synthetic_intent": {
+    "category_f1": {
+      "communication": 0.895706,
+      "environment": 0.90099,
+      "institutional_processes": 0.854167,
+      "listening": 0.0,
+      "quality": 0.772727,
+      "respect_and_rights": 0.0,
+      "safety": 0.0
+    },
+    "category_macro_f1": 0.489084,
+    "category_micro_f1": 0.820755,
+    "comments": 734,
+    "labeller": "tfidf-logreg",
+    "meets_target": {
+      "category_micro_f1": true,
+      "sentiment_macro_f1": false,
+      "stage_accuracy": true,
+      "urgency_high_recall": false
+    },
+    "missing": 0,
+    "note": "scenario-held-out synthetic intent, not the 300 human-labelled P3 test comments",
+    "prompt_version": "1",
+    "sentiment_macro_f1": 0.6484,
+    "stage_accuracy": 0.73842,
+    "stage_macro_f1": 0.389194,
+    "stage_unclear_rate": 0.002725,
+    "targets": {
+      "category_micro_f1": {
+        "operator": ">=",
+        "status": "PASS",
+        "target": 0.7,
+        "value": 0.820755
+      },
+      "sentiment_macro_f1": {
+        "operator": ">=",
+        "status": "FAIL",
+        "target": 0.75,
+        "value": 0.6484
+      },
+      "stage_accuracy": {
+        "operator": ">=",
+        "status": "PASS",
+        "target": 0.65,
+        "value": 0.73842
+      },
+      "urgency_high_recall": {
+        "operator": ">=",
+        "status": "FAIL",
+        "target": 0.8,
+        "value": 0.0
+      }
+    },
+    "urgency_accuracy": 0.816076,
+    "urgency_high_recall": 0.0
+  },
+  "usability": {
+    "reason": "five-person SUS study belongs to NFR4; see docs/frontend-usability.md",
+    "status": "NOT_MEASURED"
+  }
+}
