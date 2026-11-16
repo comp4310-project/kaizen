@@ -44,22 +44,22 @@
           "operator": "<=",
           "status": "PASS",
           "target": 2,
-          "value": 0.009159
+          "value": 0.007317
         },
-        "p50_seconds": 0.006081,
-        "p95_seconds": 0.008597,
+        "p50_seconds": 0.005494,
+        "p95_seconds": 0.006986,
         "samples": 10,
         "seconds": [
-          0.007911,
-          0.006412,
-          0.005657,
-          0.005539,
-          0.005424,
-          0.00561,
-          0.009159,
-          0.006279,
-          0.005985,
-          0.006176
+          0.007317,
+          0.005686,
+          0.006581,
+          0.00499,
+          0.005225,
+          0.005016,
+          0.005457,
+          0.00553,
+          0.005778,
+          0.005375
         ]
       },
       "/compare?by=category": {
@@ -73,22 +73,22 @@
           "operator": "<=",
           "status": "PASS",
           "target": 2,
-          "value": 0.016345
+          "value": 0.015801
         },
-        "p50_seconds": 0.011615,
-        "p95_seconds": 0.014764,
+        "p50_seconds": 0.011865,
+        "p95_seconds": 0.014554,
         "samples": 10,
         "seconds": [
-          0.016345,
-          0.012832,
-          0.011677,
-          0.011552,
-          0.011804,
-          0.011891,
-          0.010815,
-          0.010605,
-          0.011351,
-          0.010709
+          0.015801,
+          0.013031,
+          0.012473,
+          0.011771,
+          0.011709,
+          0.011165,
+          0.011928,
+          0.01229,
+          0.011725,
+          0.011802
         ]
       },
       "/compare?by=stage": {
@@ -102,22 +102,22 @@
           "operator": "<=",
           "status": "PASS",
           "target": 2,
-          "value": 0.01187
+          "value": 0.013221
         },
-        "p50_seconds": 0.011398,
-        "p95_seconds": 0.011815,
+        "p50_seconds": 0.012236,
+        "p95_seconds": 0.01319,
         "samples": 10,
         "seconds": [
-          0.011635,
-          0.011507,
-          0.01187,
-          0.011312,
-          0.010931,
-          0.011483,
-          0.011152,
-          0.011201,
-          0.010999,
-          0.011748
+          0.01191,
+          0.012166,
+          0.011888,
+          0.011807,
+          0.012306,
+          0.013221,
+          0.013151,
+          0.012858,
+          0.012436,
+          0.011901
         ]
       },
       "/compare?by=unit": {
@@ -131,22 +131,22 @@
           "operator": "<=",
           "status": "PASS",
           "target": 2,
-          "value": 0.014276
+          "value": 0.014286
         },
-        "p50_seconds": 0.011509,
-        "p95_seconds": 0.013277,
+        "p50_seconds": 0.012141,
+        "p95_seconds": 0.013798,
         "samples": 10,
         "seconds": [
-          0.011503,
-          0.011514,
-          0.012056,
-          0.011263,
-          0.011005,
-          0.011345,
-          0.011899,
-          0.011591,
-          0.011184,
-          0.014276
+          0.011853,
+          0.012517,
+          0.011547,
+          0.011712,
+          0.012078,
+          0.012072,
+          0.013203,
+          0.014286,
+          0.012683,
+          0.012203
         ]
       },
       "/issues": {
@@ -160,22 +160,22 @@
           "operator": "<=",
           "status": "PASS",
           "target": 2,
-          "value": 0.011123
+          "value": 0.012672
         },
-        "p50_seconds": 0.007907,
-        "p95_seconds": 0.010142,
+        "p50_seconds": 0.006263,
+        "p95_seconds": 0.010014,
         "samples": 10,
         "seconds": [
-          0.011123,
-          0.007872,
-          0.008943,
-          0.007943,
-          0.007088,
-          0.00701,
-          0.00676,
-          0.007242,
-          0.008012,
-          0.008028
+          0.012672,
+          0.006765,
+          0.005806,
+          0.006012,
+          0.00575,
+          0.005933,
+          0.006214,
+          0.006534,
+          0.006312,
+          0.006475
         ]
       },
       "/issues/1/comments": {
@@ -189,22 +189,22 @@
           "operator": "<=",
           "status": "PASS",
           "target": 2,
-          "value": 0.009393
+          "value": 0.01828
         },
-        "p50_seconds": 0.005818,
-        "p95_seconds": 0.00845,
+        "p50_seconds": 0.010307,
+        "p95_seconds": 0.01775,
         "samples": 10,
         "seconds": [
-          0.009393,
-          0.006766,
-          0.005753,
-          0.005883,
-          0.007298,
-          0.006199,
-          0.005604,
-          0.005423,
-          0.005387,
-          0.005363
+          0.010066,
+          0.01828,
+          0.016189,
+          0.017103,
+          0.015871,
+          0.006963,
+          0.009356,
+          0.009864,
+          0.010548,
+          0.00818
         ]
       },
       "/issues/1/comments?format=csv": {
@@ -218,22 +218,22 @@
           "operator": "<=",
           "status": "PASS",
           "target": 2,
-          "value": 0.005686
+          "value": 0.010249
         },
-        "p50_seconds": 0.005014,
-        "p95_seconds": 0.005561,
+        "p50_seconds": 0.007973,
+        "p95_seconds": 0.010223,
         "samples": 10,
         "seconds": [
-          0.005276,
-          0.005068,
-          0.00498,
-          0.00497,
-          0.004924,
-          0.005041,
-          0.004986,
-          0.004987,
-          0.005686,
-          0.005408
+          0.010249,
+          0.00773,
+          0.010192,
+          0.008454,
+          0.007381,
+          0.008216,
+          0.008662,
+          0.007676,
+          0.007001,
+          0.006733
         ]
       },
       "/suggestions": {
@@ -247,28 +247,28 @@
           "operator": "<=",
           "status": "PASS",
           "target": 2,
-          "value": 0.00666
+          "value": 0.0062
         },
-        "p50_seconds": 0.004168,
-        "p95_seconds": 0.006329,
+        "p50_seconds": 0.00446,
+        "p95_seconds": 0.005638,
         "samples": 10,
         "seconds": [
-          0.00666,
-          0.004158,
-          0.004177,
-          0.003932,
-          0.003951,
-          0.00383,
-          0.0038,
-          0.004227,
-          0.005923,
-          0.004194
+          0.0062,
+          0.004952,
+          0.004355,
+          0.004268,
+          0.004447,
+          0.004433,
+          0.004527,
+          0.004544,
+          0.004473,
+          0.004348
         ]
       }
     },
     "issue_detail_covered": true,
     "scope": "in-process FastAPI TestClient; real SQLite and routes; no network/browser/rendering or MySQL",
-    "suggestion_rows": 1
+    "suggestion_rows": 0
   },
   "data": {
     "date_max": "2026-11-01",
@@ -292,7 +292,7 @@
       "neutral": 202,
       "positive": 326
     },
-    "short_rows_up_to_15_words": 503,
+    "short_rows_up_to_15_words": 519,
     "source": {
       "family": 595,
       "nurse": 496,
@@ -309,64 +309,64 @@
     },
     "top_five_word_openings": [
       [
+        "could visitors get drinking water",
+        23
+      ],
+      [
         "i left with the papers",
-        23
+        17
       ],
       [
-        "the nurse made time to",
-        23
+        "the nurse sat down and",
+        17
       ],
       [
-        "someone brought an extra blanket",
-        23
+        "there was a loud floor",
+        17
       ],
       [
-        "i used the side entrance",
-        23
+        "a colleague covered my break",
+        16
       ],
       [
-        "small thing, but remembering how",
-        23
+        "the safety pause gave everyone",
+        16
       ],
       [
-        "thanks to the volunteer who",
-        23
+        "the team reviewed the investigation",
+        16
       ],
       [
-        "the meal was cold by",
-        23
+        "the imaging team called back",
+        16
       ],
       [
-        "finding a parking space took",
-        23
+        "we checked the procedure list",
+        16
       ],
       [
-        "we went through the consent",
-        23
+        "admissions sent the correct paperwork",
+        16
       ],
       [
-        "the theatre team explained the",
-        23
+        "i tried to explain mum's",
+        16
       ],
       [
-        "reception pointed me to the",
-        23
+        "could the staff room have",
+        16
       ],
       [
-        "i tried explaining what worried",
-        23
+        "the senior nurse helped with",
+        16
       ],
       [
-        "leaving was well organised and",
-        23
+        "we tried the new layout",
+        16
       ],
       [
-        "the physio helped me feel",
-        23
-      ],
-      [
-        "the person doing my scan",
-        23
+        "the social worker sorted out",
+        16
       ]
     ],
     "transport_weekly": {
@@ -389,12 +389,12 @@
       "ICU": 264
     },
     "words_min_median_max": [
-      7,
-      20,
-      39
+      8,
+      19,
+      38
     ]
   },
-  "dataset_sha256": "f4fb33aec8ed877ad28a4f87700d389d8293994d46f862c0268db98cb3c8d96b",
+  "dataset_sha256": "3d12a8dea25b9eb4b823aab92a71ea153c3b2ab4407e7006baa8a70022c7191e",
   "deidentification": {
     "comments": 150,
     "details": 315,
@@ -462,7 +462,7 @@
     }
   },
   "environment": {
-    "commit": "27263601d5f3f467cb8503fec0a4ea6f57fd2b67",
+    "commit": "1574cd36a3d260907c9dea4512ce4636a41af2d3",
     "logical_cpus": 3,
     "machine": "x86_64",
     "memory_gib": 9.73,
@@ -596,7 +596,7 @@
       "PYTHONHASHSEED": "4310",
       "TOKENIZERS_PARALLELISM": "false"
     },
-    "utc": "2026-11-16T00:14:05+00:00",
+    "utc": "2026-11-16T01:52:10+00:00",
     "working_tree_dirty": true
   },
   "human_synthetic": {
@@ -608,17 +608,17 @@
     "errors": [],
     "rejected": 0,
     "saved": 2300,
-    "seconds": 12.805181
+    "seconds": 13.385369
   },
   "issues": {
-    "adjusted_rand_index_planted": 0.110186,
+    "adjusted_rand_index_planted": 0.109365,
     "ari_note": "diagnostic only; outliers/unselected rows share -1",
     "embedder": "sentence-transformers/all-MiniLM-L6-v2",
     "human_quality": {
       "reason": "two members must rate ten comments from each top issue",
       "status": "NOT_MEASURED"
     },
-    "issues": 144,
+    "issues": 148,
     "model_files_sha256": {
       "models--Qdrant--all-MiniLM-L6-v2-onnx/snapshots/d13954661f83248295ba75c1ed411eef3b7b936e/config.json": "1b4d8e2a3988377ed8b519a31d8d31025a25f1c5f8606998e8014111438efcd7",
       "models--Qdrant--all-MiniLM-L6-v2-onnx/snapshots/d13954661f83248295ba75c1ed411eef3b7b936e/model.onnx": "bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5",
@@ -661,8 +661,8 @@
         "value": 0
       }
     },
-    "seconds_including_model_load": 29.781223,
-    "unassigned_rows": 338
+    "seconds_including_model_load": 31.413304,
+    "unassigned_rows": 379
   },
   "performance": {
     "batch_size": 50,
@@ -700,22 +700,22 @@
             "operator": "<=",
             "status": "PASS",
             "target": 2,
-            "value": 0.007495
+            "value": 0.007164
           },
-          "p50_seconds": 0.005427,
-          "p95_seconds": 0.006661,
+          "p50_seconds": 0.005869,
+          "p95_seconds": 0.007067,
           "samples": 10,
           "seconds": [
-            0.007495,
-            0.00559,
-            0.004949,
-            0.00496,
-            0.004571,
-            0.005074,
-            0.005308,
-            0.005547,
-            0.005642,
-            0.005636
+            0.007164,
+            0.006319,
+            0.005571,
+            0.005858,
+            0.005881,
+            0.005634,
+            0.005855,
+            0.005845,
+            0.006949,
+            0.006361
           ]
         },
         "/compare?by=category": {
@@ -729,22 +729,22 @@
             "operator": "<=",
             "status": "PASS",
             "target": 2,
-            "value": 0.009107
+            "value": 0.012722
           },
-          "p50_seconds": 0.007318,
-          "p95_seconds": 0.008552,
+          "p50_seconds": 0.0087,
+          "p95_seconds": 0.012249,
           "samples": 10,
           "seconds": [
-            0.009107,
-            0.007562,
-            0.007874,
-            0.007464,
-            0.007424,
-            0.006756,
-            0.007072,
-            0.00714,
-            0.006809,
-            0.007212
+            0.010003,
+            0.008471,
+            0.009421,
+            0.007943,
+            0.008629,
+            0.012722,
+            0.011671,
+            0.008099,
+            0.008771,
+            0.008038
           ]
         },
         "/compare?by=stage": {
@@ -758,22 +758,22 @@
             "operator": "<=",
             "status": "PASS",
             "target": 2,
-            "value": 0.009267
+            "value": 0.011328
           },
-          "p50_seconds": 0.006946,
-          "p95_seconds": 0.008499,
+          "p50_seconds": 0.007975,
+          "p95_seconds": 0.011004,
           "samples": 10,
           "seconds": [
-            0.007431,
-            0.006956,
-            0.007179,
-            0.006884,
-            0.006936,
-            0.009267,
-            0.00756,
-            0.006839,
-            0.006861,
-            0.006803
+            0.007716,
+            0.007749,
+            0.007439,
+            0.00744,
+            0.008327,
+            0.010608,
+            0.010126,
+            0.011328,
+            0.007878,
+            0.008072
           ]
         },
         "/compare?by=unit": {
@@ -787,22 +787,22 @@
             "operator": "<=",
             "status": "PASS",
             "target": 2,
-            "value": 0.00761
+            "value": 0.008994
           },
-          "p50_seconds": 0.00717,
-          "p95_seconds": 0.007585,
+          "p50_seconds": 0.008451,
+          "p95_seconds": 0.008925,
           "samples": 10,
           "seconds": [
-            0.007474,
-            0.00761,
-            0.006816,
-            0.006754,
-            0.006921,
-            0.007197,
-            0.006765,
-            0.007143,
-            0.007553,
-            0.007379
+            0.008205,
+            0.008821,
+            0.008994,
+            0.00871,
+            0.00884,
+            0.00836,
+            0.008041,
+            0.008541,
+            0.008181,
+            0.007891
           ]
         },
         "/issues": {
@@ -816,22 +816,22 @@
             "operator": "<=",
             "status": "PASS",
             "target": 2,
-            "value": 0.008004
+            "value": 0.014342
           },
-          "p50_seconds": 0.005564,
-          "p95_seconds": 0.007288,
+          "p50_seconds": 0.006658,
+          "p95_seconds": 0.01119,
           "samples": 10,
           "seconds": [
-            0.008004,
-            0.006414,
-            0.005539,
-            0.005268,
-            0.005154,
-            0.005241,
-            0.005503,
-            0.005708,
-            0.005939,
-            0.005589
+            0.014342,
+            0.007338,
+            0.0067,
+            0.006118,
+            0.005896,
+            0.006633,
+            0.006683,
+            0.006302,
+            0.00733,
+            0.00649
           ]
         },
         "/issues/1/comments": {
@@ -845,22 +845,22 @@
             "operator": "<=",
             "status": "PASS",
             "target": 2,
-            "value": 0.009961
+            "value": 0.010336
           },
-          "p50_seconds": 0.006964,
-          "p95_seconds": 0.008989,
+          "p50_seconds": 0.007522,
+          "p95_seconds": 0.010184,
           "samples": 10,
           "seconds": [
-            0.009961,
-            0.007567,
-            0.006478,
-            0.006367,
-            0.006288,
-            0.007134,
-            0.0078,
-            0.006957,
-            0.006714,
-            0.00697
+            0.010336,
+            0.009341,
+            0.007729,
+            0.007269,
+            0.007023,
+            0.00668,
+            0.00724,
+            0.007315,
+            0.009999,
+            0.008733
           ]
         },
         "/issues/1/comments?format=csv": {
@@ -874,22 +874,22 @@
             "operator": "<=",
             "status": "PASS",
             "target": 2,
-            "value": 0.008865
+            "value": 0.010345
           },
-          "p50_seconds": 0.006834,
-          "p95_seconds": 0.008547,
+          "p50_seconds": 0.008867,
+          "p95_seconds": 0.010076,
           "samples": 10,
           "seconds": [
-            0.008865,
-            0.006969,
-            0.007024,
-            0.008158,
-            0.006807,
-            0.006423,
-            0.00686,
-            0.006674,
-            0.006436,
-            0.006212
+            0.009229,
+            0.007434,
+            0.010345,
+            0.008367,
+            0.009747,
+            0.008875,
+            0.008858,
+            0.008483,
+            0.008589,
+            0.008971
           ]
         },
         "/suggestions": {
@@ -903,37 +903,37 @@
             "operator": "<=",
             "status": "PASS",
             "target": 2,
-            "value": 0.008368
+            "value": 0.005877
           },
-          "p50_seconds": 0.004273,
-          "p95_seconds": 0.006975,
+          "p50_seconds": 0.004898,
+          "p95_seconds": 0.00557,
           "samples": 10,
           "seconds": [
-            0.008368,
-            0.005271,
-            0.004145,
-            0.004721,
-            0.004249,
-            0.004667,
-            0.004296,
-            0.004065,
-            0.004029,
-            0.003995
+            0.005877,
+            0.005195,
+            0.004724,
+            0.004577,
+            0.004626,
+            0.004753,
+            0.004925,
+            0.004947,
+            0.004871,
+            0.004989
           ]
         }
       },
       "issue_detail_covered": true,
       "scope": "in-process FastAPI TestClient; real SQLite and routes; no network/browser/rendering or MySQL",
-      "suggestion_rows": 1
+      "suggestion_rows": 0
     },
     "database": "temporary SQLite",
     "embedder": "sentence-transformers/all-MiniLM-L6-v2",
     "excluded": "baseline training, model setup/download, account setup, suggestions, browser and network latency",
     "failed_batches": 0,
-    "group_seconds": 7.244095,
-    "import_seconds": 5.382345,
-    "issues_input_rows": 893,
-    "label_seconds": 0.418519,
+    "group_seconds": 8.908976,
+    "import_seconds": 5.921694,
+    "issues_input_rows": 884,
+    "label_seconds": 0.446238,
     "labelled": 1000,
     "labeller": "tfidf-logreg",
     "min_cluster_size": 8,
@@ -944,7 +944,7 @@
       "operator": "<=",
       "status": "PASS",
       "target": 900,
-      "value": 13.04496
+      "value": 15.276907
     },
     "rows": 1000,
     "scope": "CSV HTTP import with real de-identification, persisted classification, embedding, clustering and keyword naming",
@@ -955,7 +955,7 @@
       "patient": 390,
       "physician": 144
     },
-    "total_seconds": 13.04496,
+    "total_seconds": 15.276907,
     "workers": 1
   },
   "public_data": {
@@ -985,7 +985,7 @@
       "operator": ">=",
       "status": "FAIL",
       "target": 0.75,
-      "value": 0.129082
+      "value": 0.129869
     },
     "source": "pxtextmining pinned extract; NHS NEAS See and Convey; ambulance feedback, not inpatient ward feedback",
     "unlabelled_excluded": 237
@@ -996,16 +996,16 @@
   },
   "synthetic_intent": {
     "category_f1": {
-      "communication": 0.895706,
-      "environment": 0.90099,
-      "institutional_processes": 0.854167,
+      "communication": 0.894118,
+      "environment": 0.894009,
+      "institutional_processes": 0.842105,
       "listening": 0.0,
-      "quality": 0.772727,
+      "quality": 0.83871,
       "respect_and_rights": 0.0,
       "safety": 0.0
     },
-    "category_macro_f1": 0.489084,
-    "category_micro_f1": 0.820755,
+    "category_macro_f1": 0.495563,
+    "category_micro_f1": 0.822018,
     "comments": 734,
     "labeller": "tfidf-logreg",
     "meets_target": {
@@ -1017,28 +1017,28 @@
     "missing": 0,
     "note": "scenario-held-out synthetic intent, not the 300 human-labelled P3 test comments",
     "prompt_version": "1",
-    "sentiment_macro_f1": 0.6484,
-    "stage_accuracy": 0.73842,
-    "stage_macro_f1": 0.389194,
-    "stage_unclear_rate": 0.002725,
+    "sentiment_macro_f1": 0.724113,
+    "stage_accuracy": 0.741144,
+    "stage_macro_f1": 0.404464,
+    "stage_unclear_rate": 0.0,
     "targets": {
       "category_micro_f1": {
         "operator": ">=",
         "status": "PASS",
         "target": 0.7,
-        "value": 0.820755
+        "value": 0.822018
       },
       "sentiment_macro_f1": {
         "operator": ">=",
         "status": "FAIL",
         "target": 0.75,
-        "value": 0.6484
+        "value": 0.724113
       },
       "stage_accuracy": {
         "operator": ">=",
         "status": "PASS",
         "target": 0.65,
-        "value": 0.73842
+        "value": 0.741144
       },
       "urgency_high_recall": {
         "operator": ">=",
@@ -1047,7 +1047,7 @@
         "value": 0.0
       }
     },
-    "urgency_accuracy": 0.816076,
+    "urgency_accuracy": 0.837875,
     "urgency_high_recall": 0.0
   },
   "usability": {

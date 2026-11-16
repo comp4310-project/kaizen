@@ -1,12 +1,12 @@
 {"row_id": 1, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 3, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 4, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 4, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 5, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 6, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 7, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 7, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 8, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 9, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 9, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 10, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 11, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 12, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
@@ -18,9 +18,9 @@
 {"row_id": 18, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 19, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 20, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 21, "prediction": {"sentiment": "negative", "categories": [], "stage": "admissions", "urgency": "medium"}}
+{"row_id": 21, "prediction": {"sentiment": "neutral", "categories": [], "stage": "admissions", "urgency": "low"}}
 {"row_id": 22, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 23, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 23, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 24, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 25, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 26, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
@@ -39,7 +39,7 @@
 {"row_id": 39, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "unclear", "urgency": "medium"}}
 {"row_id": 40, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 41, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 42, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 42, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 43, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 44, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 45, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -51,7 +51,7 @@
 {"row_id": 51, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 52, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 53, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 54, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 54, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 55, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 56, "prediction": {"sentiment": "positive", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 57, "prediction": {"sentiment": "positive", "categories": [], "stage": "admissions", "urgency": "low"}}
@@ -75,30 +75,30 @@
 {"row_id": 75, "prediction": {"sentiment": "positive", "categories": [], "stage": "admissions", "urgency": "low"}}
 {"row_id": 76, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "unclear", "urgency": "medium"}}
 {"row_id": 77, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
-{"row_id": 78, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 78, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 79, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 80, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 81, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 82, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 83, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 81, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
+{"row_id": 82, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 83, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 84, "prediction": {"sentiment": "positive", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 85, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 86, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 87, "prediction": {"sentiment": "positive", "categories": [], "stage": "admissions", "urgency": "low"}}
 {"row_id": 88, "prediction": {"sentiment": "positive", "categories": [], "stage": "examination_and_diagnosis", "urgency": "low"}}
 {"row_id": 89, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 90, "prediction": {"sentiment": "negative", "categories": [], "stage": "admissions", "urgency": "medium"}}
+{"row_id": 90, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 91, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 92, "prediction": {"sentiment": "negative", "categories": ["safety"], "stage": "care_on_the_ward", "urgency": "high"}}
 {"row_id": 93, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 94, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 95, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 95, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 96, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 97, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 98, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 99, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 100, "prediction": {"sentiment": "neutral", "categories": [], "stage": "examination_and_diagnosis", "urgency": "low"}}
-{"row_id": 101, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 101, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 102, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 103, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 104, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -112,7 +112,7 @@
 {"row_id": 112, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 113, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 114, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 115, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 115, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 116, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 117, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 118, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -123,10 +123,10 @@
 {"row_id": 123, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 124, "prediction": {"sentiment": "positive", "categories": [], "stage": "admissions", "urgency": "low"}}
 {"row_id": 125, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 126, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 126, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 127, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 128, "prediction": {"sentiment": "positive", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
-{"row_id": 129, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 129, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 130, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 131, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 132, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -140,7 +140,7 @@
 {"row_id": 140, "prediction": {"sentiment": "negative", "categories": ["respect_and_rights"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 141, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 142, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
-{"row_id": 143, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 143, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 144, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 145, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 146, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
@@ -167,7 +167,7 @@
 {"row_id": 167, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 168, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 169, "prediction": {"sentiment": "negative", "categories": ["safety"], "stage": "care_on_the_ward", "urgency": "high"}}
-{"row_id": 170, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 170, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 171, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 172, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 173, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -181,9 +181,9 @@
 {"row_id": 181, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 182, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 183, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 184, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 184, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 185, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 186, "prediction": {"sentiment": "negative", "categories": [], "stage": "admissions", "urgency": "medium"}}
+{"row_id": 186, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 187, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 188, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 189, "prediction": {"sentiment": "neutral", "categories": [], "stage": "unclear", "urgency": "low"}}
@@ -194,7 +194,7 @@
 {"row_id": 194, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 195, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 196, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 197, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 197, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 198, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 199, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 200, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
@@ -206,17 +206,17 @@
 {"row_id": 206, "prediction": {"sentiment": "positive", "categories": [], "stage": "examination_and_diagnosis", "urgency": "low"}}
 {"row_id": 207, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 208, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 209, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 209, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 210, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 211, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 212, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 212, "prediction": {"sentiment": "negative", "categories": [], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 213, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 214, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 215, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 216, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 217, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 218, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
-{"row_id": 219, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 219, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 220, "prediction": {"sentiment": "positive", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
 {"row_id": 221, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 222, "prediction": {"sentiment": "neutral", "categories": [], "stage": "unclear", "urgency": "low"}}
@@ -240,8 +240,8 @@
 {"row_id": 240, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 241, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 242, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 243, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 244, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 243, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "examination_and_diagnosis", "urgency": "medium"}}
+{"row_id": 244, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 245, "prediction": {"sentiment": "positive", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 246, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 247, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -277,9 +277,9 @@
 {"row_id": 277, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 278, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 279, "prediction": {"sentiment": "negative", "categories": [], "stage": "admissions", "urgency": "medium"}}
-{"row_id": 280, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 280, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 281, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 282, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 282, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 283, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 284, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 285, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -297,7 +297,7 @@
 {"row_id": 297, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 298, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 299, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
-{"row_id": 300, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 300, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 301, "prediction": {"sentiment": "positive", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
 {"row_id": 302, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 303, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -311,12 +311,12 @@
 {"row_id": 311, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 312, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 313, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 314, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 314, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 315, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 316, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 317, "prediction": {"sentiment": "negative", "categories": ["respect_and_rights"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 318, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 319, "prediction": {"sentiment": "negative", "categories": [], "stage": "admissions", "urgency": "medium"}}
+{"row_id": 319, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 320, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 321, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 322, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -330,7 +330,7 @@
 {"row_id": 330, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 331, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 332, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 333, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 333, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 334, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 335, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 336, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
@@ -350,7 +350,7 @@
 {"row_id": 350, "prediction": {"sentiment": "neutral", "categories": [], "stage": "unclear", "urgency": "low"}}
 {"row_id": 351, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 352, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 353, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 353, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 354, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 355, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 356, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -367,7 +367,7 @@
 {"row_id": 367, "prediction": {"sentiment": "negative", "categories": ["safety"], "stage": "care_on_the_ward", "urgency": "high"}}
 {"row_id": 368, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 369, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 370, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 370, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 371, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 372, "prediction": {"sentiment": "positive", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
 {"row_id": 373, "prediction": {"sentiment": "negative", "categories": [], "stage": "admissions", "urgency": "medium"}}
@@ -396,7 +396,7 @@
 {"row_id": 396, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 397, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 398, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 399, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 399, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 400, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 401, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 402, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "examination_and_diagnosis", "urgency": "medium"}}
@@ -422,7 +422,7 @@
 {"row_id": 422, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 423, "prediction": {"sentiment": "positive", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 424, "prediction": {"sentiment": "negative", "categories": ["listening"], "stage": "examination_and_diagnosis", "urgency": "medium"}}
-{"row_id": 425, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 425, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 426, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 427, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 428, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -448,7 +448,7 @@
 {"row_id": 448, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 449, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 450, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 451, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 451, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 452, "prediction": {"sentiment": "positive", "categories": [], "stage": "admissions", "urgency": "low"}}
 {"row_id": 453, "prediction": {"sentiment": "positive", "categories": [], "stage": "admissions", "urgency": "low"}}
 {"row_id": 454, "prediction": {"sentiment": "positive", "categories": [], "stage": "admissions", "urgency": "low"}}
@@ -456,12 +456,12 @@
 {"row_id": 456, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 457, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 458, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 459, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 459, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 460, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 461, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 462, "prediction": {"sentiment": "negative", "categories": ["safety"], "stage": "care_on_the_ward", "urgency": "high"}}
 {"row_id": 463, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 464, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 464, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 465, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 466, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 467, "prediction": {"sentiment": "positive", "categories": [], "stage": "admissions", "urgency": "low"}}
@@ -483,19 +483,19 @@
 {"row_id": 483, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 484, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 485, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 486, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 486, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 487, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 488, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 489, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 489, "prediction": {"sentiment": "positive", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
 {"row_id": 490, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 491, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 492, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
-{"row_id": 493, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 493, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 494, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 495, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 496, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 497, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 498, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 498, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 499, "prediction": {"sentiment": "positive", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
 {"row_id": 500, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 501, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
@@ -513,7 +513,7 @@
 {"row_id": 513, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 514, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 515, "prediction": {"sentiment": "positive", "categories": [], "stage": "unclear", "urgency": "low"}}
-{"row_id": 516, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 516, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 517, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 518, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 519, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -561,7 +561,7 @@
 {"row_id": 561, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 562, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 563, "prediction": {"sentiment": "negative", "categories": ["listening"], "stage": "examination_and_diagnosis", "urgency": "medium"}}
-{"row_id": 564, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 564, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 565, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 566, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 567, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -591,9 +591,9 @@
 {"row_id": 591, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 592, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 593, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
-{"row_id": 594, "prediction": {"sentiment": "negative", "categories": [], "stage": "admissions", "urgency": "medium"}}
+{"row_id": 594, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 595, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 596, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
+{"row_id": 596, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 597, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 598, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 599, "prediction": {"sentiment": "positive", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
@@ -619,7 +619,7 @@
 {"row_id": 619, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 620, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 621, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
-{"row_id": 622, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 622, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 623, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 624, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 625, "prediction": {"sentiment": "positive", "categories": [], "stage": "examination_and_diagnosis", "urgency": "low"}}
@@ -628,7 +628,7 @@
 {"row_id": 628, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 629, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 630, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 631, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 631, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 632, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 633, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 634, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -654,7 +654,7 @@
 {"row_id": 654, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 655, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 656, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 657, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 657, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 658, "prediction": {"sentiment": "neutral", "categories": [], "stage": "examination_and_diagnosis", "urgency": "low"}}
 {"row_id": 659, "prediction": {"sentiment": "negative", "categories": ["safety"], "stage": "care_on_the_ward", "urgency": "high"}}
 {"row_id": 660, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -690,7 +690,7 @@
 {"row_id": 690, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 691, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 692, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 693, "prediction": {"sentiment": "negative", "categories": [], "stage": "admissions", "urgency": "medium"}}
+{"row_id": 693, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 694, "prediction": {"sentiment": "positive", "categories": [], "stage": "admissions", "urgency": "low"}}
 {"row_id": 695, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 696, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
@@ -724,7 +724,7 @@
 {"row_id": 724, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 725, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 726, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 727, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 727, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 728, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 729, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 730, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
@@ -741,7 +741,7 @@
 {"row_id": 741, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 742, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 743, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 744, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 744, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 745, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "examination_and_diagnosis", "urgency": "medium"}}
 {"row_id": 746, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 747, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -750,7 +750,7 @@
 {"row_id": 750, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 751, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 752, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 753, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 753, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 754, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 755, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 756, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -759,7 +759,7 @@
 {"row_id": 759, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 760, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 761, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 762, "prediction": {"sentiment": "negative", "categories": [], "stage": "admissions", "urgency": "low"}}
+{"row_id": 762, "prediction": {"sentiment": "neutral", "categories": [], "stage": "admissions", "urgency": "low"}}
 {"row_id": 763, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 764, "prediction": {"sentiment": "neutral", "categories": [], "stage": "examination_and_diagnosis", "urgency": "low"}}
 {"row_id": 765, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -783,7 +783,7 @@
 {"row_id": 783, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 784, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 785, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 786, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 786, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 787, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 788, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 789, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -795,10 +795,10 @@
 {"row_id": 795, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 796, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 797, "prediction": {"sentiment": "positive", "categories": [], "stage": "admissions", "urgency": "low"}}
-{"row_id": 798, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 798, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 799, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 800, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 801, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 801, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 802, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 803, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 804, "prediction": {"sentiment": "positive", "categories": [], "stage": "admissions", "urgency": "low"}}
@@ -816,7 +816,7 @@
 {"row_id": 816, "prediction": {"sentiment": "positive", "categories": [], "stage": "admissions", "urgency": "low"}}
 {"row_id": 817, "prediction": {"sentiment": "positive", "categories": [], "stage": "admissions", "urgency": "low"}}
 {"row_id": 818, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
-{"row_id": 819, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 819, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 820, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 821, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 822, "prediction": {"sentiment": "positive", "categories": [], "stage": "unclear", "urgency": "low"}}
@@ -828,7 +828,7 @@
 {"row_id": 828, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 829, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 830, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 831, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 831, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 832, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 833, "prediction": {"sentiment": "positive", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 834, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -882,7 +882,7 @@
 {"row_id": 882, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 883, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 884, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 885, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 885, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 886, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 887, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 888, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -895,11 +895,11 @@
 {"row_id": 895, "prediction": {"sentiment": "negative", "categories": ["safety"], "stage": "care_on_the_ward", "urgency": "high"}}
 {"row_id": 896, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 897, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 898, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 898, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 899, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 900, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 901, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 902, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 902, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 903, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 904, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 905, "prediction": {"sentiment": "negative", "categories": ["safety"], "stage": "care_on_the_ward", "urgency": "high"}}
@@ -909,7 +909,7 @@
 {"row_id": 909, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 910, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 911, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "examination_and_diagnosis", "urgency": "medium"}}
-{"row_id": 912, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 912, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 913, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 914, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 915, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
@@ -962,11 +962,11 @@
 {"row_id": 962, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 963, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 964, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
-{"row_id": 965, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 965, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 966, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 967, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 968, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 969, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 969, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 970, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 971, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 972, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -977,7 +977,7 @@
 {"row_id": 977, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 978, "prediction": {"sentiment": "positive", "categories": [], "stage": "unclear", "urgency": "low"}}
 {"row_id": 979, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 980, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 980, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 981, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 982, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 983, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -989,7 +989,7 @@
 {"row_id": 989, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 990, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 991, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
-{"row_id": 992, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 992, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 993, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 994, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 995, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -1020,9 +1020,9 @@
 {"row_id": 1020, "prediction": {"sentiment": "positive", "categories": [], "stage": "admissions", "urgency": "low"}}
 {"row_id": 1021, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1022, "prediction": {"sentiment": "neutral", "categories": [], "stage": "unclear", "urgency": "low"}}
-{"row_id": 1023, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1023, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1024, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 1025, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1025, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1026, "prediction": {"sentiment": "negative", "categories": ["listening"], "stage": "examination_and_diagnosis", "urgency": "medium"}}
 {"row_id": 1027, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1028, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -1033,13 +1033,13 @@
 {"row_id": 1033, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1034, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1035, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1036, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 1036, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1037, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1038, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1039, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1040, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1041, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 1042, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1042, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1043, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1044, "prediction": {"sentiment": "positive", "categories": [], "stage": "examination_and_diagnosis", "urgency": "low"}}
 {"row_id": 1045, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
@@ -1048,7 +1048,7 @@
 {"row_id": 1048, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1049, "prediction": {"sentiment": "positive", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
 {"row_id": 1050, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1051, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 1051, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1052, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1053, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1054, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -1060,7 +1060,7 @@
 {"row_id": 1060, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1061, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1062, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1063, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1063, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1064, "prediction": {"sentiment": "positive", "categories": [], "stage": "admissions", "urgency": "low"}}
 {"row_id": 1065, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1066, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -1104,7 +1104,7 @@
 {"row_id": 1104, "prediction": {"sentiment": "positive", "categories": [], "stage": "admissions", "urgency": "low"}}
 {"row_id": 1105, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1106, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 1107, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1107, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1108, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1109, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1110, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
@@ -1125,7 +1125,7 @@
 {"row_id": 1125, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1126, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1127, "prediction": {"sentiment": "positive", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
-{"row_id": 1128, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 1128, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1129, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1130, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1131, "prediction": {"sentiment": "positive", "categories": [], "stage": "unclear", "urgency": "low"}}
@@ -1135,7 +1135,7 @@
 {"row_id": 1135, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1136, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1137, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1138, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 1138, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1139, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1140, "prediction": {"sentiment": "neutral", "categories": [], "stage": "examination_and_diagnosis", "urgency": "low"}}
 {"row_id": 1141, "prediction": {"sentiment": "neutral", "categories": [], "stage": "examination_and_diagnosis", "urgency": "low"}}
@@ -1148,7 +1148,7 @@
 {"row_id": 1148, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1149, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1150, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1151, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
+{"row_id": 1151, "prediction": {"sentiment": "neutral", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
 {"row_id": 1152, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1153, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1154, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -1174,7 +1174,7 @@
 {"row_id": 1174, "prediction": {"sentiment": "positive", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
 {"row_id": 1175, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1176, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1177, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
+{"row_id": 1177, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1178, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1179, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1180, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -1237,7 +1237,7 @@
 {"row_id": 1237, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1238, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1239, "prediction": {"sentiment": "neutral", "categories": [], "stage": "examination_and_diagnosis", "urgency": "low"}}
-{"row_id": 1240, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1240, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1241, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1242, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1243, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -1265,10 +1265,10 @@
 {"row_id": 1265, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1266, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1267, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 1268, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 1268, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1269, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "examination_and_diagnosis", "urgency": "medium"}}
 {"row_id": 1270, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
-{"row_id": 1271, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1271, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1272, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1273, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1274, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -1295,8 +1295,8 @@
 {"row_id": 1295, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 1296, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1297, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
-{"row_id": 1298, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1299, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1298, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1299, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1300, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1301, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1302, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -1304,7 +1304,7 @@
 {"row_id": 1304, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1305, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1306, "prediction": {"sentiment": "positive", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
-{"row_id": 1307, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1307, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1308, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1309, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 1310, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -1341,16 +1341,16 @@
 {"row_id": 1341, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "unclear", "urgency": "medium"}}
 {"row_id": 1342, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1343, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1344, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 1344, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1345, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1346, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 1347, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
+{"row_id": 1347, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1348, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1349, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1350, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1351, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1352, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1353, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1353, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1354, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1355, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1356, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -1391,12 +1391,12 @@
 {"row_id": 1391, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1392, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1393, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
-{"row_id": 1394, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1394, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1395, "prediction": {"sentiment": "positive", "categories": [], "stage": "unclear", "urgency": "low"}}
 {"row_id": 1396, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
-{"row_id": 1397, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 1397, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1398, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
-{"row_id": 1399, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 1399, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1400, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1401, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1402, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -1421,7 +1421,7 @@
 {"row_id": 1421, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1422, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1423, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1424, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1424, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1425, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1426, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1427, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -1442,26 +1442,26 @@
 {"row_id": 1442, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1443, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1444, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1445, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 1445, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1446, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1447, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1448, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1449, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1449, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1450, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1451, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1452, "prediction": {"sentiment": "positive", "categories": [], "stage": "examination_and_diagnosis", "urgency": "low"}}
-{"row_id": 1453, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1453, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1454, "prediction": {"sentiment": "positive", "categories": [], "stage": "admissions", "urgency": "low"}}
-{"row_id": 1455, "prediction": {"sentiment": "neutral", "categories": [], "stage": "unclear", "urgency": "low"}}
+{"row_id": 1455, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1456, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1457, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1458, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1459, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1460, "prediction": {"sentiment": "positive", "categories": [], "stage": "unclear", "urgency": "low"}}
-{"row_id": 1461, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1461, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1462, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1463, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1464, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1464, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1465, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1466, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1467, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
@@ -1476,7 +1476,7 @@
 {"row_id": 1476, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1477, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1478, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1479, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1479, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1480, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1481, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1482, "prediction": {"sentiment": "negative", "categories": ["safety"], "stage": "care_on_the_ward", "urgency": "high"}}
@@ -1493,7 +1493,7 @@
 {"row_id": 1493, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1494, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1495, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1496, "prediction": {"sentiment": "neutral", "categories": [], "stage": "admissions", "urgency": "low"}}
+{"row_id": 1496, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 1497, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1498, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1499, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -1537,7 +1537,7 @@
 {"row_id": 1537, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1538, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1539, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 1540, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1540, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1541, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1542, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1543, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -1562,12 +1562,12 @@
 {"row_id": 1562, "prediction": {"sentiment": "positive", "categories": [], "stage": "examination_and_diagnosis", "urgency": "low"}}
 {"row_id": 1563, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1564, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1565, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1565, "prediction": {"sentiment": "negative", "categories": [], "stage": "examination_and_diagnosis", "urgency": "low"}}
 {"row_id": 1566, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "unclear", "urgency": "medium"}}
 {"row_id": 1567, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1568, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 1568, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1569, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 1570, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 1570, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1571, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1572, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1573, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -1585,8 +1585,8 @@
 {"row_id": 1585, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1586, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1587, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1588, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
-{"row_id": 1589, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1588, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 1589, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1590, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1591, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1592, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -1594,7 +1594,7 @@
 {"row_id": 1594, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1595, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1596, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 1597, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 1597, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1598, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1599, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1600, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
@@ -1608,14 +1608,14 @@
 {"row_id": 1608, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1609, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1610, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1611, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1611, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1612, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1613, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1614, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1615, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1616, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1617, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1618, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 1618, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1619, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1620, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 1621, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
@@ -1629,8 +1629,8 @@
 {"row_id": 1629, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1630, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1631, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
-{"row_id": 1632, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
-{"row_id": 1633, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
+{"row_id": 1632, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 1633, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1634, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1635, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1636, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -1646,7 +1646,7 @@
 {"row_id": 1646, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1647, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1648, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
-{"row_id": 1649, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1649, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1650, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1651, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 1652, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -1657,15 +1657,15 @@
 {"row_id": 1657, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1658, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1659, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1660, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 1660, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1661, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1662, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 1663, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1663, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1664, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1665, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1666, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1667, "prediction": {"sentiment": "neutral", "categories": [], "stage": "examination_and_diagnosis", "urgency": "low"}}
-{"row_id": 1668, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 1668, "prediction": {"sentiment": "negative", "categories": [], "stage": "admissions", "urgency": "low"}}
 {"row_id": 1669, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1670, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1671, "prediction": {"sentiment": "negative", "categories": ["listening"], "stage": "examination_and_diagnosis", "urgency": "medium"}}
@@ -1716,12 +1716,12 @@
 {"row_id": 1716, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1717, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 1718, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
-{"row_id": 1719, "prediction": {"sentiment": "neutral", "categories": [], "stage": "unclear", "urgency": "low"}}
+{"row_id": 1719, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 1720, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1721, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1722, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1723, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1724, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1724, "prediction": {"sentiment": "negative", "categories": [], "stage": "examination_and_diagnosis", "urgency": "medium"}}
 {"row_id": 1725, "prediction": {"sentiment": "positive", "categories": [], "stage": "unclear", "urgency": "low"}}
 {"row_id": 1726, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1727, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
@@ -1734,7 +1734,7 @@
 {"row_id": 1734, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1735, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1736, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1737, "prediction": {"sentiment": "negative", "categories": [], "stage": "admissions", "urgency": "medium"}}
+{"row_id": 1737, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1738, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1739, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1740, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -1759,7 +1759,7 @@
 {"row_id": 1759, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1760, "prediction": {"sentiment": "positive", "categories": [], "stage": "examination_and_diagnosis", "urgency": "low"}}
 {"row_id": 1761, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
-{"row_id": 1762, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 1762, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1763, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1764, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1765, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -1769,7 +1769,7 @@
 {"row_id": 1769, "prediction": {"sentiment": "positive", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 1770, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1771, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1772, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 1772, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1773, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1774, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1775, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -1789,7 +1789,7 @@
 {"row_id": 1789, "prediction": {"sentiment": "positive", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
 {"row_id": 1790, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1791, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
-{"row_id": 1792, "prediction": {"sentiment": "positive", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
+{"row_id": 1792, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1793, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1794, "prediction": {"sentiment": "positive", "categories": [], "stage": "admissions", "urgency": "low"}}
 {"row_id": 1795, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
@@ -1817,14 +1817,14 @@
 {"row_id": 1817, "prediction": {"sentiment": "neutral", "categories": [], "stage": "unclear", "urgency": "low"}}
 {"row_id": 1818, "prediction": {"sentiment": "negative", "categories": ["safety"], "stage": "care_on_the_ward", "urgency": "high"}}
 {"row_id": 1819, "prediction": {"sentiment": "neutral", "categories": [], "stage": "unclear", "urgency": "low"}}
-{"row_id": 1820, "prediction": {"sentiment": "neutral", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
+{"row_id": 1820, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 1821, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1822, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1823, "prediction": {"sentiment": "neutral", "categories": [], "stage": "unclear", "urgency": "low"}}
 {"row_id": 1824, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1825, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1826, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 1827, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
+{"row_id": 1827, "prediction": {"sentiment": "neutral", "categories": [], "stage": "admissions", "urgency": "low"}}
 {"row_id": 1828, "prediction": {"sentiment": "positive", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
 {"row_id": 1829, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1830, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -1833,7 +1833,7 @@
 {"row_id": 1833, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1834, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1835, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 1836, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1836, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1837, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1838, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1839, "prediction": {"sentiment": "negative", "categories": ["safety"], "stage": "care_on_the_ward", "urgency": "high"}}
@@ -1841,7 +1841,7 @@
 {"row_id": 1841, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1842, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1843, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1844, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 1844, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1845, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1846, "prediction": {"sentiment": "positive", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 1847, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -1872,7 +1872,7 @@
 {"row_id": 1872, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 1873, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1874, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1875, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1875, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1876, "prediction": {"sentiment": "positive", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
 {"row_id": 1877, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1878, "prediction": {"sentiment": "positive", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
@@ -1889,8 +1889,8 @@
 {"row_id": 1889, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1890, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1891, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1892, "prediction": {"sentiment": "negative", "categories": [], "stage": "admissions", "urgency": "medium"}}
-{"row_id": 1893, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1892, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
+{"row_id": 1893, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1894, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1895, "prediction": {"sentiment": "neutral", "categories": [], "stage": "unclear", "urgency": "low"}}
 {"row_id": 1896, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -1917,7 +1917,7 @@
 {"row_id": 1917, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1918, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1919, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 1920, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "admissions", "urgency": "medium"}}
+{"row_id": 1920, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1921, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1922, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1923, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -1928,7 +1928,7 @@
 {"row_id": 1928, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1929, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1930, "prediction": {"sentiment": "positive", "categories": [], "stage": "unclear", "urgency": "low"}}
-{"row_id": 1931, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 1931, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1932, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1933, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1934, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
@@ -1946,7 +1946,7 @@
 {"row_id": 1946, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "examination_and_diagnosis", "urgency": "medium"}}
 {"row_id": 1947, "prediction": {"sentiment": "negative", "categories": ["safety"], "stage": "care_on_the_ward", "urgency": "high"}}
 {"row_id": 1948, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
-{"row_id": 1949, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 1949, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1950, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1951, "prediction": {"sentiment": "positive", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 1952, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -1967,7 +1967,7 @@
 {"row_id": 1967, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 1968, "prediction": {"sentiment": "negative", "categories": ["respect_and_rights"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1969, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 1970, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 1970, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 1971, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1972, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 1973, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
@@ -1996,15 +1996,15 @@
 {"row_id": 1996, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 1997, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "examination_and_diagnosis", "urgency": "medium"}}
 {"row_id": 1998, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "examination_and_diagnosis", "urgency": "medium"}}
-{"row_id": 1999, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
-{"row_id": 2000, "prediction": {"sentiment": "negative", "categories": [], "stage": "admissions", "urgency": "medium"}}
+{"row_id": 1999, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 2000, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 2001, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2002, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2003, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2004, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2005, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2006, "prediction": {"sentiment": "positive", "categories": [], "stage": "examination_and_diagnosis", "urgency": "low"}}
-{"row_id": 2007, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 2007, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2008, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2009, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2010, "prediction": {"sentiment": "positive", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
@@ -2034,7 +2034,7 @@
 {"row_id": 2034, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2035, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2036, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 2037, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 2037, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2038, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2039, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2040, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -2042,7 +2042,7 @@
 {"row_id": 2042, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 2043, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2044, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 2045, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 2045, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2046, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2047, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2048, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
@@ -2051,7 +2051,7 @@
 {"row_id": 2051, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2052, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2053, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 2054, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 2054, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2055, "prediction": {"sentiment": "positive", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 2056, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2057, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -2077,17 +2077,17 @@
 {"row_id": 2077, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2078, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2079, "prediction": {"sentiment": "positive", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
-{"row_id": 2080, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 2080, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2081, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 2082, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 2082, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2083, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 2084, "prediction": {"sentiment": "neutral", "categories": [], "stage": "unclear", "urgency": "low"}}
 {"row_id": 2085, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 2086, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 2086, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2087, "prediction": {"sentiment": "negative", "categories": ["safety"], "stage": "care_on_the_ward", "urgency": "high"}}
 {"row_id": 2088, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2089, "prediction": {"sentiment": "positive", "categories": [], "stage": "unclear", "urgency": "low"}}
-{"row_id": 2090, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 2090, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2091, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2092, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2093, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
@@ -2116,7 +2116,7 @@
 {"row_id": 2116, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 2117, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2118, "prediction": {"sentiment": "neutral", "categories": [], "stage": "unclear", "urgency": "low"}}
-{"row_id": 2119, "prediction": {"sentiment": "neutral", "categories": [], "stage": "discharge_and_transfers", "urgency": "low"}}
+{"row_id": 2119, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 2120, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2121, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2122, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
@@ -2137,7 +2137,7 @@
 {"row_id": 2137, "prediction": {"sentiment": "neutral", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 2138, "prediction": {"sentiment": "neutral", "categories": [], "stage": "examination_and_diagnosis", "urgency": "low"}}
 {"row_id": 2139, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
-{"row_id": 2140, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 2140, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2141, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2142, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 2143, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
@@ -2148,7 +2148,7 @@
 {"row_id": 2148, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2149, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2150, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 2151, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 2151, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2152, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2153, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2154, "prediction": {"sentiment": "negative", "categories": [], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -2199,7 +2199,7 @@
 {"row_id": 2199, "prediction": {"sentiment": "negative", "categories": ["listening"], "stage": "examination_and_diagnosis", "urgency": "medium"}}
 {"row_id": 2200, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2201, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 2202, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 2202, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 2203, "prediction": {"sentiment": "positive", "categories": [], "stage": "admissions", "urgency": "low"}}
 {"row_id": 2204, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2205, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -2207,7 +2207,7 @@
 {"row_id": 2207, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2208, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 2209, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 2210, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 2210, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2211, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2212, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2213, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -2218,7 +2218,7 @@
 {"row_id": 2218, "prediction": {"sentiment": "neutral", "categories": [], "stage": "unclear", "urgency": "low"}}
 {"row_id": 2219, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2220, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 2221, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 2221, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 2222, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2223, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2224, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -2232,7 +2232,7 @@
 {"row_id": 2232, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2233, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2234, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
-{"row_id": 2235, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
+{"row_id": 2235, "prediction": {"sentiment": "neutral", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
 {"row_id": 2236, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2237, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2238, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "unclear", "urgency": "medium"}}
@@ -2247,7 +2247,7 @@
 {"row_id": 2247, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2248, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2249, "prediction": {"sentiment": "negative", "categories": ["safety"], "stage": "care_on_the_ward", "urgency": "high"}}
-{"row_id": 2250, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 2250, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2251, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2252, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2253, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -2255,7 +2255,7 @@
 {"row_id": 2255, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2256, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2257, "prediction": {"sentiment": "positive", "categories": [], "stage": "care_on_the_ward", "urgency": "low"}}
-{"row_id": 2258, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 2258, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
 {"row_id": 2259, "prediction": {"sentiment": "negative", "categories": ["communication"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2260, "prediction": {"sentiment": "positive", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 2261, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
@@ -2266,9 +2266,9 @@
 {"row_id": 2266, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2267, "prediction": {"sentiment": "positive", "categories": [], "stage": "operations_and_procedures", "urgency": "low"}}
 {"row_id": 2268, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
-{"row_id": 2269, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
+{"row_id": 2269, "prediction": {"sentiment": "negative", "categories": ["quality"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2270, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
-{"row_id": 2271, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 2271, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2272, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2273, "prediction": {"sentiment": "negative", "categories": ["safety"], "stage": "care_on_the_ward", "urgency": "high"}}
 {"row_id": 2274, "prediction": {"sentiment": "positive", "categories": [], "stage": "examination_and_diagnosis", "urgency": "low"}}
@@ -2277,7 +2277,7 @@
 {"row_id": 2277, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2278, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
 {"row_id": 2279, "prediction": {"sentiment": "negative", "categories": ["communication", "institutional_processes"], "stage": "admissions", "urgency": "medium"}}
-{"row_id": 2280, "prediction": {"sentiment": "negative", "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}}
+{"row_id": 2280, "prediction": {"sentiment": "negative", "categories": [], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2281, "prediction": {"sentiment": "negative", "categories": ["environment"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2282, "prediction": {"sentiment": "negative", "categories": ["respect_and_rights"], "stage": "care_on_the_ward", "urgency": "medium"}}
 {"row_id": 2283, "prediction": {"sentiment": "neutral", "categories": [], "stage": "examination_and_diagnosis", "urgency": "low"}}

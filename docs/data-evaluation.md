@@ -7,7 +7,7 @@ implementations owned by other members.
 
 ## Run it
 
-Use Python 3.12 from the repository root:
+Use Python 3.12 on Linux or WSL, from the repository root:
 
 ```sh
 python -m venv .venv
@@ -282,3 +282,38 @@ To reproduce the sample selection from the existing CSV without regenerating any
 That command writes a blank reviewer sheet and automated repetition statistics. It does
 not fabricate review decisions. The submitted audit retains the actual before/after
 review notes separately.
+
+## Final measured findings
+
+The final default run uses dataset version 2 and the existing minimum cluster size of 8.
+The saved reports identify the code revision and exact dataset hash.
+
+| Check | Measured result | Target / result |
+|---|---:|---|
+| De-identification recall, 150 comments / 315 fake details | 98.41% | At least 95%, PASS |
+| ID, phone and email recall | 100% in each required type | 100%, PASS |
+| Over-removal; unit removals | 0%; 0 | Under 5%; none, PASS |
+| Synthetic sentiment macro F1, 734 held-out rows | 0.7241 | 0.75, FAIL |
+| Synthetic category micro F1 | 0.8220 | 0.70, PASS |
+| Synthetic stage accuracy | 74.11% | 65%, PASS |
+| Synthetic high-urgency recall | 0% | 80%, FAIL |
+| Public FFT sentiment macro F1, 1,388 labelled rows | 0.1299 | 0.75, FAIL |
+| Planted recovery, default minimum size 8 | 0 of 8 | At least 6, FAIL |
+| Planted recovery, exploratory minimum size 40 | 8 of 8 | At least 6, PASS for this configuration |
+| Real baseline processing, 1,000 comments | 15.277 seconds | At most 900 seconds, PASS for measured scope |
+| Slowest of the populated dashboard API samples | 0.018280 seconds | At most 2 seconds, PASS for in-process scope |
+
+The [size-40 diagnostic](../reports/bhavya/grouping-40.json) isolates a grouping parameter
+without changing teammate-owned code. The default produced 148 small issues; minimum
+size 40 produced ten larger ones and recovered all eight planted problems. Medication
+had 130 patient/family and 90 staff comments. The recovered noise issue had 203
+patient/family comments and zero staff, including some background contamination. Transport
+had 90 patient/family and 72 staff comments and was flagged rising. The adjusted Rand index
+on planted comments rose from 0.1094 to 0.8957. That index is a diagnostic, not P3's human
+issue-quality score. Independent API aggregation checks passed for all three groupings.
+
+The size-40 run was chosen after seeing default fragmentation. It is explicitly
+exploratory, not an untouched-test estimate or a replacement for the default failure.
+The code default remains 8. Its timing is not used as the NFR3 benchmark; only the default
+configuration was benchmarked. A separate [ten-issue reviewer sheet](../reports/bhavya/issues-to-rate-grouping-40.csv)
+is provided, but it has no completed human ratings.

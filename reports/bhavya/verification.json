@@ -1,0 +1,47 @@
+{
+  "backend": {
+    "command": ".venv/bin/python -m pytest backend/tests -q",
+    "failed": 0,
+    "passed": 168,
+    "seconds": 90.02,
+    "warnings": 2
+  },
+  "dependencies": {
+    "command": ".venv/bin/python -m pip check",
+    "status": "PASS"
+  },
+  "frontend": {
+    "commands": [
+      "npm ci",
+      "npm run build"
+    ],
+    "scope": "TypeScript check and Vite production build; no browser study",
+    "status": "PASS"
+  },
+  "node": "v24.22.1",
+  "npm": "11.9.0",
+  "quality_audit": {
+    "corrected_sample_rows": 35,
+    "corrected_total_rows": 721,
+    "reviewer_type": "AI, not human annotation",
+    "sample": 100,
+    "source_counts": {
+      "family": 25,
+      "nurse": 25,
+      "patient": 25,
+      "physician": 25
+    }
+  },
+  "report_hash_matches_dataset": true,
+  "reproduction": {
+    "scope": "both dataset files matched byte for byte in memory; existing files not overwritten",
+    "status": "PASS"
+  },
+  "unperformed": [
+    "hosted LLM throughput",
+    "MySQL/network/browser timing",
+    "human 300-comment validation",
+    "two-rater issue and suggestion scoring",
+    "independent teammate reproduction"
+  ]
+}
