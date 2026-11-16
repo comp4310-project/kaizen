@@ -42,7 +42,9 @@ def test_same_seed_same_files(tmp_path) -> None:
 def test_committed_files_match_the_generator(tmp_path) -> None:
     fresh = synth.write(tmp_path)
     for path in fresh.values():
-        assert path.read_bytes() == (DATA / path.name).read_bytes(), f"rerun scripts/make_synthetic.py, {path.name} is stale"
+        # Git on Windows may check the committed copy out with CRLF line endings.
+        committed = (DATA / path.name).read_bytes().replace(b"\r\n", b"\n")
+        assert path.read_bytes() == committed, f"rerun scripts/make_synthetic.py, {path.name} is stale"
 
 
 def test_size_sources_dates_and_background(rows) -> None:
