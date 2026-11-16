@@ -32,7 +32,7 @@ src/api.ts                  every API call and the types of its replies
 src/auth.tsx                AuthProvider, useAuth(), canReviewSuggestions()
 src/states.tsx              ErrorNotice, EmptyState, SkeletonRows, SkeletonBlocks, describeError()
 src/format.ts               words(), percent(), sourceName(), sortUnits(), roleName(), dateTime()
-src/hooks.ts                useDebounced(), so filters reload once a select has settled
+src/hooks.ts                useFilter(): a select or input that reloads data on a pick, Enter or leaving it, not on every arrow key
 src/SuggestionCard.tsx      one suggestion: fields, citations, accept / edit / reject
 src/IssueReview.tsx        issue and comment correction forms for QI and admin
 src/pages/LoginPage.tsx

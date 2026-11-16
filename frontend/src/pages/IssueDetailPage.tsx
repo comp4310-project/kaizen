@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { api, type IssueComment, type IssueCommentsOut, type Source, type Suggestion, type Unit } from "../api";
 import { canReviewSuggestions, useAuth } from "../auth";
 import { sortUnits, sourceName, words } from "../format";
-import { useDebounced } from "../hooks";
+import { useFilter } from "../hooks";
 import { describeError, EmptyState, ErrorNotice, SkeletonBlocks } from "../states";
 import { SuggestionCard } from "../SuggestionCard";
 import { CommentReview, IssueReview } from "../IssueReview";
@@ -113,18 +113,16 @@ function IssueDetail({ issueId }: { issueId: number }) {
   const [error, setError] = useState<unknown>(null);
   const [moreError, setMoreError] = useState<unknown>(null);
   const [loadingMore, setLoadingMore] = useState(false);
-  const [unit, setUnit] = useState("");
-  const [source, setSource] = useState<Source | "">("");
+  const unit = useFilter("");
+  const source = useFilter<Source | "">("");
   const [units, setUnits] = useState<Unit[] | null>(null);
   const [unitsError, setUnitsError] = useState<unknown>(null);
   const [exporting, setExporting] = useState(false);
   const [exportError, setExportError] = useState<unknown>(null);
   const [filtering, setFiltering] = useState(false);
-  // The selects change at once; the list reloads once they have settled. See hooks.ts.
-  const appliedUnit = useDebounced(unit);
-  const appliedSource = useDebounced(source);
-  const scopedUnit = me?.role === "manager" ? me.unit ?? undefined : appliedUnit || undefined;
-  const sourceFilter = appliedSource || undefined;
+  // The list reloads when a filter is applied, not on every arrow key. See hooks.ts.
+  const scopedUnit = me?.role === "manager" ? me.unit ?? undefined : unit.applied || undefined;
+  const sourceFilter = source.applied || undefined;
   const [exportNote, setExportNote] = useState("");
   const hasResults = data !== null && !filtering && error === null;
   const canExport = hasResults && !!data?.comments.length && !exporting && !loadingMore;
@@ -236,8 +234,7 @@ function IssueDetail({ issueId }: { issueId: number }) {
               {canReview && (
                 <div className="field">
                   <label htmlFor="comment-unit">Unit</label>
-                  <select id="comment-unit" value={unit} disabled={!units || loadingMore || exporting}
-                    onChange={(event) => setUnit(event.target.value)}>
+                  <select id="comment-unit" {...unit.props} disabled={!units || loadingMore || exporting}>
                     <option value="">All units</option>
                     {units?.map(({ code, name }) => <option key={code} value={code}>{code} ({name})</option>)}
                   </select>
@@ -245,8 +242,7 @@ function IssueDetail({ issueId }: { issueId: number }) {
               )}
               <div className="field">
                 <label htmlFor="comment-source">Source</label>
-                <select id="comment-source" value={source} disabled={loadingMore || exporting}
-                  onChange={(event) => setSource(event.target.value as Source | "")}>
+                <select id="comment-source" {...source.props} disabled={loadingMore || exporting}>
                   <option value="">All sources</option>
                   <option value="patient_family">Patient or family</option>
                   <option value="staff">Staff</option>

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { api, type CompareBy, type CompareOut, type Unit } from "../api";
 import { useAuth } from "../auth";
 import { percent, sortUnits, words } from "../format";
-import { useDebounced } from "../hooks";
+import { useFilter } from "../hooks";
 import { EmptyState, ErrorNotice, SkeletonRows } from "../states";
 
 const groupNames: Record<CompareBy, string> = {
@@ -35,17 +35,16 @@ function CountCell({ count, max }: { count: number; max: number }) {
 export function ComparePage() {
   const { me } = useAuth();
   const isManager = me?.role === "manager";
-  const [by, setBy] = useState<CompareBy>("category");
-  const [unit, setUnit] = useState("");
-  const [from, setFrom] = useState("");
-  const [to, setTo] = useState("");
+  // Each filter reloads when applied, not on every arrow key. See hooks.ts.
+  const by = useFilter<CompareBy>("category");
+  const unit = useFilter("");
+  const from = useFilter("");
+  const to = useFilter("");
   const [units, setUnits] = useState<Unit[] | null>(null);
   const [unitError, setUnitError] = useState<unknown>(null);
-  const scopedUnit = isManager ? me?.unit ?? undefined : unit || undefined;
-  const invalidRange = Boolean(from && to && from > to);
-  // Reload once the filters have settled, not for every option passed with the arrow keys.
-  const applied = useDebounced(JSON.stringify([by, scopedUnit ?? null, from, to]));
-  const [appliedBy, appliedUnit, appliedFrom, appliedTo] = JSON.parse(applied) as [CompareBy, string | null, string, string];
+  const scopedUnit = isManager ? me?.unit ?? undefined : unit.applied || undefined;
+  const invalidRange = Boolean(from.value && to.value && from.value > to.value);
+  const appliedInvalid = Boolean(from.applied && to.applied && from.applied > to.applied);
 
   useEffect(() => {
     if (isManager) return;
@@ -73,7 +72,7 @@ export function ComparePage() {
       <div className="toolbar compare-filters">
         <div className="field">
           <label htmlFor="compare-by">Group by</label>
-          <select id="compare-by" value={by} onChange={(event) => setBy(event.target.value as CompareBy)}>
+          <select id="compare-by" {...by.props}>
             <option value="category">Category</option>
             <option value="stage">Stage of care</option>
             <option value="unit">Unit</option>
@@ -82,7 +81,7 @@ export function ComparePage() {
         {!isManager && (
           <div className="field">
             <label htmlFor="compare-unit">Unit</label>
-            <select id="compare-unit" value={unit} onChange={(event) => setUnit(event.target.value)} disabled={!units}>
+            <select id="compare-unit" {...unit.props} disabled={!units}>
               <option value="">All units</option>
               {units?.map(({ code, name }) => <option key={code} value={code}>{code} ({name})</option>)}
             </select>
@@ -90,12 +89,12 @@ export function ComparePage() {
         )}
         <div className="field">
           <label htmlFor="compare-from">From date</label>
-          <input id="compare-from" type="date" value={from} onChange={(event) => setFrom(event.target.value)}
+          <input id="compare-from" type="date" {...from.props}
             aria-invalid={invalidRange} aria-describedby={invalidRange ? "compare-date-error" : undefined} />
         </div>
         <div className="field">
           <label htmlFor="compare-to">To date</label>
-          <input id="compare-to" type="date" value={to} onChange={(event) => setTo(event.target.value)}
+          <input id="compare-to" type="date" {...to.props}
             aria-invalid={invalidRange} aria-describedby={invalidRange ? "compare-date-error" : undefined} />
         </div>
       </div>
@@ -105,12 +104,13 @@ export function ComparePage() {
           <ErrorNotice error={unitError} />
         </div>
       )}
-      {invalidRange || (appliedFrom && appliedTo && appliedFrom > appliedTo) ? (
+      {invalidRange || appliedInvalid ? (
         <div id="compare-date-error">
           <ErrorNotice error={new Error("Choose an end date on or after the start date.")} />
         </div>
       ) : (
-        <CompareResults key={applied} by={appliedBy} unit={appliedUnit ?? undefined} from={appliedFrom} to={appliedTo} />
+        <CompareResults key={JSON.stringify([by.applied, scopedUnit, from.applied, to.applied])}
+          by={by.applied} unit={scopedUnit} from={from.applied} to={to.applied} />
       )}
     </section>
   );
