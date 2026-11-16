@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { api, type IssueComment, type IssueCommentsOut, type Source, type Suggestion, type Unit } from "../api";
 import { canReviewSuggestions, useAuth } from "../auth";
-import { sourceName, words } from "../format";
+import { sortUnits, sourceName, words } from "../format";
+import { useDebounced } from "../hooks";
 import { describeError, EmptyState, ErrorNotice, SkeletonBlocks } from "../states";
 import { SuggestionCard } from "../SuggestionCard";
 import { CommentReview, IssueReview } from "../IssueReview";
@@ -119,7 +120,11 @@ function IssueDetail({ issueId }: { issueId: number }) {
   const [exporting, setExporting] = useState(false);
   const [exportError, setExportError] = useState<unknown>(null);
   const [filtering, setFiltering] = useState(false);
-  const scopedUnit = me?.role === "manager" ? me.unit ?? undefined : unit || undefined;
+  // The selects change at once; the list reloads once they have settled. See hooks.ts.
+  const appliedUnit = useDebounced(unit);
+  const appliedSource = useDebounced(source);
+  const scopedUnit = me?.role === "manager" ? me.unit ?? undefined : appliedUnit || undefined;
+  const sourceFilter = appliedSource || undefined;
   const [exportNote, setExportNote] = useState("");
   const hasResults = data !== null && !filtering && error === null;
   const canExport = hasResults && !!data?.comments.length && !exporting && !loadingMore;
@@ -128,7 +133,7 @@ function IssueDetail({ issueId }: { issueId: number }) {
     if (!canReview) return;
     let current = true;
     api.units().then(
-      (rows) => { if (current) setUnits(rows); },
+      (rows) => { if (current) setUnits(sortUnits(rows)); },
       (cause: unknown) => { if (current) setUnitsError(cause); },
     );
     return () => { current = false; };
@@ -136,7 +141,8 @@ function IssueDetail({ issueId }: { issueId: number }) {
 
   useEffect(() => {
     let current = true;
-    api.issueComments(issueId, { unit: scopedUnit, source: source || undefined, limit: PAGE_SIZE }).then(
+    resetComments();
+    api.issueComments(issueId, { unit: scopedUnit, source: sourceFilter, limit: PAGE_SIZE }).then(
       (out) => {
         if (current) {
           setData(out);
@@ -151,7 +157,7 @@ function IssueDetail({ issueId }: { issueId: number }) {
       },
     );
     return () => { current = false; };
-  }, [issueId, scopedUnit, source]);
+  }, [issueId, scopedUnit, sourceFilter]);
 
   function resetComments() {
     setError(null);
@@ -167,7 +173,7 @@ function IssueDetail({ issueId }: { issueId: number }) {
     setMoreError(null);
     try {
       const next = await api.issueComments(issueId, {
-        unit: scopedUnit, source: source || undefined, limit: PAGE_SIZE, offset: data.comments.length,
+        unit: scopedUnit, source: sourceFilter, limit: PAGE_SIZE, offset: data.comments.length,
       });
       setData((old) => old && { ...old, total: next.total, comments: [...old.comments, ...next.comments] });
     } catch (e) {
@@ -183,7 +189,7 @@ function IssueDetail({ issueId }: { issueId: number }) {
     setExportError(null);
     setExportNote("");
     try {
-      const saved = await api.downloadIssueComments(issueId, { unit: scopedUnit, source: source || undefined }, data.comments.length);
+      const saved = await api.downloadIssueComments(issueId, { unit: scopedUnit, source: sourceFilter }, data.comments.length);
       setExportNote(`Downloaded ${saved.fileName} (${saved.rows} ${saved.rows === 1 ? "comment" : "comments"}).`);
     } catch (cause) {
       setExportError(cause);
@@ -231,7 +237,7 @@ function IssueDetail({ issueId }: { issueId: number }) {
                 <div className="field">
                   <label htmlFor="comment-unit">Unit</label>
                   <select id="comment-unit" value={unit} disabled={!units || loadingMore || exporting}
-                    onChange={(event) => { resetComments(); setUnit(event.target.value); }}>
+                    onChange={(event) => setUnit(event.target.value)}>
                     <option value="">All units</option>
                     {units?.map(({ code, name }) => <option key={code} value={code}>{code} ({name})</option>)}
                   </select>
@@ -240,7 +246,7 @@ function IssueDetail({ issueId }: { issueId: number }) {
               <div className="field">
                 <label htmlFor="comment-source">Source</label>
                 <select id="comment-source" value={source} disabled={loadingMore || exporting}
-                  onChange={(event) => { resetComments(); setSource(event.target.value as Source | ""); }}>
+                  onChange={(event) => setSource(event.target.value as Source | "")}>
                   <option value="">All sources</option>
                   <option value="patient_family">Patient or family</option>
                   <option value="staff">Staff</option>

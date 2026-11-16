@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { api, type CompareBy, type CompareOut, type Unit } from "../api";
 import { useAuth } from "../auth";
-import { percent, words } from "../format";
+import { percent, sortUnits, words } from "../format";
+import { useDebounced } from "../hooks";
 import { EmptyState, ErrorNotice, SkeletonRows } from "../states";
 
 const groupNames: Record<CompareBy, string> = {
@@ -42,13 +43,16 @@ export function ComparePage() {
   const [unitError, setUnitError] = useState<unknown>(null);
   const scopedUnit = isManager ? me?.unit ?? undefined : unit || undefined;
   const invalidRange = Boolean(from && to && from > to);
+  // Reload once the filters have settled, not for every option passed with the arrow keys.
+  const applied = useDebounced(JSON.stringify([by, scopedUnit ?? null, from, to]));
+  const [appliedBy, appliedUnit, appliedFrom, appliedTo] = JSON.parse(applied) as [CompareBy, string | null, string, string];
 
   useEffect(() => {
     if (isManager) return;
     let current = true;
     api.units().then(
       (result) => {
-        if (current) setUnits(result);
+        if (current) setUnits(sortUnits(result));
       },
       (error: unknown) => {
         if (current) setUnitError(error);
@@ -101,12 +105,12 @@ export function ComparePage() {
           <ErrorNotice error={unitError} />
         </div>
       )}
-      {invalidRange ? (
+      {invalidRange || (appliedFrom && appliedTo && appliedFrom > appliedTo) ? (
         <div id="compare-date-error">
           <ErrorNotice error={new Error("Choose an end date on or after the start date.")} />
         </div>
       ) : (
-        <CompareResults key={JSON.stringify([by, scopedUnit, from, to])} by={by} unit={scopedUnit} from={from} to={to} />
+        <CompareResults key={applied} by={appliedBy} unit={appliedUnit ?? undefined} from={appliedFrom} to={appliedTo} />
       )}
     </section>
   );
