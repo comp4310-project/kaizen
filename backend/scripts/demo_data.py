@@ -2,7 +2,7 @@
 
     python backend/scripts/demo_data.py work/demo.db
 
-Run it from the repository root. Each step uses the same code as the app:
+It can be run from any folder. Each step uses the same code as the app:
 
 1. Import data/synthetic/comments.csv through the CSV checks and de-identification (FR1, FR2).
 2. Label every comment (FR3). By default the TF-IDF baseline is trained on the synthetic
@@ -41,7 +41,7 @@ from kaizen.issues.build import build_issues
 from kaizen.issues.embed import SentenceEmbedder
 from kaizen.issues.name import IssueNamer, KeywordNamer
 
-DATA = Path("data/synthetic")
+DATA = Path(__file__).resolve().parents[2] / "data" / "synthetic"
 
 
 def baseline_from_training_split(saved: list[Comment]) -> BaselineLabeller:
