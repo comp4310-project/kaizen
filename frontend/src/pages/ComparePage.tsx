@@ -10,6 +10,14 @@ const groupNames: Record<CompareBy, string> = {
   unit: "Unit",
 };
 
+// The API has no category filter yet, so rows cannot link to the comments they count and
+// switching Group by starts again from every comment. See TASKS.md, FR5 follow-up.
+const groupMeaning: Record<CompareBy, string> = {
+  category: "Each row counts the labelled comments with that category from each group, across all issues and the filters above.",
+  stage: "Each row counts the labelled comments about that stage of care from each group, across all issues and the filters above.",
+  unit: "Each row counts the labelled comments recorded against that unit from each group, across all issues and the filters above.",
+};
+
 function CountCell({ count, max }: { count: number; max: number }) {
   return (
     <td className="num">
@@ -172,6 +180,7 @@ function CompareResults({ by, unit, from, to }: { by: CompareBy; unit?: string; 
               </tbody>
             </table>
           </div>
+          {data && <p className="muted small">{groupMeaning[data.by]}</p>}
           {data?.by === "category" && (
             <p className="muted small">Comments can count in more than one category. Comments without a category only appear in the totals.</p>
           )}

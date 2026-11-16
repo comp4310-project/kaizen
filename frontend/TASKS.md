@@ -32,6 +32,15 @@ Implemented at `/compare` for QI, admin and managers. The unit choices come from
 `api.units()`, and managers see only their assigned unit. Both count columns share
 the same bar scale. The table shows which groups reported each category, stage or unit.
 
+Follow-up from study round 1: three of five participants wanted to click a row to see the
+comments it counts, or to keep a chosen category when switching Group by (task 2). Neither
+works with the current API, because `/compare`, `/issues` and `/issues/{id}/comments` have
+no category or stage filter. The page says in one line under the table what each grouping
+counts. A drill-down needs a `category` and `stage` filter on `/compare` (to show the stage
+breakdown of one category) and on a comment list endpoint (to link a row to its comments).
+Agree it with the back end owner first; grouping by unit could already link to the same
+table filtered to that unit, since `/compare` takes `unit`.
+
 Done when:
 - Known patterns in the synthetic data appear correctly (P3 Table 2 check). With the current NHS data every comment is patient or family, so every row should show "Only patients"; check a staff pattern once Bhavya's synthetic staff comments are loaded.
 - A manager sees only their unit and cannot pick another.
