@@ -54,7 +54,7 @@ export function ComparePage() {
   return (
     <section>
       <div className="page-head">
-        <h1>Compare patient and staff feedback</h1>
+        <h1>Compare patient or family and staff feedback</h1>
         {isManager && <p className="muted">Showing feedback from your unit, {me?.unit}.</p>}
       </div>
 
@@ -130,7 +130,7 @@ function CompareResults({ by, unit, from, to }: { by: CompareBy; unit?: string; 
     <>
       <p role="status" className="muted">
         {data
-          ? `Labelled comments: ${data.totals.patient} from patients or families, ${data.totals.staff} from staff.`
+          ? `Labelled comments: ${data.totals.patient} patient or family, ${data.totals.staff} staff.`
           : "Loading comparison."}
       </p>
       {data?.rows.length === 0 ? (
@@ -165,7 +165,7 @@ function CompareResults({ by, unit, from, to }: { by: CompareBy; unit?: string; 
                     <CountCell count={row.patient} max={max} />
                     <CountCell count={row.staff} max={max} />
                     <td>{row.only
-                      ? <span className="badge badge-warn">{row.only === "patient" ? "Only patients" : "Only staff"}</span>
+                      ? <span className="badge badge-warn">{row.only === "patient" ? "Only patients or families" : "Only staff"}</span>
                       : "Both groups"}</td>
                   </tr>
                 ))}

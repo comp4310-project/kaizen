@@ -42,7 +42,7 @@ export function LoginPage() {
   return (
     <section className="login panel">
       <h1>Kaizen</h1>
-      <p className="muted">Recurring issues from patient and staff feedback. Log in with your Kaizen account.</p>
+      <p className="muted">Recurring issues from patient or family and staff feedback. Log in with your Kaizen account.</p>
       {expired && !error && (
         <p className="notice" role="status">
           Your login ended. Log in again to carry on.

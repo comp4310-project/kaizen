@@ -32,7 +32,7 @@ function Labels({ comment }: { comment: IssueComment }) {
       </div>
       <div>
         <dt>Labels</dt>
-        <dd>{l.status === "confirmed" ? "checked by a person" : "suggested by the model"}</dd>
+        <dd>{l.status === "confirmed" ? "checked by a person" : "suggested automatically, not yet checked"}</dd>
       </div>
     </dl>
   );
@@ -262,7 +262,7 @@ function IssueDetail({ issueId }: { issueId: number }) {
             <ErrorNotice error={unitsError} />
             {hasResults && data && (
               <p className="muted small" role="status">
-                Showing {data.comments.length} of {data.total}, most typical first. All text is de-identified.
+                Showing {data.comments.length} of {data.total}. Typical examples, the comments closest to what this issue is about, come first. All text is de-identified.
                 {me?.role === "manager" && ` Only comments from unit ${me.unit}.`}
               </p>
             )}
@@ -281,7 +281,7 @@ function IssueDetail({ issueId }: { issueId: number }) {
                       <span>{sourceName(c.source)}</span>
                       <span>Unit {c.unit}</span>
                       <span className="num">{c.date}</span>
-                      {c.typical && <span className="badge">Typical</span>}
+                      {c.typical && <span className="badge">Typical example</span>}
                     </p>
                     <p className="comment-text">{c.text}</p>
                     <Labels comment={c} />

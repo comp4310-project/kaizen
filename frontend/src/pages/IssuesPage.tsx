@@ -30,8 +30,8 @@ export function IssuesPage() {
         <h1>Recurring issues</h1>
         {data?.run && (
           <p className="muted">
-            Run {data.run.id}, {dateTime(data.run.created_at)}. {data.run.comments_used} comments grouped,{" "}
-            {data.run.outliers} left out as outliers.
+            Run {data.run.id}, {dateTime(data.run.created_at)}. {data.run.comments_used} comments grouped into issues,{" "}
+            {data.run.outliers} left out because they did not match any issue (outliers).
             {isManager && ` Only issues with comments from unit ${me?.unit}.`}
           </p>
         )}
