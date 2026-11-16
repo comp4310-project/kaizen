@@ -60,3 +60,6 @@ kaizen-passages.npz
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Local evaluation scratch files, never submission artifacts
+/work/
