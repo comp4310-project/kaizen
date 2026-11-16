@@ -43,13 +43,13 @@ def test_removes_details(text: str, expected: str) -> None:
         "may 2 of the nurses come back later?",
         # Words spaCy tagged as names in real ambulance feedback, reworded.
         "My Dad was poorly and Mum rang for help. Gran came too.",
-        "They took into account my Dads age and my Mum's worries.",
+        "They were patient with my Dads hearing and my Mum's worries.",
         "The crew took her to the RVI and NEAS kept us updated.",
-        "If Entinox had been there it would have helped, they gave medazalam instead.",
+        "We asked for Entinox but they only had medazalam.",
         "Gave Dexamethasone for Croup. She is Deafblind so they were patient. All during covid.",
-        "Timescale was a little long. However the crew were great.",
+        "Timescale for the crew was slow. However they were great.",
         "Fromm the start they were lovely. Thank you all. Xx",
-        "Rang them after the fone call. Friendly.put me at ease. Xxx",
+        "Rang them after the fone call. Friendly.put us at ease. Xxx",
         "The ambulance went from Cramlington to the hospital.",
     ],
 )
