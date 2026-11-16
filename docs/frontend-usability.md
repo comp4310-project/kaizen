@@ -83,3 +83,19 @@ detail checks as `study-manager`, which is scoped to unit 4B. Record the browser
 screen reader versions, observed speech and any blockers.
 
 Participant results and live screen reader speech checks are pending.
+
+## Changes after round 1
+
+Round 1 used five simulated participants (LLM personas, not classmates) and gave a mean
+SUS of 64.0 against the target of 68. These changes respond to what they ran into.
+
+- The CSV button says "Download as spreadsheet (CSV)" and a polite live region beside it names the saved file and its row count, or the error, because none of the five could confirm task 4.
+- The CSV button keeps focus while it works, because disabling it during the download dropped focus to the page.
+- Edit labels moves focus to Sentiment, and Save labels sits right after Urgency as well as at the end, because four of five scrolled past the categories looking for it.
+- The label editor says that saving marks the labels as checked by a person, and the category checkboxes no longer stretch to full width.
+- Patient or family is the only name for that group, and the compare badge reads "Only patients or families", because three of five were unsure the terms meant the same people.
+- "Suggested by the model" became "suggested automatically, not yet checked", and Typical and outliers are explained in visible text where they appear.
+- The compare page says under the table what each grouping counts; rows still do not link to comments, because the API has no category or stage filter (recorded in `frontend/TASKS.md`).
+- Below 900px the issues table moves Main stage under the issue name so it fits at 768px, and table wrappers allow touch panning in both directions.
+- Unit options are sorted by code, and filters apply on a mouse pick, Enter, leaving the control or a 1.5 second pause, because arrowing through Unit reloaded and announced the count for every option.
+- The header links show during the login check, and placeholder table rows no longer highlight under the pointer, because two participants clicked during loading and nothing happened.

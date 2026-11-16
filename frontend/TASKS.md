@@ -42,7 +42,7 @@ Agree it with the back end owner first; grouping by unit could already link to t
 table filtered to that unit, since `/compare` takes `unit`.
 
 Done when:
-- Known patterns in the synthetic data appear correctly (P3 Table 2 check). With the current NHS data every comment is patient or family, so every row should show "Only patients"; check a staff pattern once Bhavya's synthetic staff comments are loaded.
+- Known patterns in the synthetic data appear correctly (P3 Table 2 check). With the current NHS data every comment is patient or family, so every row should show "Only patients or families"; check a staff pattern once Bhavya's synthetic staff comments are loaded.
 - A manager sees only their unit and cannot pick another.
 - Loading, empty ("No labelled comments in this range") and error states work.
 
