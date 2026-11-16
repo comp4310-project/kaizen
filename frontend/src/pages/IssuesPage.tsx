@@ -77,7 +77,7 @@ export function IssuesPage() {
                 <th scope="col" className="num">
                   Staff
                 </th>
-                <th scope="col">Main stage</th>
+                <th scope="col" className="col-optional">Main stage</th>
                 <th scope="col" className="num">
                   Negative
                 </th>
@@ -85,18 +85,20 @@ export function IssuesPage() {
               </tr>
             </thead>
             <tbody aria-busy={!data}>
-              {!data && <SkeletonRows columns={columns} rows={7} />}
+              {!data && <SkeletonRows columns={columns} rows={7} optional={[columns.length - 3]} />}
               {data?.issues.map((issue) => (
                 <tr key={issue.id}>
                   <td className="num">{issue.rank}</td>
                   <th scope="row" className="issue-name">
                     <Link to={`/issues/${issue.id}`}>{issue.name}</Link>
+                    {/* Below 900px the stage column is hidden and the stage sits here instead. */}
+                    <span className="narrow-stage muted small">Main stage: {words(issue.main_stage)}</span>
                   </th>
                   <td className="num">{issue.size}</td>
                   {isManager && <td className="num">{issue.unit_size ?? ""}</td>}
                   <td className="num">{issue.patient_count}</td>
                   <td className="num">{issue.staff_count}</td>
-                  <td className="nowrap">{words(issue.main_stage)}</td>
+                  <td className="nowrap col-optional">{words(issue.main_stage)}</td>
                   <td className="num">
                     <span className="share">
                       <span className="share-track">
