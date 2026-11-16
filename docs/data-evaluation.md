@@ -1,5 +1,7 @@
 # Data and evaluation
 
+For submission status and reviewer tasks, see [Bhavya's handoff](bhavya-handoff.md).
+
 Bhavya's P3 Table 8 work is in `backend/kaizen/evaluation/`. The runner uses the existing
 de-identification scorer, classifier metrics, baseline, issue recovery scorer and
 suggestion scorer. It does not change the import, classifier, grouping or dashboard
@@ -35,8 +37,10 @@ ignored `work/`, a fixed Python hash seed and one UMAP/OpenMP thread.
 The default output is [the measured report](../reports/bhavya/results.json) and
 [a readable target summary](../reports/bhavya/summary.md). Re-running replaces those
 artifacts. Use `--out work/my-run` to keep the submission results. A failed quality target
-is a reported FAIL, not a broken command. Exceptions and failing automated tests return a
-nonzero exit code. NOT_MEASURED never counts as PASS.
+is a reported FAIL, not a broken command. Unhandled exceptions and failing automated tests return a nonzero exit code. Grouping
+errors are caught and recorded as NOT_MEASURED, with the benchmark skipped. Inspect
+results.json and summary.md even when the command exits successfully; NOT_MEASURED
+never counts as PASS.
 
 Commands for individual steps:
 
