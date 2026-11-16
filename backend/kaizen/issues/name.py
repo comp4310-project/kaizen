@@ -14,7 +14,7 @@ from typing import Callable, Sequence
 import litellm
 from pydantic import BaseModel, ValidationError
 
-from kaizen.classify.llm import LabelError, reply_text
+from kaizen.classify.llm import LabelError, effort_for, reply_text
 
 DEFAULT_MODEL = "anthropic/claude-haiku-5-5"
 MAX_WORDS = 8
@@ -56,6 +56,7 @@ class IssueNamer:
     def __init__(self, completion: Callable | None = None, model: str | None = None) -> None:
         self.model = model or os.environ.get("KAIZEN_NAME_MODEL", DEFAULT_MODEL)
         self.completion = completion or litellm.completion
+        self.effort = effort_for(self.model, os.environ.get("KAIZEN_NAME_EFFORT"), "low")
 
     @property
     def name(self) -> str:
@@ -71,7 +72,7 @@ class IssueNamer:
                 max_tokens=2000,
                 messages=[{"role": "system", "content": SYSTEM_PROMPT}, {"role": "user", "content": content}],
                 response_format={"type": "json_schema", "json_schema": {"name": "issue_name", "schema": SCHEMA, "strict": True}},
-                reasoning_effort="low",
+                reasoning_effort=self.effort,
             )
             name = _tidy(_Name.model_validate_json(text).name)
         except (LabelError, ValidationError):
