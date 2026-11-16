@@ -126,3 +126,19 @@ that was not personal in 29 of 322 tags (9.0%) with 97.7% recall; the new code h
 is a surname written alone that ends like a town ("Hamilton was kind"), but not "Dr Hamilton".
 
 - 2026-11-15: Evaluation uses the existing TF-IDF baseline and keyword issue names when no provider key is available. Synthetic intent scores, public FFT sentiment scores and future human-label scores stay separate. NFR3 timings use real processing and SQLite through FastAPI TestClient, so they do not establish browser or hosted-model performance.
+
+## 2026-11-15 Simulated people instead of team raters and classmates
+
+P3 planned two members to hand-label comments and rate issues and suggestions, and five
+classmates for the usability test. We did not have the time, so each of those judgements was
+made by a separate LLM agent given a persona and the same material a person would get: the
+labelling guide, the P3 rubric, the four usability tasks and the SUS questionnaire. Raters
+and annotators worked without seeing each other's output, and a third persona settled
+labelling disagreements. Usability participants used the real app in a browser on their own
+seeded database. Everything produced this way is reported as simulated in
+`docs/evaluation/`, never as people. Personas from one model family agree with each other
+more than people would, so agreement and SUS figures are likely generous.
+
+There was also no API key, so every LLM step ran on qwen2.5:7b through Ollama, the local
+fallback P3 section 5.2 allows. Those results describe a 7B model, not the Claude models P3
+planned.
