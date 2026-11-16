@@ -28,6 +28,11 @@ export function IssuesPage() {
     <section>
       <div className="page-head">
         <h1>Recurring issues</h1>
+        {!data && !error && (
+          <p className="muted" role="status">
+            Loading issues. The list replaces the grey rows when it arrives.
+          </p>
+        )}
         {data?.run && (
           <p className="muted">
             Run {data.run.id}, {dateTime(data.run.created_at)}. {data.run.comments_used} comments grouped into issues,{" "}

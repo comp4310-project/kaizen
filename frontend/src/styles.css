@@ -625,6 +625,15 @@ textarea {
   background: var(--surface);
 }
 
+/* Placeholder rows are not links, so they do not light up under the pointer. */
+.data-table tbody tr.skeleton-row {
+  cursor: progress;
+}
+
+.data-table tbody tr.skeleton-row:hover {
+  background: transparent;
+}
+
 .data-table tbody th {
   font-weight: 600;
 }
