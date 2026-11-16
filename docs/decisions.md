@@ -104,7 +104,23 @@ committees, surveys, patient relations, the patient declaration of values and an
 improvement plans) are included, checked line by line against the official Word file.
 
 Running the real comments through de-identification showed a problem the synthetic test set
-did not: of about 35 PERSON tags, only two or three were names. The rest removed words such
-as Mum, Dad, Gran, the hospital (RVI), the ambulance service (NEAS) and drug names (Entonox,
-midazolam, dexamethasone). That is far above the P3 target of under 5% of tags removing text
-that is not personal, and it should go in the evaluation as found.
+did not: of 33 PERSON tags, one was a name. The rest removed words such as Mum, Dad, Gran,
+the hospital (RVI), the ambulance service (NEAS), a town, drug names (Entonox, midazolam,
+dexamethasone, some misspelt), covid, typos ("Fromm", "fone"), kisses ("Xx") and
+sentence-initial words ("However", "Timescale"). Counting every tag, 32 of 39 (82%) removed
+text that is not personal, against the P3 target of under 5%. It goes in the evaluation as
+found.
+
+The fix, in `kaizen/deid/person_rules.py`, drops a PERSON tag when the word cannot be a name
+(kinship and role words, acronyms of 2 to 5 capitals, drug and condition names with close
+misspellings, lower case words, words with no vowel or with digits or dots) and, for a single
+word no cue found, when spaCy reads it as an ordinary word once it is lower-cased. A new cue
+catches "Bill the paramedic". After the fix the same 1,625 comments get 7 tags: 1 PERSON (the
+one name), 5 dates and 1 incident number, all personal, so 0 of 7 remove text that is not
+personal. We only know about names spaCy tagged; names it never tagged are not counted.
+
+The test set now has hard negatives of the same kinds (kinship words, acronyms, drugs and
+conditions, typos and kisses, 64 spans written for the set). On it the old code removed text
+that was not personal in 29 of 322 tags (9.0%) with 97.7% recall; the new code has 0 of 295
+(0.0%) and 98.3% recall. The trade-offs: a name typed in capitals ("JILL") is missed, and so
+is a surname written alone that ends like a town ("Hamilton was kind"), but not "Dr Hamilton".

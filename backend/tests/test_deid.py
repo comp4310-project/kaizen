@@ -41,11 +41,36 @@ def test_removes_details(text: str, expected: str) -> None:
         "Overnight in the Emergency Department since 2019 was the worst.",
         "Nurse Practitioner covering the unit was helpful.",
         "may 2 of the nurses come back later?",
+        # Words spaCy tagged as names in real ambulance feedback, reworded.
+        "My Dad was poorly and Mum rang for help. Gran came too.",
+        "They were patient with my Dads hearing and my Mum's worries.",
+        "The crew took her to the RVI and NEAS kept us updated.",
+        "We asked for Entinox but they only had medazalam.",
+        "Gave Dexamethasone for Croup. She is Deafblind so they were patient. All during covid.",
+        "Timescale for the crew was slow. However they were great.",
+        "Fromm the start they were lovely. Thank you all. Xx",
+        "Rang them after the fone call. Friendly.put us at ease. Xxx",
+        "The ambulance went from Cramlington to the hospital.",
     ],
 )
 def test_keeps_text_that_is_not_personal(text: str) -> None:
     result = deidentify(text)
     assert result.text == text, result.spans
+
+
+@pytest.mark.parametrize(
+    ("text", "expected"),
+    [
+        ("Jill was amazing with my son.", "<PERSON> was amazing with my son."),
+        ("Sarah was lovely to my Mum.", "<PERSON> was lovely to my Mum."),
+        ("We thanked Rose for everything.", "We thanked <PERSON> for everything."),
+        ("Bill the paramedic gave Gran some Entonox.", "<PERSON> the paramedic gave Gran some Entonox."),
+        ("My Mum's carer Joan rang the RVI.", "My Mum's carer <PERSON> rang the RVI."),
+        ("Thanks to Grace and Hunter on the crew. Xx", "Thanks to <PERSON> and <PERSON> on the crew. Xx"),
+    ],
+)
+def test_names_next_to_hard_negatives(text: str, expected: str) -> None:
+    assert deidentify(text).text == expected
 
 
 def test_counts_hold_no_text() -> None:
@@ -67,3 +92,6 @@ def test_targets_on_test_set() -> None:
         assert report.recall_for(typ) == 1.0, [m for m in report.misses if m[1] == typ]
     assert report.over_removal_rate < 0.05, report.extra
     assert report.keep_removed["UNIT"] == 0
+    # The hard negatives must be in the set, or the 5% target measures nothing.
+    for typ in ("KINSHIP", "ACRONYM", "DRUG", "TYPO"):
+        assert report.keep_total[typ] >= 10, typ
