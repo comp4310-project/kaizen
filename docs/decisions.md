@@ -124,3 +124,5 @@ conditions, typos and kisses, 64 spans written for the set). On it the old code 
 that was not personal in 29 of 322 tags (9.0%) with 97.7% recall; the new code has 0 of 295
 (0.0%) and 98.3% recall. The trade-offs: a name typed in capitals ("JILL") is missed, and so
 is a surname written alone that ends like a town ("Hamilton was kind"), but not "Dr Hamilton".
+
+- 2026-11-15: Evaluation uses the existing TF-IDF baseline and keyword issue names when no provider key is available. Synthetic intent scores, public FFT sentiment scores and future human-label scores stay separate. NFR3 timings use real processing and SQLite through FastAPI TestClient, so they do not establish browser or hosted-model performance.

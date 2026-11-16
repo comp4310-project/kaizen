@@ -1,0 +1,149 @@
+{
+  "audit": {
+    "date_max": "2026-11-01",
+    "date_min": "2026-09-21",
+    "issues": {
+      "background": 800,
+      "call_bell": 180,
+      "cleanliness_equipment": 180,
+      "discharge_instructions": 180,
+      "discharge_medication": 220,
+      "ed_wait": 200,
+      "handover": 180,
+      "night_noise": 180,
+      "transport": 180
+    },
+    "narrative_seeds": 190,
+    "realism_limit": "AI-authored scenario combinations; unique text does not establish human realism. Repeated narrative seeds remain. Human review required.",
+    "rows": 2300,
+    "sentiment_intent": {
+      "negative": 1772,
+      "neutral": 202,
+      "positive": 326
+    },
+    "short_rows_up_to_15_words": 519,
+    "source": {
+      "family": 595,
+      "nurse": 496,
+      "patient": 905,
+      "physician": 304
+    },
+    "source_group": {
+      "patient_family": 1500,
+      "staff": 800
+    },
+    "split": {
+      "test": 734,
+      "train": 1566
+    },
+    "top_five_word_openings": [
+      [
+        "could visitors get drinking water",
+        23
+      ],
+      [
+        "i left with the papers",
+        17
+      ],
+      [
+        "the nurse sat down and",
+        17
+      ],
+      [
+        "there was a loud floor",
+        17
+      ],
+      [
+        "a colleague covered my break",
+        16
+      ],
+      [
+        "the safety pause gave everyone",
+        16
+      ],
+      [
+        "the team reviewed the investigation",
+        16
+      ],
+      [
+        "the imaging team called back",
+        16
+      ],
+      [
+        "we checked the procedure list",
+        16
+      ],
+      [
+        "admissions sent the correct paperwork",
+        16
+      ],
+      [
+        "i tried to explain mum's",
+        16
+      ],
+      [
+        "could the staff room have",
+        16
+      ],
+      [
+        "the senior nurse helped with",
+        16
+      ],
+      [
+        "we tried the new layout",
+        16
+      ],
+      [
+        "the social worker sorted out",
+        16
+      ]
+    ],
+    "transport_weekly": {
+      "1": 8,
+      "2": 12,
+      "3": 18,
+      "4": 28,
+      "5": 42,
+      "6": 72
+    },
+    "unique_texts": 2300,
+    "units": {
+      "2A": 264,
+      "3A": 273,
+      "4A": 281,
+      "4B": 271,
+      "5A": 287,
+      "6A": 279,
+      "ED": 381,
+      "ICU": 264
+    },
+    "words_min_median_max": [
+      8,
+      19,
+      38
+    ]
+  },
+  "csv_sha256": "3d12a8dea25b9eb4b823aab92a71ea153c3b2ab4407e7006baa8a70022c7191e",
+  "generator_version": "2",
+  "join": "row_id is the one-based data row, never an assumed database id",
+  "provenance": "AI-authored fictional scenario bank and seeded local composition. No real stories.",
+  "seed": 4310,
+  "start": "2026-09-21",
+  "synthetic": true,
+  "transport_weekly": [
+    8,
+    12,
+    18,
+    28,
+    42,
+    72
+  ],
+  "truth_sha256": "3b56e07b065592328a680975fdf500dd496724869bb528cb7b25277dc504da65",
+  "weeks": 6,
+  "wording_revision": {
+    "changed_rows": 721,
+    "from_version": "1",
+    "metadata_unchanged": true,
+    "reason": "100-row AI review: family perspective, mismatched follow-on details and unfamiliar abbreviation"
+  }
+}
