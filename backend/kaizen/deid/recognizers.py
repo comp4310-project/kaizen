@@ -131,6 +131,9 @@ _NOT_NAMES = {
     "Nobody", "Someone", "Nurses", "Doctors", "Thanks", "Thank", "Please", "Patient", "Pt",
     "Call", "Email", "Phone", "Text", "Contact", "Chart",
     "The", "On", "In", "At", "And", "Who", "Was", "Is", "This", "That", "We", "They", "She", "He",
+    # Sentence openers the "Bill the paramedic" cue can pick up.
+    "But", "So", "Then", "When", "If", "Also", "Just", "Only", "After", "Before", "Once", "All",
+    "Both", "However", "Although", "Because", "Unfortunately", "Thankfully", "Luckily", "Eventually",
 }
 _PHONE_OR_EMAIL_AHEAD = r"(?=(?:\+?1[-.\s]?)?(?:\(\d{3}\)\s?|\d{3}[-.\s]?)\d{3}[-.\s]?\d{4}\b|\S+@\S+)"
 
@@ -156,6 +159,12 @@ class CuedNameRecognizer(EntityRecognizer):
         re.compile(r"(?:^|\s)-\s*" + _NAME + r"\s*$"),
         re.compile(r"(?:^|[.!?]\s+)" + _NAME + r",\s*" + _PHONE_OR_EMAIL_AHEAD),
         re.compile(_NAME + r"\s+(?i:(?:from|on)\s+(?:the\s+)?(?:nights?|days?|evenings?)\b)"),
+        # "Bill the paramedic": a name followed by its role. Needed because a capitalised
+        # ordinary word at the start of a sentence is otherwise treated as a word, not a name.
+        re.compile(
+            _NAME + r",?\s+(?i:(?:the|our|my|a)\s+(?:paramedic|nurse|doctor|medic|technician"
+            r"|consultant|surgeon|midwife|porter|receptionist|call handler|driver)s?\b)"
+        ),
     ]
 
     def __init__(self) -> None:
