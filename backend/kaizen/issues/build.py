@@ -3,11 +3,14 @@
 Only comments that describe a problem are grouped: negative or neutral, with at least one
 problem category. Praise is left out, and so are non-answers like "Nothing" or "Did not
 answer", which are neutral with no category. On the real FFT comments those non-answers
-formed six of the seven issues, each with an invented name. Comments that have no labels yet are skipped, so run the labeller first. Each run
+formed six of the seven issues, each with an invented name. A model can still give a
+non-answer a category, so the usual survey non-answers are also dropped by their text. Comments that have no labels yet are skipped, so run the labeller first. Each run
 is kept, and the dashboard shows the newest one.
 """
 
 from __future__ import annotations
+
+import re
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -18,6 +21,17 @@ from kaizen.issues.pipeline import find_issues
 from kaizen.issues.rank import IssueComment as RankInput
 
 
+# Whole-comment answers that say nothing about the service, as they appear in the FFT data.
+_NON_ANSWER = re.compile(
+    r"(nothing( at all| really| else| to add| to improve)?|no(ne|pe)?|not really|n/?a|nil|ok(ay)?"
+    r"|did not answer|no comments?|can ?not think of anything|can'?t think of anything|see (above|previous))"
+)
+
+
+def is_non_answer(text: str) -> bool:
+    return bool(_NON_ANSWER.fullmatch(re.sub(r"[^\w/' ]+", " ", text.lower()).strip()))
+
+
 def load(session: Session) -> tuple[list[int], list[str], list[RankInput]]:
     rows = session.execute(
         select(Comment, CommentLabel)
@@ -25,7 +39,7 @@ def load(session: Session) -> tuple[list[int], list[str], list[RankInput]]:
         .where(CommentLabel.sentiment != "positive")
         .order_by(Comment.id)
     ).all()
-    rows = [(c, lab) for c, lab in rows if lab.categories]  # JSON list, so filtered here
+    rows = [(c, lab) for c, lab in rows if lab.categories and not is_non_answer(c.text)]
     ids = [c.id for c, _ in rows]
     texts = [c.text for c, _ in rows]  # de-identified
     comments = [

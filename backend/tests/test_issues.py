@@ -131,6 +131,7 @@ def test_build_saves_ranked_issues_and_skips_praise(app) -> None:
     add_labelled(app, texts[20:], source=Source.STAFF)  # triage, from staff
     praise = add_labelled(app, ["Lovely staff, thank you"] * 10, sentiment="positive")
     praise += add_labelled(app, ["Nothing", "Did not answer"] * 5, sentiment="neutral", categories=())  # non-answers
+    praise += add_labelled(app, ["Did not answer.", "Nothing at all!!", "Not really"] * 4, sentiment="neutral")  # wrongly given a category
 
     with app.state.sessionmaker() as session:
         run = build_issues(session, FakeEmbedder(), KeywordNamer(), min_cluster_size=5)
@@ -186,3 +187,12 @@ def test_llm_names_are_trimmed_and_failures_fall_back_to_keywords() -> None:
     assert IssueNamer(completion=offline).name_issue(keywords, []) == fallback
     garbled = FakeCompletion(lambda _: reply("not json"))
     assert IssueNamer(completion=garbled).name_issue(keywords, []) == fallback
+
+
+def test_non_answers_are_recognised_by_text() -> None:
+    from kaizen.issues.build import is_non_answer
+
+    for text in ["Nothing", "nothing at all.", "Did not answer", "N/A", "Can't think of anything", "See previous", " no "]:
+        assert is_non_answer(text), text
+    for text in ["Nothing was explained to me", "No one came for 3 hours", "Waited too long", "Not really listened to"]:
+        assert not is_non_answer(text), text
