@@ -21,7 +21,7 @@
       "neutral": 202,
       "positive": 326
     },
-    "short_rows_up_to_15_words": 503,
+    "short_rows_up_to_15_words": 519,
     "source": {
       "family": 595,
       "nurse": 496,
@@ -38,64 +38,64 @@
     },
     "top_five_word_openings": [
       [
+        "could visitors get drinking water",
+        23
+      ],
+      [
         "i left with the papers",
-        23
+        17
       ],
       [
-        "the nurse made time to",
-        23
+        "the nurse sat down and",
+        17
       ],
       [
-        "someone brought an extra blanket",
-        23
+        "there was a loud floor",
+        17
       ],
       [
-        "i used the side entrance",
-        23
+        "a colleague covered my break",
+        16
       ],
       [
-        "small thing, but remembering how",
-        23
+        "the safety pause gave everyone",
+        16
       ],
       [
-        "thanks to the volunteer who",
-        23
+        "the team reviewed the investigation",
+        16
       ],
       [
-        "the meal was cold by",
-        23
+        "the imaging team called back",
+        16
       ],
       [
-        "finding a parking space took",
-        23
+        "we checked the procedure list",
+        16
       ],
       [
-        "we went through the consent",
-        23
+        "admissions sent the correct paperwork",
+        16
       ],
       [
-        "the theatre team explained the",
-        23
+        "i tried to explain mum's",
+        16
       ],
       [
-        "reception pointed me to the",
-        23
+        "could the staff room have",
+        16
       ],
       [
-        "i tried explaining what worried",
-        23
+        "the senior nurse helped with",
+        16
       ],
       [
-        "leaving was well organised and",
-        23
+        "we tried the new layout",
+        16
       ],
       [
-        "the physio helped me feel",
-        23
-      ],
-      [
-        "the person doing my scan",
-        23
+        "the social worker sorted out",
+        16
       ]
     ],
     "transport_weekly": {
@@ -118,13 +118,13 @@
       "ICU": 264
     },
     "words_min_median_max": [
-      7,
-      20,
-      39
+      8,
+      19,
+      38
     ]
   },
-  "csv_sha256": "f4fb33aec8ed877ad28a4f87700d389d8293994d46f862c0268db98cb3c8d96b",
-  "generator_version": "1",
+  "csv_sha256": "3d12a8dea25b9eb4b823aab92a71ea153c3b2ab4407e7006baa8a70022c7191e",
+  "generator_version": "2",
   "join": "row_id is the one-based data row, never an assumed database id",
   "provenance": "AI-authored fictional scenario bank and seeded local composition. No real stories.",
   "seed": 4310,
@@ -139,5 +139,11 @@
     72
   ],
   "truth_sha256": "3b56e07b065592328a680975fdf500dd496724869bb528cb7b25277dc504da65",
-  "weeks": 6
+  "weeks": 6,
+  "wording_revision": {
+    "changed_rows": 721,
+    "from_version": "1",
+    "metadata_unchanged": true,
+    "reason": "100-row AI review: family perspective, mismatched follow-on details and unfamiliar abbreviation"
+  }
 }

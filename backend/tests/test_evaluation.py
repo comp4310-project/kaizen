@@ -144,6 +144,7 @@ def test_real_csv_import_and_baseline_pipeline(client, app, dataset):
         run = label_comments(session, model, workers=1)
         assert run.labelled == 24 and run.failed_batches == 0
         result = api_checks(client, headers, session, repeats=1)
+        assert result["suggestion_rows"] == 0
         assert all(v["status"] == "PASS" for v in result["comparison_integrity"].values())
         assert all(v["http_200"]["status"] == "PASS" for v in result["endpoints"].values())
 
@@ -166,3 +167,13 @@ def test_public_labels_are_separate_and_raw_text_is_not_sent_to_model(tmp_path, 
     assert result["unlabelled_excluded"] == 1
     assert "raw example" not in json.dumps(result)
     assert result["hcat_category_stage_urgency"]["status"] == "NOT_MEASURED"
+
+
+
+def test_quality_sample_is_repeatable_and_source_balanced(dataset):
+    from kaizen.evaluation.quality import sample_positions
+    rows, _ = dataset
+    selected = sample_positions(rows)
+    assert selected == sample_positions(rows)
+    assert len(set(selected)) == 100
+    assert Counter(rows[i]["source"] for i in selected) == {"patient": 25, "family": 25, "nurse": 25, "physician": 25}

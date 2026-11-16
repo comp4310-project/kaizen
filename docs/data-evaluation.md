@@ -82,9 +82,11 @@ Transport counts across the six weeks are 8, 12, 18, 28, 42 and 72. This is a de
 frequency trend, not evidence about a hospital. Other issue dates are sampled uniformly;
 they are not forced to have identical weekly counts.
 
-The fixed seed is 4310. Generation uses an AI-authored bank of 190 narrative seeds,
+The fixed seed is 4310. Version 2 applies text-only corrections from the 100-row
+quality review; it preserves every original row ID and truth record. The original dataset
+and results remain in Git history at commit `1a1ebe5`. Generation uses an AI-authored bank of 190 narrative seeds,
 process-specific follow-on details, short and longer forms, family context, occasional
-typos and informal phrasing. There are 2,300 unique full texts, 503 comments of at most
+typos and informal phrasing. There are 2,300 unique full texts, 519 comments of at most
 15 words, and 800 background comments. Intended sentiments are 326 positive, 202 neutral
 and 1,772 negative. Mixed praise/complaint wording occurs among the negative examples.
 
@@ -249,3 +251,34 @@ changes; do not replace a failed default score with a tuned score without explan
 
 Quality-target failures in the measured report are findings for the owning members. They
 are not hidden by the passing integration tests.
+
+## Recorded quality audit
+
+The [100-row audit](../reports/bhavya/quality-audit-100.csv) contains 25 randomly selected
+comments from each original source, using seed 4310. All 100 were read in the AI review,
+and changed rows were read again after correction. This is an AI qualitative review,
+not a clinician review or one of the required human labelling exercises.
+
+The review found family comments written as the patient, staff comments with
+patient-perspective endings, unrelated follow-on questions in neutral reports, and the
+unfamiliar abbreviation TTOs. The versioned wording pass corrects 721 rows across the
+dataset, including 35 of the sampled rows. Dates, units, sources, issue assignments,
+sentiment intent, trend and train/test splits are unchanged. No identifiable stories or
+clinical advice were introduced.
+
+The sample has 100 distinct texts and 34 comments of at most 15 words. It includes short
+fragments, conventional sentences, several-sentence descriptions, lower-case openings,
+informal expressions and occasional typos. Repeated phrasing remains: one five-word
+opening occurs four times in the 100-row sample. This is acceptable as a reproducible
+prototype fixture but does not justify a claim of human-equivalent language diversity.
+No numerical human-realism score is claimed.
+
+To reproduce the sample selection from the existing CSV without regenerating anything:
+
+```sh
+.venv/bin/python -m kaizen.evaluation.quality --out work/quality-review
+```
+
+That command writes a blank reviewer sheet and automated repetition statistics. It does
+not fabricate review decisions. The submitted audit retains the actual before/after
+review notes separately.

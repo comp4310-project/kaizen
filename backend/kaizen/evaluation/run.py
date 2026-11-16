@@ -201,7 +201,7 @@ def api_checks(client, headers, session, repeats=10):
         comparisons[by] = check(actual == expected_rows and response["totals"] == dict(total), True, operator="==")
     return {"scope": "in-process FastAPI TestClient; real SQLite and routes; no network/browser/rendering or MySQL",
             "endpoints": result, "comparison_integrity": comparisons,
-            "issue_detail_covered": bool(issues), "suggestion_rows": len(client.get("/suggestions", headers=headers).json())}
+            "issue_detail_covered": bool(issues), "suggestion_rows": len(client.get("/suggestions", headers=headers).json()["suggestions"])}
 
 
 def benchmark(rows, labeller, embedder, repeats, batch_size, workers, min_cluster_size):

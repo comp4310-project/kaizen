@@ -15,7 +15,7 @@ from kaizen.units import UNITS
 
 SEED = 4310
 START = date(2026, 9, 21)
-VERSION = "1"
+VERSION = "2"
 TRANSPORT_WEEKS = [8, 12, 18, 28, 42, 72]
 
 
@@ -53,7 +53,7 @@ def render(base, details, rng, family=False):
     return text
 
 
-def generate(seed=SEED):
+def generate(seed=SEED, apply_revision=True):
     rng = random.Random(seed)
     rows, truth, seen = [], [], set()
     transport_days = [w for w, count in enumerate(TRANSPORT_WEEKS) for _ in range(count)]
@@ -107,7 +107,8 @@ def generate(seed=SEED):
     rows, truth = map(list, zip(*paired))
     for n, item in enumerate(truth, 1):
         item["row_id"] = n
-    return rows, truth
+    from kaizen.evaluation.revise import revise
+    return (revise(rows, truth, seed) if apply_revision else rows), truth
 
 
 def audit(rows, truth):
@@ -151,6 +152,12 @@ def main():
         "csv_sha256": digest(path), "truth_sha256": digest(args.out / "truth.jsonl"),
         "join": "row_id is the one-based data row, never an assumed database id",
         "provenance": "AI-authored fictional scenario bank and seeded local composition. No real stories.",
+        "wording_revision": {
+            "from_version": "1",
+            "changed_rows": sum(a != b for a, b in zip(generate(args.seed, apply_revision=False)[0], rows)),
+            "metadata_unchanged": True,
+            "reason": "100-row AI review: family perspective, mismatched follow-on details and unfamiliar abbreviation",
+        },
         "audit": audit(rows, truth),
     })
     print(json.dumps(audit(rows, truth), indent=2))
