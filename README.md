@@ -2,9 +2,11 @@
 
 Group project for COMP 4310 (Web Health Informatics), Lakehead University.
 
-**Status: built and evaluated.** Every Must and Should requirement in P3 has code on `main` or in an open
-pull request, and the results against P3 Table 9 are in
-[docs/evaluation](docs/evaluation/README.md), including the targets we missed. The plan is in
+**Status: working prototype (P4).** Every Must and Should requirement from P3 runs end to
+end: upload, de-identification, labelling, issue grouping, the patient vs staff comparison,
+corrections, the dashboard and cited suggestions. First results against P3 Table 9, including
+the targets we missed, are in [docs/evaluation](docs/evaluation/README.md) and
+[docs/data-evaluation.md](docs/data-evaluation.md). The plan is in
 [docs/p3-requirements-design.md](docs/p3-requirements-design.md).
 
 ## The idea
@@ -30,64 +32,115 @@ that actually gets used in hospital operations, which is why we picked it.
 | Aansh Amitabh Arora | [@AanshXArora](https://github.com/AanshXArora) |
 | Bhavya Bhatt | [@Bhavya1435](https://github.com/Bhavya1435) |
 
+## What works
+
+| Requirement | What you can do | Code |
+|---|---|---|
+| FR1 | Upload a CSV (`POST /imports`) or send one comment to the public form endpoint (`POST /feedback`, no login); bad rows are reported and skipped | `backend/kaizen/ingest/` |
+| FR2 | Names, dates, phones, emails, health card and record numbers are replaced with tags before anything is saved | `backend/kaizen/deid/` |
+| FR3 | Each comment gets a sentiment, HCAT categories, a stage of care and a suggested urgency | `backend/kaizen/classify/` |
+| FR4 | Similar comments are grouped into named issues, ranked, with a rising flag | `backend/kaizen/issues/` |
+| FR5 | Patient or family vs staff counts by category, stage or unit | `/compare`, Compare page |
+| FR6 | Confirm or correct labels, redact a missed detail, rename or merge issues; all logged | issue page |
+| FR7 | Two or three suggestions per issue that cite our documents, to accept, edit or reject | `backend/kaizen/suggest/` |
+| FR8 | Ranked issues, their comments, unit and source filters, CSV export | `frontend/` |
+
+Not built yet: upload and feedback-form pages in the front end (both work through the API, for
+example from http://localhost:8000/docs), and trend charts and the improvement tracker (both
+Could in P3).
+
 ## Stack
 
-From P3: Python 3.12 and FastAPI for the back end, React with TypeScript for the front end,
-MySQL, Presidio and spaCy for de-identification, BERTopic for grouping comments, an LLM
-through LiteLLM, and Chroma for the documents behind suggestions. See P3 section 4 for why.
+Python 3.12 and FastAPI, SQLAlchemy with SQLite (MySQL through `KAIZEN_DATABASE_URL`), React
+19 and TypeScript with Vite, Presidio and spaCy for de-identification, and LLM calls through
+LiteLLM. Three changes from P3, each explained in [docs/decisions.md](docs/decisions.md):
+issue grouping runs BERTopic's steps (sentence embeddings, UMAP, HDBSCAN, class-based TF-IDF)
+without the BERTopic package and its PyTorch download, passage search uses numpy instead of
+Chroma, and with no API budget the LLM steps run on a free local model for now.
 
-## Running it
+## Quick demo
 
-Back end first. You need Python 3.12 or later. The install pulls the spaCy
-English model, which is about 400MB.
+This builds a database by running the real pipeline on the 2,300 synthetic comments, then
+starts the app. No API key and no cost. You need Python 3.12 and Node 24.
 
 ```
 cd backend
 python -m venv .venv
 .venv/Scripts/activate        # Windows; on macOS or Linux: source .venv/bin/activate
 pip install -e ".[dev]"
-pytest
+python scripts/demo_data.py ../work/demo.db
 ```
 
-To see the de-identification score and every miss on the test set:
+The script asks for one password for three accounts: `demo-qi` (QI staff), `demo-manager`
+(unit 4B only) and `demo-admin`. It imports the comments through the CSV checks and
+de-identification, labels them with the TF-IDF baseline, and builds the ranked issues, which
+takes about two minutes. Then start the API on that database:
 
 ```
-python -m kaizen.deid.evaluate tests/data/deid_test_set.jsonl
+# PowerShell: $env:KAIZEN_DATABASE_URL = "sqlite:///../work/demo.db"
+export KAIZEN_DATABASE_URL=sqlite:///../work/demo.db
+uvicorn kaizen.api.app:create_app --factory
 ```
 
-To rerun the whole evaluation (NFR5) in one command, with no API key:
+and in a second terminal:
 
 ```
-python -m kaizen.evaluate eval-results
+cd frontend
+npm ci
+npm run dev
 ```
 
-It scores de-identification, trains the TF-IDF baseline on the synthetic training split and
-scores it on the 300 held-out comments, imports the synthetic CSV into a fresh SQLite database
-in `eval-results/`, builds issues from the template labels and counts how many of the 8
-built-in problems it finds, checks the staff-only, patient-only and rising problems (FR4, FR5),
-and times 1,000 comments (NFR3). It writes `results.md` and `results.json` with every number
-next to its P3 target, plus library versions, seeds and the git commit. It takes a few minutes,
-most of it de-identification and the sentence model. Add `--llm anthropic/claude-haiku-5-5`
-to also score an LLM labeller on the held-out split; that one needs the API key and costs money.
+Open http://localhost:5173 and log in. The API's own docs are at http://localhost:8000/docs.
 
-The synthetic data is in `tests/data/synthetic*` and comes from
-`python scripts/make_synthetic.py` (seed 4310). Rerunning it gives the same files byte for byte,
-and a test fails if the committed files go stale.
+## Running it yourself
 
-To run the API locally (SQLite by default, set `KAIZEN_DATABASE_URL` for MySQL), create
-an admin account and start the server, then open http://localhost:8000/docs:
+After the install above, `pytest` in `backend/` runs the 194 back end tests. On a fresh
+database, create the first account with
+`python -m kaizen.cli create-user admin --role admin`, upload a CSV with `POST /imports`
+(the API docs page has a form for it), then run each step:
 
 ```
-python -m kaizen.cli create-user admin --role admin
-uvicorn kaizen.api.app:create_app --factory --reload
+python -m kaizen.classify label          # label new comments (FR3)
+python -m kaizen.issues build            # group labelled comments into issues (FR4)
+python -m kaizen.suggest index           # embed the documents behind suggestions (FR7)
+python -m kaizen.suggest draft ISSUE_ID  # draft suggestions for one issue
 ```
 
-The tables and endpoints are described in [docs/data-model.md](docs/data-model.md).
+The CSV format and every table and endpoint are in [docs/data-model.md](docs/data-model.md).
 
-The front end is a React and TypeScript app in `frontend/` with login, the ranked issues
-table, an issue's comments, and suggestion review. With the API running on port 8000, run
-`npm install` and `npm run dev` in `frontend/` and open http://localhost:5173. Details and
-the pages still to build are in [frontend/README.md](frontend/README.md).
+### Settings
+
+All optional, set as environment variables. Never put keys in the repository.
+
+| Variable | Default | What it does |
+|---|---|---|
+| `KAIZEN_DATABASE_URL` | local SQLite file | for example `mysql+pymysql://user:pass@localhost/kaizen` |
+| `KAIZEN_LABEL_MODEL`, `KAIZEN_LABEL_EFFORT` | `anthropic/claude-haiku-5-5`, `low` | model for labelling |
+| `KAIZEN_NAME_MODEL` | `anthropic/claude-haiku-5-5` | model for issue names (`--keyword-names` skips it) |
+| `KAIZEN_SUGGEST_MODEL`, `KAIZEN_SUGGEST_EFFORT` | `anthropic/claude-opus-5-5`, `medium` | model for suggestions |
+| `ANTHROPIC_API_KEY` | none | needed only for the `anthropic/...` models |
+| `KAIZEN_CORPUS_DIR` | `documents` | documents behind suggestions |
+| `KAIZEN_EMBED_CACHE` | system cache | where the 90MB sentence model is stored |
+
+Model names go through LiteLLM, so a free local model works without code changes. With
+[Ollama](https://ollama.com) running, set `KAIZEN_LABEL_MODEL`, `KAIZEN_NAME_MODEL` and
+`KAIZEN_SUGGEST_MODEL` to `ollama/qwen2.5:7b`. That is what our P4 LLM results used.
+
+## Evaluation
+
+Both runners need no API key.
+
+- `python -m kaizen.evaluate eval-results` (from `backend/`) scores de-identification, the
+  baseline on the 300 held-out comments of the 1,200-comment set in `tests/data/`, issue
+  finding and the FR5 patterns, and timing. It writes `results.md` and `results.json`.
+- `bash scripts/evaluate.sh --with-public` (from the repository root) runs Bhavya's
+  2,300-comment set in `data/synthetic/` and the public NHS comments end to end. See
+  [docs/data-evaluation.md](docs/data-evaluation.md).
+
+Results are in [docs/evaluation](docs/evaluation/README.md),
+[reports/bhavya](reports/bhavya/summary.md) and
+[reports/issue-size-default](reports/issue-size-default/summary.md). Synthetic, public and
+simulated-rater results are always reported separately.
 
 ## Data
 
@@ -115,7 +168,8 @@ Public data we use, fetched by script rather than committed:
 | P0 Team Formation and Topic Selection | Submitted | [docs/p0-team-formation.md](docs/p0-team-formation.md) |
 | P1 Project Proposal | Submitted, 94/100 | [docs/p1-proposal.md](docs/p1-proposal.md) |
 | P2 Literature and Existing-System Analysis | Submitted, 96/100 | [docs/p2-literature-review.md](docs/p2-literature-review.md) |
-| P3 Requirements and Design | Draft | [docs/p3-requirements-design.md](docs/p3-requirements-design.md) |
+| P3 Requirements and Design | Submitted | [docs/p3-requirements-design.md](docs/p3-requirements-design.md) |
+| P4 Prototype and Progress Evaluation | In progress | report on D2L; results in [docs/evaluation](docs/evaluation/README.md) |
 
 Instructor feedback on each one, and what we changed because of it, is in
 [docs/feedback.md](docs/feedback.md).
@@ -128,10 +182,3 @@ See [CONTRIBUTING.md](CONTRIBUTING.md). Branch, open a PR, get one review, squas
 ## License
 
 [MIT](LICENSE)
-
-## Data and evaluation
-
-Bhavya's seeded synthetic dataset, P3 scoring, human annotation workflow and performance
-benchmark are documented in [Data and evaluation](docs/data-evaluation.md). Run
-`bash scripts/evaluate.sh --with-public` after installing the evaluation environment.
-Measured results and limitations are saved in [the evaluation summary](reports/bhavya/summary.md).
