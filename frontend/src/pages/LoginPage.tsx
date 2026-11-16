@@ -1,5 +1,5 @@
 import { useState, type FormEvent } from "react";
-import { Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
 import { ApiError } from "../api";
 import { useAuth } from "../auth";
 import { ErrorNotice } from "../states";
@@ -83,6 +83,7 @@ export function LoginPage() {
           {busy ? "Logging in" : "Log in"}
         </button>
       </form>
+      <p><Link to="/feedback">Send feedback without logging in</Link></p>
     </section>
   );
 }

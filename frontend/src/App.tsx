@@ -3,6 +3,8 @@ import { Navigate, NavLink, Route, Routes, useLocation } from "react-router-dom"
 import { canReviewSuggestions, useAuth } from "./auth";
 import { roleName } from "./format";
 import { ComparePage } from "./pages/ComparePage";
+import { FeedbackPage } from "./pages/FeedbackPage";
+import { ImportPage } from "./pages/ImportPage";
 import { IssueDetailPage } from "./pages/IssueDetailPage";
 import { IssuesPage } from "./pages/IssuesPage";
 import { LoginPage } from "./pages/LoginPage";
@@ -54,6 +56,8 @@ function Header() {
           <NavLink to="/issues">Issues</NavLink>
           <NavLink to="/compare">Compare</NavLink>
           {canReviewSuggestions(me) && <NavLink to="/suggestions">Suggestions</NavLink>}
+          {canReviewSuggestions(me) && <NavLink to="/imports">Upload CSV</NavLink>}
+          <NavLink to="/feedback">Send feedback</NavLink>
         </nav>
         <div className="who">
           <span className="who-name">{me.username}</span>
@@ -81,6 +85,15 @@ export function App() {
       <main id="main" tabIndex={-1} className="container">
         <Routes>
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/feedback" element={<FeedbackPage />} />
+          <Route
+            path="/imports"
+            element={
+              <RequireLogin>
+                {canReviewSuggestions(me) ? <ImportPage /> : <Navigate to="/issues" replace />}
+              </RequireLogin>
+            }
+          />
           <Route
             path="/issues"
             element={

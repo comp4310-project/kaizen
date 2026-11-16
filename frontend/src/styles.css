@@ -176,6 +176,11 @@ main:focus {
 
   .nav {
     min-height: 44px;
+    flex-wrap: wrap;
+  }
+
+  .nav a {
+    min-height: 44px;
   }
 
   .who {
@@ -505,6 +510,29 @@ textarea {
 
 .login form {
   margin-top: 20px;
+}
+
+.intake-page {
+  max-width: 38rem;
+}
+
+.intake-form {
+  margin-bottom: 24px;
+}
+
+.intake-form fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  min-width: 0;
+}
+
+.intake-form select {
+  max-width: 100%;
+}
+
+.intake-form .btn-primary {
+  margin-top: 12px;
 }
 
 /* Notices: inline messages. notice-error for failures, plain notice for information. */

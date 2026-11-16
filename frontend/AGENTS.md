@@ -36,6 +36,8 @@ src/hooks.ts                useFilter(): a select or input that reloads data on 
 src/SuggestionCard.tsx      one suggestion: fields, citations, accept / edit / reject
 src/IssueReview.tsx        issue and comment correction forms for QI and admin
 src/pages/LoginPage.tsx
+src/pages/ImportPage.tsx        CSV upload and rejected row details for QI and admin
+src/pages/FeedbackPage.tsx      public feedback form
 src/pages/IssuesPage.tsx        ranked table
 src/pages/ComparePage.tsx       patient and staff counts by category, stage or unit
 src/pages/IssueDetailPage.tsx   comments with labels, suggestions beside them for QI
@@ -63,6 +65,7 @@ so when a handler changes, change the type in the same PR:
 | Types | Backend file |
 |---|---|
 | `LoginOut`, `Me`, `Unit` | `backend/kaizen/api/app.py` (`login`, `me`, `units`) |
+| `FeedbackIn`, `ImportOut` | `backend/kaizen/api/app.py` (`submit_feedback`, `import_csv`) |
 | `CompareBy`, `CompareOut` | `backend/kaizen/api/compare.py` (`compare`) |
 | `IssuesOut`, `IssueSummary`, `IssueRun`, `IssueCommentsOut`, `IssueComment`, `CommentLabels` | `backend/kaizen/api/issues.py` |
 | `Suggestion`, `Citation`, `SuggestionsOut`, `DraftOut`, `Decision` | `backend/kaizen/api/suggestions.py` (`_out`, `DecisionIn`) |
@@ -75,7 +78,8 @@ rather than trusting the docs page.
 ## Auth and roles
 
 `AuthProvider` checks a stored token against `/me` on load and keeps `me` (username, role,
-unit). `RequireLogin` in `App.tsx` wraps every route except `/login`.
+unit). `RequireLogin` in `App.tsx` wraps the protected routes. Login and the feedback form
+are public. Upload CSV is available to QI and admin.
 
 Roles are `qi`, `admin` and `manager`. The API enforces access; the front end only hides
 what a role cannot use, so nobody clicks a button that returns 403:

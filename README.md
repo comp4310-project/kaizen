@@ -36,7 +36,7 @@ that actually gets used in hospital operations, which is why we picked it.
 
 | Requirement | What you can do | Code |
 |---|---|---|
-| FR1 | Upload a CSV (`POST /imports`) or send one comment to the public form endpoint (`POST /feedback`, no login); bad rows are reported and skipped | `backend/kaizen/ingest/` |
+| FR1 | QI staff and admins can upload feedback and see which rows were skipped. Anyone can send one comment without logging in. | Upload CSV (`/imports`) and Send feedback (`/feedback`) |
 | FR2 | Names, dates, phones, emails, health card and record numbers are replaced with tags before anything is saved | `backend/kaizen/deid/` |
 | FR3 | Each comment gets a sentiment, HCAT categories, a stage of care and a suggested urgency | `backend/kaizen/classify/` |
 | FR4 | Similar comments are grouped into named issues, ranked, with a rising flag | `backend/kaizen/issues/` |
@@ -45,9 +45,7 @@ that actually gets used in hospital operations, which is why we picked it.
 | FR7 | Two or three suggestions per issue that cite our documents, to accept, edit or reject | `backend/kaizen/suggest/` |
 | FR8 | Ranked issues, their comments, unit and source filters, CSV export | `frontend/` |
 
-Not built yet: upload and feedback-form pages in the front end (both work through the API, for
-example from http://localhost:8000/docs), and trend charts and the improvement tracker (both
-Could in P3).
+Trend charts and the improvement tracker are still open (both Could in P3).
 
 ## Stack
 
@@ -90,7 +88,10 @@ npm ci
 npm run dev
 ```
 
-Open http://localhost:5173 and log in. The API's own docs are at http://localhost:8000/docs.
+Open http://localhost:5173 and log in as `demo-qi` to try **Upload CSV**. To try the
+public feedback form, follow **Send feedback without logging in** on the login page.
+New feedback is saved for the next labelling and issue grouping run. The API docs are
+at http://localhost:8000/docs.
 
 ## Running it yourself
 

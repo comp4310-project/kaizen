@@ -42,6 +42,20 @@ export interface Unit {
   name: string;
 }
 
+export interface FeedbackIn {
+  text: string;
+  source: Source;
+  unit: string;
+  date?: string;
+}
+
+export interface ImportOut {
+  batch_id: number;
+  saved: number;
+  rejected: number;
+  errors: { line: number; reason: string }[];
+}
+
 export type CompareBy = "category" | "stage" | "unit";
 
 export interface CompareOut {
@@ -234,14 +248,15 @@ async function request<T>(method: string, path: string, body?: unknown, csv = fa
   if (csv) headers.Accept = "text/csv";
   const token = getToken();
   if (token) headers.Authorization = `Bearer ${token}`;
-  if (body !== undefined) headers["Content-Type"] = "application/json";
+  const multipart = body instanceof FormData;
+  if (body !== undefined && !multipart) headers["Content-Type"] = "application/json";
 
   let response: Response;
   try {
     response = await fetch(BASE + path, {
       method,
       headers,
-      body: body === undefined ? undefined : JSON.stringify(body),
+      body: multipart ? body : JSON.stringify(body),
     });
   } catch {
     throw new ApiError(0, "no answer from the server");
@@ -305,6 +320,15 @@ export const api = {
   me: () => request<Me>("GET", "/me"),
 
   units: () => request<Unit[]>("GET", "/units"),
+
+  submitFeedback: (feedback: FeedbackIn) =>
+    request<{ batch_id: number }>("POST", "/feedback", feedback),
+
+  importFeedback: (file: File) => {
+    const body = new FormData();
+    body.set("file", file);
+    return request<ImportOut>("POST", "/imports", body);
+  },
 
   compare: (options: { by: CompareBy; unit?: string; date_from?: string; date_to?: string }) =>
     request<CompareOut>("GET", "/compare" + query(options)),
