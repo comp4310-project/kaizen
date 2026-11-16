@@ -15,6 +15,7 @@ from presidio_analyzer import AnalyzerEngine, RecognizerRegistry
 from presidio_analyzer.nlp_engine import NlpEngineProvider
 from presidio_analyzer.predefined_recognizers import EmailRecognizer, PhoneRecognizer, SpacyRecognizer
 
+from kaizen.deid.person_rules import refine_person
 from kaizen.deid.recognizers import (
     CalendarDateRecognizer,
     CuedNameRecognizer,
@@ -92,19 +93,16 @@ def _analyzer(model: str) -> AnalyzerEngine:
     return AnalyzerEngine(nlp_engine=nlp_engine, registry=registry, supported_languages=["en"])
 
 
-# Short words spaCy sometimes tags as a person in clinical notes.
-_NOT_PERSON = {"pt", "pts", "rn", "rpn", "np", "md", "dr", "er", "ed", "icu", "iv", "prn"}
-
-
-def _keep(text: str, start: int, end: int, tag: str) -> bool:
-    """False for results that are not personal: a unit name, or "Pt" tagged as a person."""
-    if tag == "PERSON" and text[start:end].strip(" .").lower() in _NOT_PERSON:
-        return False
+def _keep(text: str, start: int, end: int) -> bool:
+    """False for a result inside a unit name, which the unit filters need."""
     return not _inside_unit_name(text, start, end)
 
 
 def _inside_unit_name(text: str, start: int, end: int) -> bool:
     return any(m.start() <= start and end <= m.end() for m in unit_mention_pattern().finditer(text))
+
+
+_CUES = CuedNameRecognizer()
 
 
 def _merge(spans: list[Span], text: str) -> list[Span]:
@@ -124,12 +122,29 @@ def _merge(spans: list[Span], text: str) -> list[Span]:
 
 def find_spans(text: str, model: str | None = None) -> list[Span]:
     model = model or os.environ.get("KAIZEN_SPACY_MODEL", DEFAULT_MODEL)
-    results = _analyzer(model).analyze(text=text, language="en", score_threshold=SCORE_THRESHOLD)
-    spans = [
-        Span(r.start, r.end, TAGS[r.entity_type], r.score)
-        for r in results
-        if r.entity_type in TAGS and _keep(text, r.start, r.end, TAGS[r.entity_type])
-    ]
+    analyzer = _analyzer(model)
+    # Parse once ourselves so the PERSON rules can look at the same spaCy doc.
+    artifacts = analyzer.nlp_engine.process_text(text, "en")
+    results = analyzer.analyze(
+        text=text, language="en", score_threshold=SCORE_THRESHOLD, nlp_artifacts=artifacts
+    )
+    # Presidio keeps one result per span, so a name found by both spaCy and a cue may come
+    # back as spaCy's. Run the cues again to know which names had one.
+    cued = [(r.start, r.end) for r in _CUES.analyze(text, ["PERSON"])]
+    nlp = analyzer.nlp_engine.nlp["en"]
+    spans = []
+    for r in results:
+        if r.entity_type not in TAGS:
+            continue
+        tag, start, end = TAGS[r.entity_type], r.start, r.end
+        if tag == "PERSON":
+            has_cue = any(cs < end and start < ce for cs, ce in cued)
+            refined = refine_person(text, start, end, artifacts.tokens, nlp, has_cue)
+            if refined is None:
+                continue
+            start, end = refined
+        if _keep(text, start, end):
+            spans.append(Span(start, end, tag, r.score))
     return _merge(spans, text)
 
 

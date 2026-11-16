@@ -274,6 +274,23 @@ function query(params: Record<string, string | number | undefined>): string {
   return text ? `?${text}` : "";
 }
 
+/** Counts CSV records (lines ending outside quotes), since a quoted comment can span lines. */
+function csvRecords(body: string): number {
+  let records = 0;
+  let quoted = false;
+  let empty = true;
+  for (const character of body) {
+    if (character === '"') quoted = !quoted;
+    if (character === "\n" && !quoted) {
+      if (!empty) records += 1;
+      empty = true;
+    } else if (character !== "\r") {
+      empty = false;
+    }
+  }
+  return empty ? records : records + 1;
+}
+
 export const api = {
   async login(username: string, password: string): Promise<LoginOut> {
     const out = await request<LoginOut>("POST", "/auth/login", { username, password });
@@ -297,22 +314,31 @@ export const api = {
   issueComments: (issueId: number, options: CommentFilters & { limit?: number; offset?: number } = {}) =>
     request<IssueCommentsOut>("GET", `/issues/${issueId}/comments` + query({ ...options })),
 
-  async downloadIssueComments(issueId: number, filters: CommentFilters, count: number): Promise<void> {
+  /** Saves the displayed comments as a file and says what was saved, so the page can confirm it. */
+  async downloadIssueComments(
+    issueId: number, filters: CommentFilters, count: number,
+  ): Promise<{ fileName: string; rows: number }> {
     const parts: string[] = [];
+    let rows = 0;
     for (let offset = 0; offset < count; offset += 500) {
       const params = query({ ...filters, limit: Math.min(500, count - offset), offset, format: "csv" });
       const page = await request<string>("GET", `/issues/${issueId}/comments` + params, undefined, true);
       // Only the header line is stripped. Quoted comment cells can contain newlines.
-      parts.push(offset ? page.slice(page.indexOf("\n") + 1) : page);
+      const headerEnd = page.indexOf("\n");
+      const body = headerEnd < 0 ? "" : page.slice(headerEnd + 1);
+      rows += csvRecords(body);
+      parts.push(offset ? body : page);
     }
+    const fileName = `kaizen-issue-${issueId}-comments.csv`;
     const url = URL.createObjectURL(new Blob(parts, { type: "text/csv;charset=utf-8" }));
     const link = document.createElement("a");
     link.href = url;
-    link.download = `issue-${issueId}-comments.csv`;
+    link.download = fileName;
     document.body.append(link);
     link.click();
     link.remove();
     window.setTimeout(() => URL.revokeObjectURL(url), 1000);
+    return { fileName, rows };
   },
 
   confirmLabels: (commentId: number, labels: LabelsIn) =>

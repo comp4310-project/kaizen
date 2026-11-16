@@ -54,6 +54,25 @@ To see the de-identification score and every miss on the test set:
 python -m kaizen.deid.evaluate tests/data/deid_test_set.jsonl
 ```
 
+To rerun the whole evaluation (NFR5) in one command, with no API key:
+
+```
+python -m kaizen.evaluate eval-results
+```
+
+It scores de-identification, trains the TF-IDF baseline on the synthetic training split and
+scores it on the 300 held-out comments, imports the synthetic CSV into a fresh SQLite database
+in `eval-results/`, builds issues from the template labels and counts how many of the 8
+built-in problems it finds, checks the staff-only, patient-only and rising problems (FR4, FR5),
+and times 1,000 comments (NFR3). It writes `results.md` and `results.json` with every number
+next to its P3 target, plus library versions, seeds and the git commit. It takes a few minutes,
+most of it de-identification and the sentence model. Add `--llm anthropic/claude-haiku-5-5`
+to also score an LLM labeller on the held-out split; that one needs the API key and costs money.
+
+The synthetic data is in `tests/data/synthetic*` and comes from
+`python scripts/make_synthetic.py` (seed 4310). Rerunning it gives the same files byte for byte,
+and a test fails if the committed files go stale.
+
 To run the API locally (SQLite by default, set `KAIZEN_DATABASE_URL` for MySQL), create
 an admin account and start the server, then open http://localhost:8000/docs:
 

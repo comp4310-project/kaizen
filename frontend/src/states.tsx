@@ -48,13 +48,18 @@ export function EmptyState({ children }: { children: ReactNode }) {
  * the layout does not jump when the data arrives. Pass the class of numeric columns so
  * their bars sit on the right like the numbers will.
  */
-export function SkeletonRows({ columns, rows = 6 }: { columns: ("text" | "num" | "wide")[]; rows?: number }) {
+export function SkeletonRows({ columns, rows = 6, optional = [] }: {
+  columns: ("text" | "num" | "wide")[];
+  rows?: number;
+  /** Indexes of columns the real table marks `col-optional` (hidden on narrow screens). */
+  optional?: number[];
+}) {
   return (
     <>
       {Array.from({ length: rows }, (_, r) => (
         <tr key={r} className="skeleton-row" aria-hidden="true">
           {columns.map((kind, c) => (
-            <td key={c} className={kind === "num" ? "num" : undefined}>
+            <td key={c} className={[kind === "num" ? "num" : "", optional.includes(c) ? "col-optional" : ""].join(" ").trim() || undefined}>
               <span className={`skeleton skeleton-${kind}`} />
             </td>
           ))}

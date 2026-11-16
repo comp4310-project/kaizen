@@ -1,0 +1,79 @@
+{
+  "seed": 4310,
+  "n": 1200,
+  "test_size": 300,
+  "problems": [
+    {
+      "id": "discharge_meds_delay",
+      "description": "Discharge held up for hours waiting for take-home medications from pharmacy",
+      "reporters": "both",
+      "rising": false,
+      "comments": 130,
+      "patient_family": 84,
+      "staff": 46
+    },
+    {
+      "id": "discharge_instructions",
+      "description": "Patients sent home without clear instructions about medications, wound care or follow-up",
+      "reporters": "both",
+      "rising": false,
+      "comments": 90,
+      "patient_family": 65,
+      "staff": 25
+    },
+    {
+      "id": "ed_wait_no_updates",
+      "description": "Long waits in emergency with nobody giving updates",
+      "reporters": "both",
+      "rising": false,
+      "comments": 90,
+      "patient_family": 65,
+      "staff": 25
+    },
+    {
+      "id": "call_bells_unanswered",
+      "description": "Call bells left unanswered on the wards, mostly at night and blamed on short staffing",
+      "reporters": "both",
+      "rising": false,
+      "comments": 90,
+      "patient_family": 65,
+      "staff": 25
+    },
+    {
+      "id": "night_noise",
+      "description": "Noise on the wards at night stops patients sleeping (reported by patients only)",
+      "reporters": "patient_family",
+      "rising": false,
+      "comments": 80,
+      "patient_family": 80,
+      "staff": 0
+    },
+    {
+      "id": "handover_gaps",
+      "description": "Key information lost at shift handover and transfers (reported by staff only)",
+      "reporters": "staff",
+      "rising": false,
+      "comments": 70,
+      "patient_family": 0,
+      "staff": 70
+    },
+    {
+      "id": "test_results_not_passed_on",
+      "description": "Test and scan results not passed on to patients or the team",
+      "reporters": "both",
+      "rising": false,
+      "comments": 75,
+      "patient_family": 55,
+      "staff": 20
+    },
+    {
+      "id": "iv_pump_shortage",
+      "description": "Not enough working IV infusion pumps, delaying drips and doses (rising in the last 3 weeks)",
+      "reporters": "both",
+      "rising": true,
+      "comments": 75,
+      "patient_family": 25,
+      "staff": 50
+    }
+  ]
+}

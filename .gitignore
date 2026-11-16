@@ -63,3 +63,5 @@ desktop.ini
 
 # Local evaluation scratch files, never submission artifacts
 /work/
+# Output of python -m kaizen.evaluate
+eval-results/

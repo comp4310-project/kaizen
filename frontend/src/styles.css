@@ -286,6 +286,18 @@ code {
   margin-bottom: 0;
 }
 
+/* The CSV button with its result beside it (below it when there is no room). */
+.export {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+}
+
+.export-status p {
+  margin: 0;
+}
+
 .review-controls {
   margin-block: 12px;
 }
@@ -316,7 +328,10 @@ code {
 }
 
 .review-categories input {
-  margin-right: 4px;
+  width: auto;
+  min-height: 0;
+  margin: 0 4px 0 0;
+  vertical-align: middle;
 }
 
 /* Focus: visible on every focusable element, both modes. */
@@ -383,7 +398,7 @@ code {
   color: var(--text);
 }
 
-.btn-secondary:hover:not(:disabled) {
+.btn-secondary:hover:not(:disabled, [aria-disabled="true"]) {
   background: var(--surface-sunken);
 }
 
@@ -399,7 +414,8 @@ code {
 
 /* Disabled keeps readable text (muted on the page or panel, at least 6.9:1 in both modes)
    but drops the fill, so it reads as unavailable without turning into a dark hole. */
-.btn:disabled {
+.btn:disabled,
+.btn[aria-disabled="true"] {
   background: transparent;
   border-color: var(--border-control);
   border-style: dashed;
@@ -554,6 +570,11 @@ textarea {
 .table-wrap {
   overflow: auto;
   max-height: 75vh;
+  /* Touch: let a finger pan the table both ways, and stop a sideways swipe at the table's
+     edge from turning into browser back navigation. Vertical swipes still pass on to the
+     page at the top and bottom of the table. */
+  touch-action: pan-x pan-y;
+  overscroll-behavior-x: contain;
   background: var(--surface-raised);
   border: 1px solid var(--border);
   border-radius: var(--radius-panel);
@@ -607,12 +628,43 @@ textarea {
   background: var(--surface);
 }
 
+/* Placeholder rows are not links, so they do not light up under the pointer. */
+.data-table tbody tr.skeleton-row {
+  cursor: progress;
+}
+
+.data-table tbody tr.skeleton-row:hover {
+  background: transparent;
+}
+
 .data-table tbody th {
   font-weight: 600;
 }
 
 .issue-name {
   min-width: 14rem;
+}
+
+.narrow-stage {
+  display: none;
+  font-weight: 400;
+}
+
+/* Tablets: the issues table fits without sideways scrolling. Main stage moves under the
+   issue name, and headers may wrap onto two lines. */
+@media (max-width: 56.25rem) {
+  .data-table .col-optional {
+    display: none;
+  }
+  .narrow-stage {
+    display: block;
+  }
+  .data-table thead th {
+    white-space: normal;
+  }
+  .issue-name {
+    min-width: 10rem;
+  }
 }
 
 /* A share as a number with a small bar before it. No background track. */

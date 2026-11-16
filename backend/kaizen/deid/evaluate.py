@@ -2,15 +2,21 @@
 
     python -m kaizen.deid.evaluate tests/data/deid_test_set.jsonl
 
+    python -m kaizen.deid.evaluate --csv comments.csv
+
 A detail counts as found only if every character of it is covered by a tag, since half
 a name is still a leak. The tag type does not have to match: a health card number tagged
-as a phone number is still removed. A tag that touches no personal detail counts as
-over-removal.
+as a phone number is still removed. A tag that touches no personal detail removed text
+that is not personal; P3 wants that for under 5% of tags.
+
+With --csv there are no answers to score against, so it lists every tagged span with a
+count for a person to judge. Run it only on your own machine, since it prints original text.
 """
 
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 from collections import Counter
 from dataclasses import dataclass, field
@@ -21,6 +27,7 @@ from kaizen.deid.deidentify import Span, find_spans
 
 # Types that must all be found (Table 9). Names and dates only count toward the 95%.
 MUST_FIND_ALL = ("PHONE", "EMAIL", "HEALTH_CARD", "RECORD_NUMBER")
+OVER_REMOVAL_TARGET = 0.05
 
 
 @dataclass
@@ -89,7 +96,11 @@ def print_report(report: Report) -> None:
     for typ in sorted(report.total):
         print(f"{typ:<15}{report.found[typ]:>8}{report.total[typ]:>8}{report.recall_for(typ):>9.1%}")
     print(f"{'overall':<15}{sum(report.found.values()):>8}{sum(report.total.values()):>8}{report.recall:>9.1%}")
-    print(f"\nover-removal: {report.over_removed} of {report.tags} tags ({report.over_removal_rate:.1%})")
+    met = "met" if report.over_removal_rate < OVER_REMOVAL_TARGET else "NOT met"
+    print(
+        f"\ntags that removed text that is not personal: {report.over_removed} of {report.tags}"
+        f" ({report.over_removal_rate:.1%}, target under {OVER_REMOVAL_TARGET:.0%}, {met})"
+    )
     for typ in sorted(report.keep_total):
         print(f"{typ} removed: {report.keep_removed[typ]} of {report.keep_total[typ]}")
     if report.misses:
@@ -102,11 +113,38 @@ def print_report(report: Report) -> None:
             print(f"  #{item_id} {text!r}")
 
 
+def tag_counts(path: Path, column: str = "text") -> Counter:
+    """(tag, tagged text) -> how often, over every comment in a CSV."""
+    counts: Counter = Counter()
+    with path.open(encoding="utf-8", newline="") as f:
+        for row in csv.DictReader(f):
+            text = row.get(column) or ""
+            if text.strip():
+                counts.update((s.tag, text[s.start : s.end]) for s in find_spans(text))
+    return counts
+
+
+def print_tag_counts(counts: Counter) -> None:
+    by_tag: Counter = Counter()
+    for (tag, _), n in counts.items():
+        by_tag[tag] += n
+    print("tags: " + ", ".join(f"{tag} {n}" for tag, n in sorted(by_tag.items())))
+    for (tag, span), n in sorted(counts.items(), key=lambda kv: (kv[0][0], -kv[1], kv[0][1])):
+        print(f"  {tag:<14}{n:>4}  {span!r}")
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
-    parser.add_argument("test_set", type=Path)
+    parser.add_argument("test_set", type=Path, nargs="?")
+    parser.add_argument("--csv", type=Path, help="list tagged spans in a CSV of comments")
+    parser.add_argument("--column", default="text")
     args = parser.parse_args()
-    print_report(evaluate(load(args.test_set)))
+    if args.csv:
+        print_tag_counts(tag_counts(args.csv, args.column))
+    elif args.test_set:
+        print_report(evaluate(load(args.test_set)))
+    else:
+        parser.error("give a test set or --csv")
 
 
 if __name__ == "__main__":
