@@ -4,6 +4,12 @@ Front end work owned by Aansh (P3 Table 8: FR5, FR6, FR8, NFR4). The endpoints f
 FR5, FR6 and FR8 are on `main`. How to add a page and the rules every page follows
 are in `AGENTS.md`.
 
+## FR1: upload and public feedback for P4
+
+QI staff and admins upload a CSV at `/imports` and see saved and rejected row counts
+with line numbers for the errors. Anyone can send one comment at `/feedback` using
+the units returned by the API. Both pages use the existing import endpoints.
+
 ## FR5: patient and staff comparison
 
 P3: "Show patient and staff feedback side by side by topic, stage and unit, and mark where
