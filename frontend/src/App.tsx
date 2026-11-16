@@ -29,7 +29,22 @@ function RequireLogin({ children }: { children: ReactNode }) {
 }
 
 function Header() {
-  const { me, logout } = useAuth();
+  const { me, checking, logout } = useAuth();
+  // While a stored login is checked the links already work: each route waits for the check.
+  if (checking) {
+    return (
+      <header className="site-header">
+        <div className="container header-inner">
+          <span className="brand">Kaizen</span>
+          <nav aria-label="Main" className="nav">
+            <NavLink to="/issues">Issues</NavLink>
+            <NavLink to="/compare">Compare</NavLink>
+          </nav>
+          <div className="who muted">Checking your login</div>
+        </div>
+      </header>
+    );
+  }
   if (!me) return null;
   return (
     <header className="site-header">

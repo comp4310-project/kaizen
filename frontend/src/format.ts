@@ -13,6 +13,11 @@ export function sourceName(source: string): string {
   return source === "patient_family" ? "Patient or family" : "Staff";
 }
 
+/** Units by code, numbers in order, so 2A, 3A, 4A, 4B, ... then ED and ICU. */
+export function sortUnits<T extends { code: string }>(units: T[]): T[] {
+  return [...units].sort((a, b) => a.code.localeCompare(b.code, undefined, { numeric: true }));
+}
+
 export function roleName(role: Role): string {
   return { qi: "QI", manager: "Manager", admin: "Admin" }[role];
 }
