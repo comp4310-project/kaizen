@@ -19,9 +19,9 @@ PASS/FAIL applies only to the named configuration and measured scope.
 - synthetic_intent / targets / stage_accuracy: PASS. 0.741144 >= 0.65
 - synthetic_intent / targets / urgency_high_recall: FAIL. 0.0 >= 0.8
 - issues / recovery / target: PASS. 8 >= 6
-- issues / patterns / discharge_medication: PASS. 
-- issues / patterns / night_noise: PASS. 
-- issues / patterns / transport: PASS. 
+- issues / patterns / discharge_medication: PASS.
+- issues / patterns / night_noise: PASS.
+- issues / patterns / transport: PASS.
 - issues / human_quality: NOT_MEASURED. two members must rate ten comments from each top issue
 - dashboard / endpoints / /issues / maximum: PASS. 0.008668 <= 2
 - dashboard / endpoints / /issues / http_200: PASS. True == True

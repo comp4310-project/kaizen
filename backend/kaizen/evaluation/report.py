@@ -58,7 +58,7 @@ def save(folder, report):
                 detail = value.get("reason", "")
                 if "target" in value:
                     detail = f"{value['value']} {value['operator']} {value['target']}"
-                lines.append(f"- {path}: {value['status']}. {detail}")
+                lines.append(f"- {path}: {value['status']}. {detail}".rstrip())
             for key, child in value.items():
                 if isinstance(child, (dict, list)):
                     walk(child, f"{path} / {key}" if path else key)
