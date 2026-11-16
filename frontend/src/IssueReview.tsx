@@ -1,4 +1,4 @@
-import { useEffect, useId, useState } from "react";
+import { useEffect, useId, useRef, useState } from "react";
 import type { FormEvent } from "react";
 import { api, CATEGORIES, STAGES, type IssueComment, type IssueCommentsOut, type IssueSummary, type LabelsIn } from "./api";
 import { words } from "./format";
@@ -32,8 +32,20 @@ export function CommentReview({ comment, onUpdate }: {
   const [note, setNote] = useState("");
   const [selection, setSelection] = useState({ start: 0, end: 0 });
   const text = comment.text.replace(/\r\n?/g, "\n");
+  // When a form closes, or Confirm labels disappears after confirming, focus would fall to
+  // the page body. Put it back on the matching button instead.
+  const editButton = useRef<HTMLButtonElement>(null);
+  const redactButton = useRef<HTMLButtonElement>(null);
+  const returnFocus = useRef<"labels" | "redact" | null>(null);
+
+  useEffect(() => {
+    if (mode !== null || returnFocus.current === null) return;
+    (returnFocus.current === "redact" ? redactButton : editButton).current?.focus();
+    returnFocus.current = null;
+  });
 
   function open(next: typeof mode) {
+    returnFocus.current = next === null ? mode : null;
     setError(null);
     setNote("");
     setSelection({ start: 0, end: 0 });
@@ -46,6 +58,7 @@ export function CommentReview({ comment, onUpdate }: {
     setNote("");
     try {
       await action();
+      returnFocus.current = mode ?? "labels";
       setMode(null);
       setNote(success);
     } catch (cause) {
@@ -56,10 +69,11 @@ export function CommentReview({ comment, onUpdate }: {
   }
 
   function confirm(labels: LabelsIn) {
+    const changed = Object.keys(labels).length > 0;
     void save(async () => {
       const updated = await api.confirmLabels(comment.id, labels);
       onUpdate(comment.id, { labels: updated });
-    }, "Labels confirmed.");
+    }, changed ? "Labels saved and marked as checked by a person." : "Labels confirmed as checked by a person.");
   }
 
   function redact(event: FormEvent) {
@@ -88,11 +102,11 @@ export function CommentReview({ comment, onUpdate }: {
             </button>
           )}
           {comment.labels && (
-            <button type="button" className="btn btn-secondary btn-small" disabled={busy} onClick={() => open("labels")}>
+            <button ref={editButton} type="button" className="btn btn-secondary btn-small" disabled={busy} onClick={() => open("labels")}>
               Edit labels
             </button>
           )}
-          <button type="button" className="btn btn-secondary btn-small" disabled={busy} onClick={() => open("redact")}>
+          <button ref={redactButton} type="button" className="btn btn-secondary btn-small" disabled={busy} onClick={() => open("redact")}>
             Redact
           </button>
         </div>
@@ -120,9 +134,17 @@ export function CommentReview({ comment, onUpdate }: {
           <fieldset disabled={busy}>
             <legend>Edit labels for comment {comment.id}</legend>
             <div className="review-actions">
-              <LabelSelect id={id} name="sentiment" label="Sentiment" value={comment.labels.sentiment} choices={sentiments} />
+              <LabelSelect id={id} name="sentiment" label="Sentiment" value={comment.labels.sentiment} choices={sentiments} autoFocus />
               <LabelSelect id={id} name="stage" label="Stage of care" value={comment.labels.stage} choices={STAGES} />
               <LabelSelect id={id} name="urgency" label="Urgency" value={comment.labels.urgency} choices={urgencies} />
+            </div>
+            <p id={id + "save-help"} className="muted small">Saving also marks these labels as checked by a person.</p>
+            {/* Save is repeated here so it is reachable without going past the seven categories. */}
+            <div className="review-actions">
+              <button type="submit" className="btn btn-primary" aria-describedby={id + "save-help"}>
+                {busy ? "Saving" : "Save labels"}
+              </button>
+              <button type="button" className="btn btn-secondary" onClick={() => open(null)}>Cancel</button>
             </div>
             <fieldset className="review-categories">
               <legend>Categories</legend>
@@ -135,7 +157,9 @@ export function CommentReview({ comment, onUpdate }: {
               ))}
             </fieldset>
             <div className="review-actions">
-              <button type="submit" className="btn btn-primary">{busy ? "Saving" : "Save and confirm"}</button>
+              <button type="submit" className="btn btn-primary" aria-describedby={id + "save-help"}>
+                {busy ? "Saving" : "Save labels"}
+              </button>
               <button type="button" className="btn btn-secondary" onClick={() => open(null)}>Cancel</button>
             </div>
           </fieldset>
@@ -162,13 +186,13 @@ export function CommentReview({ comment, onUpdate }: {
   );
 }
 
-function LabelSelect({ id, name, label, value, choices }: {
-  id: string; name: string; label: string; value: string; choices: readonly string[];
+function LabelSelect({ id, name, label, value, choices, autoFocus = false }: {
+  id: string; name: string; label: string; value: string; choices: readonly string[]; autoFocus?: boolean;
 }) {
   return (
     <div className="field">
       <label htmlFor={id + name}>{label}</label>
-      <select id={id + name} name={name} defaultValue={value}>
+      <select id={id + name} name={name} defaultValue={value} autoFocus={autoFocus}>
         {choices.map((choice) => <option key={choice} value={choice}>{words(choice)}</option>)}
       </select>
     </div>
