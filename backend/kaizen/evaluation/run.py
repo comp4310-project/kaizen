@@ -209,7 +209,7 @@ def benchmark(rows, labeller, embedder, repeats, batch_size, workers, min_cluste
         raise ValueError("NFR3 needs at least 1000 comments")
     indices = random.Random(SEED).sample(range(len(rows)), 1000)
     selected = [rows[i] for i in indices]
-    with tempfile.TemporaryDirectory(prefix="kaizen-benchmark-") as temporary:
+    with tempfile.TemporaryDirectory(prefix="kaizen-benchmark-", ignore_cleanup_errors=True) as temporary:
         app, client, headers = client_for(Path(temporary) / "benchmark.db")
         with client, app.state.sessionmaker() as session:
             started = time.perf_counter()
@@ -226,7 +226,7 @@ def benchmark(rows, labeller, embedder, repeats, batch_size, workers, min_cluste
                 "excluded": "baseline training, model setup/download, account setup, suggestions, browser and network latency",
                 "model_cache": "warm; full dataset evaluation ran first",
                 "database": "temporary SQLite", "labeller": labeller.name, "embedder": embedder.name,
-                "namer": "keywords", "batch_size": batch_size, "workers": workers, "min_cluster_size": min_cluster_size,
+                "namer": "keywords", "batch_size": batch_size, "workers": workers, "min_cluster_size": issue_run.min_cluster_size,
                 "import_seconds": after_import-started, "label_seconds": after_labels-after_import,
                 "group_seconds": elapsed-(after_labels-started), "total_seconds": elapsed,
                 "complete": complete, "labelled": run.labelled, "missed": run.missed,
@@ -245,12 +245,12 @@ def main():
     p.add_argument("--method", choices=["baseline", "llm"], default="baseline")
     p.add_argument("--batch-size", type=int, default=50)
     p.add_argument("--workers", type=int, default=1)
-    p.add_argument("--min-cluster-size", type=int, default=8)
+    p.add_argument("--min-cluster-size", type=int, help="default: 2%% of the grouped comments, at least 8")
     p.add_argument("--api-repeats", type=int, default=10)
     p.add_argument("--skip-benchmark", action="store_true")
     p.add_argument("--skip-grouping", action="store_true", help="partial run if embedding model cannot be downloaded")
     args = p.parse_args()
-    if args.min_cluster_size < 2:
+    if args.min_cluster_size is not None and args.min_cluster_size < 2:
         p.error("minimum cluster size must be at least 2")
     if min(args.batch_size, args.workers, args.api_repeats) < 1:
         p.error("batch size, workers and repeats must be positive")
@@ -259,7 +259,7 @@ def main():
     report = {"environment": environment(), "data": audit(rows, truth),
               "dataset_sha256": digest(args.data / "comments.csv"),
               "configuration": {"seed": SEED, "method": args.method, "batch_size": args.batch_size,
-                                "workers": args.workers, "min_cluster_size": args.min_cluster_size},
+                                "workers": args.workers, "min_cluster_size": args.min_cluster_size or "default"},
               "public_data": unavailable("no licensed public test set with completed HCAT human labels supplied"),
               "human_synthetic": unavailable("400-row blank annotation workflow exported; no human labels supplied"),
               "suggestions": unavailable("no provider credentials or two completed 40-item rating sheets"),
@@ -268,7 +268,7 @@ def main():
     print("Scoring real de-identification test set...", flush=True)
     report["deidentification"] = deid_report(Path("backend/tests/data/deid_test_set.jsonl"))
     save(args.out, report)
-    with tempfile.TemporaryDirectory(prefix="kaizen-evaluate-") as temporary:
+    with tempfile.TemporaryDirectory(prefix="kaizen-evaluate-", ignore_cleanup_errors=True) as temporary:
         app, client, headers = client_for(Path(temporary) / "evaluation.db")
         with client, app.state.sessionmaker() as session:
             print("Importing 2300 synthetic comments through POST /imports...", flush=True)
@@ -315,6 +315,7 @@ def main():
                     embedder = SentenceEmbedder()
                     issue_run = build_issues(session, embedder, KeywordNamer(), seed=SEED, min_cluster_size=args.min_cluster_size)
                     report["issues"] = issue_results(session, saved, truth, issue_run.id)
+                    report["issues"]["min_cluster_size"] = issue_run.min_cluster_size
                     report["issues"]["seconds_including_model_load"] = time.perf_counter() - started
                     report["issues"]["embedder"] = embedder.name
                     cache = Path(os.environ.get("KAIZEN_EMBED_CACHE", "work/model-cache"))

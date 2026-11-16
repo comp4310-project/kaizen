@@ -262,7 +262,7 @@ def _only_by_source(session, comment_ids: list[int]) -> tuple[int, int, str | No
     return patient, staff, _only(patient, staff)
 
 
-def _issues(data_dir: Path, out_dir: Path, make_embedder: Callable, min_size: int) -> tuple[list[Check], dict]:
+def _issues(data_dir: Path, out_dir: Path, make_embedder: Callable, min_size: int | None) -> tuple[list[Check], dict]:
     from sqlalchemy import select
 
     from kaizen.api.compare import compare
@@ -357,7 +357,7 @@ def _issues(data_dir: Path, out_dir: Path, make_embedder: Callable, min_size: in
         "database": "kaizen-eval.db",
         "comments_imported": len(rows),
         "comments_changed_by_deid": changed_by_deid,
-        "min_cluster_size": min_size,
+        "min_cluster_size": run.min_cluster_size,
         "comments_grouped": run.comments_used,
         "outliers": run.outliers,
         "issues": len(issues),
@@ -408,7 +408,7 @@ def _first_rows_csv(path: Path, n: int) -> bytes:
     return out.getvalue().encode("utf-8")
 
 
-def _timing(data_dir: Path, out_dir: Path, make_embedder: Callable, labeller, n: int, min_size: int) -> tuple[list[Check], dict]:
+def _timing(data_dir: Path, out_dir: Path, make_embedder: Callable, labeller, n: int, min_size: int | None) -> tuple[list[Check], dict]:
     from sqlalchemy import select
 
     from kaizen.classify.prompt import CommentInput
@@ -464,7 +464,7 @@ def _load_generator():
     return module
 
 
-def _recovery_rows(rows: list[dict], embedder, min_size: int) -> dict:
+def _recovery_rows(rows: list[dict], embedder, min_size: int | None) -> dict:
     from kaizen.issues.evaluate import planted_recovery
     from kaizen.issues.pipeline import find_issues
     from kaizen.issues.rank import IssueComment as RankInput
@@ -479,7 +479,7 @@ def _recovery_rows(rows: list[dict], embedder, min_size: int) -> dict:
     return planted_recovery(found, [r["planted"] for r in grouped])
 
 
-def _other_seeds(seeds, n: int, embedder, min_size: int) -> dict | None:
+def _other_seeds(seeds, n: int, embedder, min_size: int | None) -> dict | None:
     generator = _load_generator()
     if generator is None or not seeds:
         return None
@@ -502,7 +502,7 @@ def run(
     llm: str | None = None,
     timing_comments: int = TIMING_COMMENTS,
     extra_seeds=EXTRA_SEEDS,
-    min_size: int = 8,
+    min_size: int | None = None,
 ) -> dict:
     if make_embedder is None:
         from kaizen.issues.embed import SentenceEmbedder
@@ -674,7 +674,7 @@ def main() -> None:
     parser.add_argument("--llm", metavar="MODEL", help="also score this LiteLLM model on the held-out split (needs its API key)")
     parser.add_argument("--timing-comments", type=int, default=TIMING_COMMENTS)
     parser.add_argument("--other-seeds", type=int, nargs="*", default=list(EXTRA_SEEDS))
-    parser.add_argument("--min-size", type=int, default=8)
+    parser.add_argument("--min-size", type=int, help="smallest issue (default: 2%% of the comments, at least 8)")
     args = parser.parse_args()
 
     results = run(args.out_dir, args.data, llm=args.llm, timing_comments=args.timing_comments, extra_seeds=args.other_seeds, min_size=args.min_size)

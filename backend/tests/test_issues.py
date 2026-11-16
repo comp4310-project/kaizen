@@ -17,7 +17,7 @@ from kaizen.issues.cluster import Cluster, find_clusters
 from kaizen.issues.embed import normalise
 from kaizen.issues.evaluate import planted_recovery, rating_sheet
 from kaizen.issues.name import IssueNamer, KeywordNamer
-from kaizen.issues.pipeline import FoundIssue
+from kaizen.issues.pipeline import FoundIssue, default_min_size
 from kaizen.issues.rank import IssueComment as RankInput
 from kaizen.issues.rank import issue_stats
 from tests.test_classify import FakeCompletion, raises, reply
@@ -144,6 +144,22 @@ def test_build_saves_ranked_issues_and_skips_praise(app) -> None:
         assert len(members) == 30 and not set(praise) & set(members)
         assert sum(m.typical for m in session.scalars(select(IssueComment))) == 30  # 10 typical per issue
         assert session.scalars(select(ActivityLog).where(ActivityLog.action == "build_issues")).one().detail["issues"] == 3
+
+
+def test_default_smallest_issue_grows_with_the_data() -> None:
+    assert default_min_size(30) == 8  # small runs keep the floor
+    assert default_min_size(400) == 8
+    assert default_min_size(1000) == 20
+    assert default_min_size(2000) == 40
+
+
+def test_build_uses_the_default_size_and_saves_it(app) -> None:
+    texts, _ = topic_texts(10)
+    add_labelled(app, texts)
+    with app.state.sessionmaker() as session:
+        run = build_issues(session, FakeEmbedder(), KeywordNamer())
+        assert run.min_cluster_size == 8
+        assert len(session.scalars(select(Issue).where(Issue.run_id == run.id)).all()) == 3
 
 
 def test_rating_sheet_lists_ten_comments_per_issue(app, tmp_path) -> None:

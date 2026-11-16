@@ -127,6 +127,17 @@ is a surname written alone that ends like a town ("Hamilton was kind"), but not 
 
 - 2026-11-15: Evaluation uses the existing TF-IDF baseline and keyword issue names when no provider key is available. Synthetic intent scores, public FFT sentiment scores and future human-label scores stay separate. NFR3 timings use real processing and SQLite through FastAPI TestClient, so they do not establish browser or hosted-model performance.
 
+## 2026-11-15 The smallest issue scales with the data
+
+A fixed minimum of 8 comments per issue split Bhavya's 2,300 synthetic comments into 121
+small issues, and none of the 8 built-in problems reached the top 15. The minimum is now 2%
+of the comments being grouped, never below 8. We chose the 2% on the separate 1,200-comment
+fixture in `backend/tests/data/synthetic.jsonl`, not on the 2,300-comment set we score:
+there, a fixed 8 found 3 of 8 problems, anything from 1% to 4% found 7 of 8, and 5% found 5.
+2% sits in the middle of that range. On the 2,300 comments it gives a minimum of 33 and finds
+all 8, with the medication, night-noise and transport patterns all correct. Runs of under
+400 comments, such as the 345 grouped NHS comments, still use 8. `--min-size` overrides it.
+
 ## 2026-11-15 Simulated people instead of team raters and classmates
 
 P3 planned two members to hand-label comments and rate issues and suggestions, and five

@@ -22,13 +22,20 @@ def unavailable(reason):
     return {"status": "NOT_MEASURED", "reason": reason}
 
 
+def _memory_gib():
+    """Physical memory, or None where os.sysconf is missing (Windows)."""
+    if not hasattr(os, "sysconf"):
+        return None
+    return round(os.sysconf("SC_PHYS_PAGES") * os.sysconf("SC_PAGE_SIZE") / 1024**3, 2)
+
+
 def environment():
     packages = sorted(importlib.metadata.distributions(), key=lambda d: d.metadata["Name"].lower())
     return {
         "utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "python": platform.python_version(), "platform": platform.platform(),
         "machine": platform.machine(), "logical_cpus": os.cpu_count(),
-        "memory_gib": round(os.sysconf("SC_PHYS_PAGES") * os.sysconf("SC_PAGE_SIZE") / 1024**3, 2),
+        "memory_gib": _memory_gib(),
         "threads": {k: os.environ.get(k) for k in ("OMP_NUM_THREADS", "NUMBA_NUM_THREADS", "PYTHONHASHSEED", "TOKENIZERS_PARALLELISM")},
         "packages": {p.metadata["Name"]: p.version for p in packages},
         "commit": subprocess.check_output(["git", "rev-parse", "HEAD"], text=True).strip(),
