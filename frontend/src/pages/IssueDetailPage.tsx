@@ -3,7 +3,7 @@ import { Link, useNavigate, useParams } from "react-router-dom";
 import { api, type IssueComment, type IssueCommentsOut, type Source, type Suggestion, type Unit } from "../api";
 import { canReviewSuggestions, useAuth } from "../auth";
 import { sourceName, words } from "../format";
-import { EmptyState, ErrorNotice, SkeletonBlocks } from "../states";
+import { describeError, EmptyState, ErrorNotice, SkeletonBlocks } from "../states";
 import { SuggestionCard } from "../SuggestionCard";
 import { CommentReview, IssueReview } from "../IssueReview";
 
@@ -120,7 +120,9 @@ function IssueDetail({ issueId }: { issueId: number }) {
   const [exportError, setExportError] = useState<unknown>(null);
   const [filtering, setFiltering] = useState(false);
   const scopedUnit = me?.role === "manager" ? me.unit ?? undefined : unit || undefined;
+  const [exportNote, setExportNote] = useState("");
   const hasResults = data !== null && !filtering && error === null;
+  const canExport = hasResults && !!data?.comments.length && !exporting && !loadingMore;
 
   useEffect(() => {
     if (!canReview) return;
@@ -155,6 +157,7 @@ function IssueDetail({ issueId }: { issueId: number }) {
     setError(null);
     setMoreError(null);
     setExportError(null);
+    setExportNote("");
     setFiltering(true);
   }
 
@@ -175,11 +178,13 @@ function IssueDetail({ issueId }: { issueId: number }) {
   }
 
   async function exportComments() {
-    if (!data?.comments.length) return;
+    if (!canExport || !data) return;
     setExporting(true);
     setExportError(null);
+    setExportNote("");
     try {
-      await api.downloadIssueComments(issueId, { unit: scopedUnit, source: source || undefined }, data.comments.length);
+      const saved = await api.downloadIssueComments(issueId, { unit: scopedUnit, source: source || undefined }, data.comments.length);
+      setExportNote(`Downloaded ${saved.fileName} (${saved.rows} ${saved.rows === 1 ? "comment" : "comments"}).`);
     } catch (cause) {
       setExportError(cause);
     } finally {
@@ -241,13 +246,20 @@ function IssueDetail({ issueId }: { issueId: number }) {
                   <option value="staff">Staff</option>
                 </select>
               </div>
-              <button type="button" className="btn btn-secondary" disabled={!hasResults || !data?.comments.length || exporting || loadingMore}
-                onClick={exportComments}>
-                {exporting ? "Downloading" : "Download displayed comments as CSV"}
-              </button>
+              <div className="export">
+                {/* aria-disabled rather than disabled, so focus stays on the button while it works. */}
+                <button type="button" className="btn btn-secondary" aria-disabled={!canExport}
+                  aria-describedby="export-status" onClick={exportComments}>
+                  {exporting ? "Downloading" : "Download as spreadsheet (CSV)"}
+                </button>
+                <div id="export-status" className="export-status small" aria-live="polite">
+                  {exportError !== null
+                    ? <p className="notice notice-error">Download failed. {describeError(exportError, me?.role)}</p>
+                    : exportNote && <p>{exportNote}</p>}
+                </div>
+              </div>
             </div>
             <ErrorNotice error={unitsError} />
-            <ErrorNotice error={exportError} />
             {hasResults && data && (
               <p className="muted small" role="status">
                 Showing {data.comments.length} of {data.total}, most typical first. All text is de-identified.

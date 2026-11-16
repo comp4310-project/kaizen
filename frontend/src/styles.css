@@ -286,6 +286,18 @@ code {
   margin-bottom: 0;
 }
 
+/* The CSV button with its result beside it (below it when there is no room). */
+.export {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 12px;
+}
+
+.export-status p {
+  margin: 0;
+}
+
 .review-controls {
   margin-block: 12px;
 }
@@ -383,7 +395,7 @@ code {
   color: var(--text);
 }
 
-.btn-secondary:hover:not(:disabled) {
+.btn-secondary:hover:not(:disabled, [aria-disabled="true"]) {
   background: var(--surface-sunken);
 }
 
@@ -399,7 +411,8 @@ code {
 
 /* Disabled keeps readable text (muted on the page or panel, at least 6.9:1 in both modes)
    but drops the fill, so it reads as unavailable without turning into a dark hole. */
-.btn:disabled {
+.btn:disabled,
+.btn[aria-disabled="true"] {
   background: transparent;
   border-color: var(--border-control);
   border-style: dashed;
