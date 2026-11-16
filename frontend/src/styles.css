@@ -328,7 +328,10 @@ code {
 }
 
 .review-categories input {
-  margin-right: 4px;
+  width: auto;
+  min-height: 0;
+  margin: 0 4px 0 0;
+  vertical-align: middle;
 }
 
 /* Focus: visible on every focusable element, both modes. */
