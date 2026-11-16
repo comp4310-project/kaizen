@@ -19,7 +19,9 @@ backend/kaizen/api/         FastAPI app, login and roles (NFR1)
 backend/kaizen/classify/    labels each saved comment with an LLM through LiteLLM, plus a scikit-learn baseline (FR3)
 backend/kaizen/issues/      groups labelled comments into named, ranked issues (FR4)
 backend/kaizen/suggest/     drafts cited suggestions from the documents, with the citation check (FR7, NFR2)
+backend/kaizen/evaluate.py  reruns every P3 evaluation in one command and writes results.md (NFR3, NFR5)
 backend/kaizen/db.py        database tables, see docs/data-model.md
+backend/scripts/make_synthetic.py  synthetic comments with 8 built-in problems, written to backend/tests/data/
 frontend/                   React and TypeScript app built with Vite, see frontend/README.md (FR5, FR6, FR8, NFR4)
 docs/                       P0 to P3 deliverables, feedback, decisions
 docs/meetings/              meeting notes
