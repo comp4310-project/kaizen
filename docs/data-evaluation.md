@@ -5,6 +5,15 @@ de-identification scorer, classifier metrics, baseline, issue recovery scorer an
 suggestion scorer. It does not change the import, classifier, grouping or dashboard
 implementations owned by other members.
 
+During final integration, main gained a separate 1,200-row fixture and the
+`kaizen.evaluate` runner. Both are retained without changes. That runner includes an
+isolated grouping experiment using supplied synthetic labels. The 2,300-row experiment
+in this guide instead groups actual classifier predictions and keeps its ground truth
+outside the processing pipeline. Use the commands below for Bhavya's requested dataset
+and prediction-based benchmark; the two fixtures and their scores must not be combined.
+Final results were rerun after merging main's de-identification, issue-filtering and
+frontend fixes.
+
 ## Run it
 
 Use Python 3.12 on Linux or WSL, from the repository root:
@@ -290,7 +299,7 @@ The saved reports identify the code revision and exact dataset hash.
 
 | Check | Measured result | Target / result |
 |---|---:|---|
-| De-identification recall, 150 comments / 315 fake details | 98.41% | At least 95%, PASS |
+| De-identification recall, 150 comments / 300 fake details | 98.33% | At least 95%, PASS |
 | ID, phone and email recall | 100% in each required type | 100%, PASS |
 | Over-removal; unit removals | 0%; 0 | Under 5%; none, PASS |
 | Synthetic sentiment macro F1, 734 held-out rows | 0.7241 | 0.75, FAIL |
@@ -300,20 +309,21 @@ The saved reports identify the code revision and exact dataset hash.
 | Public FFT sentiment macro F1, 1,388 labelled rows | 0.1299 | 0.75, FAIL |
 | Planted recovery, default minimum size 8 | 0 of 8 | At least 6, FAIL |
 | Planted recovery, exploratory minimum size 40 | 8 of 8 | At least 6, PASS for this configuration |
-| Real baseline processing, 1,000 comments | 15.277 seconds | At most 900 seconds, PASS for measured scope |
-| Slowest of the populated dashboard API samples | 0.018280 seconds | At most 2 seconds, PASS for in-process scope |
+| Real baseline processing, 1,000 comments | 12.022 seconds | At most 900 seconds, PASS for measured scope |
+| Slowest of the populated dashboard API samples | 0.021011 seconds | At most 2 seconds, PASS for in-process scope |
 
 The [size-40 diagnostic](../reports/bhavya/grouping-40.json) isolates a grouping parameter
-without changing teammate-owned code. The default produced 148 small issues; minimum
-size 40 produced ten larger ones and recovered all eight planted problems. Medication
-had 130 patient/family and 90 staff comments. The recovered noise issue had 203
-patient/family comments and zero staff, including some background contamination. Transport
-had 90 patient/family and 72 staff comments and was flagged rising. The adjusted Rand index
-on planted comments rose from 0.1094 to 0.8957. That index is a diagnostic, not P3's human
+without changing teammate-owned code. The default produced 121 small issues; minimum
+size 40 produced eleven larger ones and recovered all eight planted problems. Medication
+had 86 patient/family and 20 staff comments in its recovered cluster. The recovered noise
+issue had 186 patient/family and 18 staff comments: staff contamination makes the expected
+patient-only pattern FAIL despite recovering the planted topic. Transport had 94
+patient/family and 70 staff comments and was flagged rising. The adjusted Rand index
+on planted comments changed from 0.1004 to 0.8156. That index is a diagnostic, not P3's human
 issue-quality score. Independent API aggregation checks passed for all three groupings.
 
 The size-40 run was chosen after seeing default fragmentation. It is explicitly
 exploratory, not an untouched-test estimate or a replacement for the default failure.
 The code default remains 8. Its timing is not used as the NFR3 benchmark; only the default
-configuration was benchmarked. A separate [ten-issue reviewer sheet](../reports/bhavya/issues-to-rate-grouping-40.csv)
+configuration was benchmarked. A separate [eleven-issue reviewer sheet](../reports/bhavya/issues-to-rate-grouping-40.csv)
 is provided, but it has no completed human ratings.

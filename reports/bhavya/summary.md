@@ -8,7 +8,7 @@ PASS/FAIL applies only to the named configuration and measured scope.
 - human_synthetic: NOT_MEASURED. 400-row blank annotation workflow exported; no human labels supplied
 - suggestions: NOT_MEASURED. no provider credentials or two completed 40-item rating sheets
 - usability: NOT_MEASURED. five-person SUS study belongs to NFR4; see docs/frontend-usability.md
-- deidentification / recall: PASS. 0.984127 >= 0.95
+- deidentification / recall: PASS. 0.983333 >= 0.95
 - deidentification / mandatory_types / PHONE: PASS. 1.0 == 1
 - deidentification / mandatory_types / EMAIL: PASS. 1.0 == 1
 - deidentification / mandatory_types / HEALTH_CARD: PASS. 1.0 == 1
@@ -24,41 +24,41 @@ PASS/FAIL applies only to the named configuration and measured scope.
 - issues / patterns / night_noise: FAIL. planted issue not recovered in top 15
 - issues / patterns / transport: FAIL. planted issue not recovered in top 15
 - issues / human_quality: NOT_MEASURED. two members must rate ten comments from each top issue
-- dashboard / endpoints / /issues / maximum: PASS. 0.012672 <= 2
+- dashboard / endpoints / /issues / maximum: PASS. 0.009738 <= 2
 - dashboard / endpoints / /issues / http_200: PASS. True == True
-- dashboard / endpoints / /comments?limit=50 / maximum: PASS. 0.007317 <= 2
+- dashboard / endpoints / /comments?limit=50 / maximum: PASS. 0.0185 <= 2
 - dashboard / endpoints / /comments?limit=50 / http_200: PASS. True == True
-- dashboard / endpoints / /compare?by=category / maximum: PASS. 0.015801 <= 2
+- dashboard / endpoints / /compare?by=category / maximum: PASS. 0.021011 <= 2
 - dashboard / endpoints / /compare?by=category / http_200: PASS. True == True
-- dashboard / endpoints / /compare?by=stage / maximum: PASS. 0.013221 <= 2
+- dashboard / endpoints / /compare?by=stage / maximum: PASS. 0.013185 <= 2
 - dashboard / endpoints / /compare?by=stage / http_200: PASS. True == True
-- dashboard / endpoints / /compare?by=unit / maximum: PASS. 0.014286 <= 2
+- dashboard / endpoints / /compare?by=unit / maximum: PASS. 0.014213 <= 2
 - dashboard / endpoints / /compare?by=unit / http_200: PASS. True == True
-- dashboard / endpoints / /suggestions / maximum: PASS. 0.0062 <= 2
+- dashboard / endpoints / /suggestions / maximum: PASS. 0.005518 <= 2
 - dashboard / endpoints / /suggestions / http_200: PASS. True == True
-- dashboard / endpoints / /issues/1/comments / maximum: PASS. 0.01828 <= 2
+- dashboard / endpoints / /issues/1/comments / maximum: PASS. 0.00884 <= 2
 - dashboard / endpoints / /issues/1/comments / http_200: PASS. True == True
-- dashboard / endpoints / /issues/1/comments?format=csv / maximum: PASS. 0.010249 <= 2
+- dashboard / endpoints / /issues/1/comments?format=csv / maximum: PASS. 0.009522 <= 2
 - dashboard / endpoints / /issues/1/comments?format=csv / http_200: PASS. True == True
 - dashboard / comparison_integrity / category: PASS. True == True
 - dashboard / comparison_integrity / stage: PASS. True == True
 - dashboard / comparison_integrity / unit: PASS. True == True
-- performance / processing_target: PASS. 15.276907 <= 900
-- performance / dashboard / endpoints / /issues / maximum: PASS. 0.014342 <= 2
+- performance / processing_target: PASS. 12.022436 <= 900
+- performance / dashboard / endpoints / /issues / maximum: PASS. 0.007664 <= 2
 - performance / dashboard / endpoints / /issues / http_200: PASS. True == True
-- performance / dashboard / endpoints / /comments?limit=50 / maximum: PASS. 0.007164 <= 2
+- performance / dashboard / endpoints / /comments?limit=50 / maximum: PASS. 0.006682 <= 2
 - performance / dashboard / endpoints / /comments?limit=50 / http_200: PASS. True == True
-- performance / dashboard / endpoints / /compare?by=category / maximum: PASS. 0.012722 <= 2
+- performance / dashboard / endpoints / /compare?by=category / maximum: PASS. 0.010379 <= 2
 - performance / dashboard / endpoints / /compare?by=category / http_200: PASS. True == True
-- performance / dashboard / endpoints / /compare?by=stage / maximum: PASS. 0.011328 <= 2
+- performance / dashboard / endpoints / /compare?by=stage / maximum: PASS. 0.007816 <= 2
 - performance / dashboard / endpoints / /compare?by=stage / http_200: PASS. True == True
-- performance / dashboard / endpoints / /compare?by=unit / maximum: PASS. 0.008994 <= 2
+- performance / dashboard / endpoints / /compare?by=unit / maximum: PASS. 0.00803 <= 2
 - performance / dashboard / endpoints / /compare?by=unit / http_200: PASS. True == True
-- performance / dashboard / endpoints / /suggestions / maximum: PASS. 0.005877 <= 2
+- performance / dashboard / endpoints / /suggestions / maximum: PASS. 0.005267 <= 2
 - performance / dashboard / endpoints / /suggestions / http_200: PASS. True == True
-- performance / dashboard / endpoints / /issues/1/comments / maximum: PASS. 0.010336 <= 2
+- performance / dashboard / endpoints / /issues/1/comments / maximum: PASS. 0.009704 <= 2
 - performance / dashboard / endpoints / /issues/1/comments / http_200: PASS. True == True
-- performance / dashboard / endpoints / /issues/1/comments?format=csv / maximum: PASS. 0.010345 <= 2
+- performance / dashboard / endpoints / /issues/1/comments?format=csv / maximum: PASS. 0.006528 <= 2
 - performance / dashboard / endpoints / /issues/1/comments?format=csv / http_200: PASS. True == True
 - performance / dashboard / comparison_integrity / category: PASS. True == True
 - performance / dashboard / comparison_integrity / stage: PASS. True == True

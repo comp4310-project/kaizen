@@ -2,8 +2,8 @@
   "backend": {
     "command": ".venv/bin/python -m pytest backend/tests -q",
     "failed": 0,
-    "passed": 168,
-    "seconds": 90.02,
+    "passed": 192,
+    "seconds": 87.21,
     "warnings": 2
   },
   "dependencies": {
@@ -17,6 +17,12 @@
     ],
     "scope": "TypeScript check and Vite production build; no browser study",
     "status": "PASS"
+  },
+  "integration": {
+    "full_suite_and_frontend_rechecked": true,
+    "main_commit": "32a2f0e",
+    "merge_commit": "ace0d7b",
+    "teammate_changes_preserved": true
   },
   "node": "v24.22.1",
   "npm": "11.9.0",
@@ -33,6 +39,11 @@
     }
   },
   "report_hash_matches_dataset": true,
+  "repository_hygiene": {
+    "command": ".venv/bin/python scripts/check_repo.py",
+    "status": "PASS",
+    "tracked_files": 174
+  },
   "reproduction": {
     "scope": "both dataset files matched byte for byte in memory; existing files not overwritten",
     "status": "PASS"

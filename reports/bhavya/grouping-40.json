@@ -44,22 +44,22 @@
           "operator": "<=",
           "status": "PASS",
           "target": 2,
-          "value": 0.008581
+          "value": 0.006627
         },
-        "p50_seconds": 0.006139,
-        "p95_seconds": 0.008191,
+        "p50_seconds": 0.005017,
+        "p95_seconds": 0.006109,
         "samples": 10,
         "seconds": [
-          0.007715,
-          0.00615,
-          0.005763,
-          0.00583,
-          0.006004,
-          0.006013,
-          0.006764,
-          0.006199,
-          0.006127,
-          0.008581
+          0.006627,
+          0.005025,
+          0.004609,
+          0.004893,
+          0.004683,
+          0.00501,
+          0.004926,
+          0.005103,
+          0.005477,
+          0.005087
         ]
       },
       "/compare?by=category": {
@@ -73,22 +73,22 @@
           "operator": "<=",
           "status": "PASS",
           "target": 2,
-          "value": 0.018057
+          "value": 0.014474
         },
-        "p50_seconds": 0.011669,
-        "p95_seconds": 0.016692,
+        "p50_seconds": 0.011663,
+        "p95_seconds": 0.013952,
         "samples": 10,
         "seconds": [
-          0.01482,
-          0.018057,
-          0.015025,
-          0.014912,
-          0.011786,
-          0.011552,
-          0.010993,
-          0.01132,
-          0.011002,
-          0.011224
+          0.014474,
+          0.013313,
+          0.011242,
+          0.01172,
+          0.011738,
+          0.011605,
+          0.011431,
+          0.01131,
+          0.011551,
+          0.012816
         ]
       },
       "/compare?by=stage": {
@@ -102,22 +102,22 @@
           "operator": "<=",
           "status": "PASS",
           "target": 2,
-          "value": 0.017562
+          "value": 0.012972
         },
-        "p50_seconds": 0.012281,
-        "p95_seconds": 0.015592,
+        "p50_seconds": 0.011806,
+        "p95_seconds": 0.012633,
         "samples": 10,
         "seconds": [
-          0.011507,
-          0.011312,
-          0.011502,
-          0.0119,
-          0.012267,
-          0.012381,
-          0.012295,
-          0.017562,
-          0.013184,
-          0.01265
+          0.012033,
+          0.011652,
+          0.012972,
+          0.011935,
+          0.011076,
+          0.011014,
+          0.011179,
+          0.011892,
+          0.012219,
+          0.011721
         ]
       },
       "/compare?by=unit": {
@@ -131,22 +131,22 @@
           "operator": "<=",
           "status": "PASS",
           "target": 2,
-          "value": 0.01492
+          "value": 0.021191
         },
-        "p50_seconds": 0.012695,
-        "p95_seconds": 0.014599,
+        "p50_seconds": 0.01201,
+        "p95_seconds": 0.018775,
         "samples": 10,
         "seconds": [
-          0.012751,
-          0.013885,
-          0.0119,
-          0.01492,
-          0.012527,
-          0.014207,
-          0.012864,
-          0.012639,
-          0.012519,
-          0.01225
+          0.021191,
+          0.011367,
+          0.011381,
+          0.010944,
+          0.010695,
+          0.011869,
+          0.014078,
+          0.015821,
+          0.012307,
+          0.01215
         ]
       },
       "/issues": {
@@ -160,22 +160,22 @@
           "operator": "<=",
           "status": "PASS",
           "target": 2,
-          "value": 0.008668
+          "value": 0.008826
         },
-        "p50_seconds": 0.00531,
-        "p95_seconds": 0.007319,
+        "p50_seconds": 0.004709,
+        "p95_seconds": 0.0074,
         "samples": 10,
         "seconds": [
-          0.008668,
-          0.005554,
-          0.004351,
-          0.005227,
-          0.00567,
-          0.005234,
-          0.005156,
-          0.005496,
-          0.005346,
-          0.005273
+          0.008826,
+          0.005656,
+          0.004699,
+          0.004926,
+          0.004899,
+          0.004591,
+          0.004246,
+          0.004718,
+          0.004118,
+          0.004392
         ]
       },
       "/issues/1/comments": {
@@ -189,22 +189,22 @@
           "operator": "<=",
           "status": "PASS",
           "target": 2,
-          "value": 0.012227
+          "value": 0.01084
         },
-        "p50_seconds": 0.008603,
-        "p95_seconds": 0.011733,
+        "p50_seconds": 0.006296,
+        "p95_seconds": 0.009548,
         "samples": 10,
         "seconds": [
-          0.011124,
-          0.008584,
-          0.007479,
-          0.011129,
-          0.007798,
-          0.012227,
-          0.008623,
-          0.008746,
-          0.008406,
-          0.008198
+          0.01084,
+          0.007969,
+          0.006761,
+          0.00615,
+          0.006403,
+          0.006311,
+          0.00628,
+          0.00597,
+          0.006152,
+          0.005995
         ]
       },
       "/issues/1/comments?format=csv": {
@@ -218,22 +218,22 @@
           "operator": "<=",
           "status": "PASS",
           "target": 2,
-          "value": 0.00743
+          "value": 0.008556
         },
-        "p50_seconds": 0.006904,
-        "p95_seconds": 0.007291,
+        "p50_seconds": 0.006575,
+        "p95_seconds": 0.0082,
         "samples": 10,
         "seconds": [
-          0.007063,
-          0.006954,
-          0.006924,
-          0.006852,
-          0.006884,
-          0.006585,
-          0.006818,
-          0.00673,
-          0.00743,
-          0.007121
+          0.005762,
+          0.005555,
+          0.005782,
+          0.005491,
+          0.006698,
+          0.007599,
+          0.007075,
+          0.008556,
+          0.007765,
+          0.006453
         ]
       },
       "/suggestions": {
@@ -247,22 +247,22 @@
           "operator": "<=",
           "status": "PASS",
           "target": 2,
-          "value": 0.008939
+          "value": 0.005447
         },
-        "p50_seconds": 0.004969,
-        "p95_seconds": 0.007268,
+        "p50_seconds": 0.003932,
+        "p95_seconds": 0.004991,
         "samples": 10,
         "seconds": [
-          0.008939,
-          0.005122,
-          0.004912,
-          0.004821,
-          0.005058,
-          0.004945,
-          0.004942,
-          0.004972,
-          0.005226,
-          0.004965
+          0.005447,
+          0.003599,
+          0.00394,
+          0.003924,
+          0.004247,
+          0.004433,
+          0.003532,
+          0.003458,
+          0.003588,
+          0.004224
         ]
       }
     },
@@ -397,15 +397,15 @@
   "dataset_sha256": "3d12a8dea25b9eb4b823aab92a71ea153c3b2ab4407e7006baa8a70022c7191e",
   "deidentification": {
     "comments": 150,
-    "details": 315,
+    "details": 300,
     "extra_tags": 0,
     "found_by_type": {
-      "DATE": 59,
+      "DATE": 55,
       "EMAIL": 26,
-      "HEALTH_CARD": 23,
-      "PERSON": 119,
-      "PHONE": 47,
-      "RECORD_NUMBER": 36
+      "HEALTH_CARD": 18,
+      "PERSON": 114,
+      "PHONE": 45,
+      "RECORD_NUMBER": 37
     },
     "mandatory_types": {
       "EMAIL": {
@@ -443,16 +443,16 @@
       "operator": ">=",
       "status": "PASS",
       "target": 0.95,
-      "value": 0.984127
+      "value": 0.983333
     },
-    "tags": 310,
+    "tags": 295,
     "total_by_type": {
-      "DATE": 59,
+      "DATE": 55,
       "EMAIL": 26,
-      "HEALTH_CARD": 23,
-      "PERSON": 124,
-      "PHONE": 47,
-      "RECORD_NUMBER": 36
+      "HEALTH_CARD": 18,
+      "PERSON": 119,
+      "PHONE": 45,
+      "RECORD_NUMBER": 37
     },
     "unit_names_removed": {
       "operator": "==",
@@ -462,7 +462,7 @@
     }
   },
   "environment": {
-    "commit": "1574cd36a3d260907c9dea4512ce4636a41af2d3",
+    "commit": "ace0d7bc0553e857e4895ec622cf586d82f18477",
     "logical_cpus": 3,
     "machine": "x86_64",
     "memory_gib": 9.73,
@@ -596,7 +596,7 @@
       "PYTHONHASHSEED": "4310",
       "TOKENIZERS_PARALLELISM": "false"
     },
-    "utc": "2026-11-16T01:53:50+00:00",
+    "utc": "2026-11-16T01:59:50+00:00",
     "working_tree_dirty": true
   },
   "human_synthetic": {
@@ -608,17 +608,17 @@
     "errors": [],
     "rejected": 0,
     "saved": 2300,
-    "seconds": 14.072409
+    "seconds": 13.355154
   },
   "issues": {
-    "adjusted_rand_index_planted": 0.89568,
+    "adjusted_rand_index_planted": 0.815556,
     "ari_note": "diagnostic only; outliers/unselected rows share -1",
     "embedder": "sentence-transformers/all-MiniLM-L6-v2",
     "human_quality": {
       "reason": "two members must rate ten comments from each top issue",
       "status": "NOT_MEASURED"
     },
-    "issues": 10,
+    "issues": 11,
     "model_files_sha256": {
       "models--Qdrant--all-MiniLM-L6-v2-onnx/snapshots/d13954661f83248295ba75c1ed411eef3b7b936e/config.json": "1b4d8e2a3988377ed8b519a31d8d31025a25f1c5f8606998e8014111438efcd7",
       "models--Qdrant--all-MiniLM-L6-v2-onnx/snapshots/d13954661f83248295ba75c1ed411eef3b7b936e/model.onnx": "bbd7b466f6d58e646fdc2bd5fd67b2f5e93c0b687011bd4548c420f7bd46f0c5",
@@ -629,24 +629,24 @@
     "namer": "keywords",
     "patterns": {
       "discharge_medication": {
-        "patient": 130,
-        "rank": 1,
+        "patient": 86,
+        "rank": 7,
         "rising": false,
-        "staff": 90,
+        "staff": 20,
         "status": "PASS"
       },
       "night_noise": {
-        "patient": 203,
-        "rank": 2,
+        "patient": 186,
+        "rank": 1,
         "rising": false,
-        "staff": 0,
-        "status": "PASS"
+        "staff": 18,
+        "status": "FAIL"
       },
       "transport": {
-        "patient": 90,
+        "patient": 94,
         "rank": 6,
         "rising": true,
-        "staff": 72,
+        "staff": 70,
         "status": "PASS"
       }
     },
@@ -655,12 +655,12 @@
       "planted": 8,
       "rank_of": {
         "call_bell": 5,
-        "cleanliness_equipment": 8,
+        "cleanliness_equipment": 9,
         "discharge_instructions": 4,
-        "discharge_medication": 1,
-        "ed_wait": 7,
-        "handover": 3,
-        "night_noise": 2,
+        "discharge_medication": 7,
+        "ed_wait": 3,
+        "handover": 2,
+        "night_noise": 1,
         "transport": 6
       },
       "target": {
@@ -670,8 +670,8 @@
         "value": 8
       }
     },
-    "seconds_including_model_load": 40.329581,
-    "unassigned_rows": 785
+    "seconds_including_model_load": 33.218099,
+    "unassigned_rows": 764
   },
   "performance": {
     "reason": "benchmark skipped or embedding unavailable; import/API timing is partial",
