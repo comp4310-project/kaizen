@@ -300,3 +300,27 @@ def test_tenacity_is_installed() -> None:
     # LiteLLM does not install it, and the fakes above never reach LiteLLM, so without this
     # the first real labelling call is where we would find out.
     import tenacity  # noqa: F401
+
+
+def test_local_ollama_models_are_sent_no_reasoning_effort() -> None:
+    # qwen2.5 through Ollama rejects any reasoning_effort ("does not support thinking").
+    from kaizen.classify.llm import LLMLabeller, effort_for, reply_text
+
+    assert effort_for("ollama/qwen2.5:7b", None, "low") == "none"
+    assert effort_for("ollama_chat/qwen2.5:7b", "medium", "low") == "medium"  # configured wins
+    assert effort_for("anthropic/claude-haiku-5-5", None, "low") == "low"
+    assert LLMLabeller(completion=lambda **k: None, model="ollama/qwen2.5:7b").effort == "none"
+
+    sent = {}
+
+    class Reply:
+        choices = [type("C", (), {"finish_reason": "stop", "message": type("M", (), {"content": "ok"})()})()]
+
+    def fake(**kwargs):
+        sent.update(kwargs)
+        return Reply()
+
+    assert reply_text(fake, model="ollama/qwen2.5:7b", reasoning_effort="none") == "ok"
+    assert "reasoning_effort" not in sent
+    reply_text(fake, model="anthropic/claude-haiku-5-5", reasoning_effort="low")
+    assert sent["reasoning_effort"] == "low"

@@ -24,7 +24,7 @@ from pydantic import BaseModel, Field, ValidationError
 from sqlalchemy.orm import Session
 
 from kaizen.classify.labels import Stage
-from kaizen.classify.llm import LabelError, reply_text
+from kaizen.classify.llm import LabelError, effort_for, reply_text
 from kaizen.db import ActivityLog, Suggestion
 from kaizen.suggest.cite import MIN_QUOTE_WORDS, quote_in_passage
 from kaizen.suggest.corpus import Passage
@@ -183,7 +183,7 @@ class SuggestionDrafter:
             completion = litellm.completion
         self.completion = completion  # tests pass a fake
         self.model = model or os.environ.get("KAIZEN_SUGGEST_MODEL", DEFAULT_MODEL)
-        self.effort = effort or os.environ.get("KAIZEN_SUGGEST_EFFORT", DEFAULT_EFFORT)
+        self.effort = effort_for(self.model, effort or os.environ.get("KAIZEN_SUGGEST_EFFORT"), DEFAULT_EFFORT)
 
     @property
     def name(self) -> str:

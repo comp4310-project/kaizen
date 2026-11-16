@@ -57,8 +57,24 @@ class _Batch(BaseModel):
     labels: list[_Item]
 
 
+NO_EFFORT = "none"
+
+
+def effort_for(model: str, configured: str | None, default: str) -> str:
+    """The reasoning effort to ask for. Local Ollama models such as qwen2.5 have no thinking
+    mode and reject the request if it is set, so they get "none" unless one is configured."""
+    if configured:
+        return configured
+    return NO_EFFORT if model.startswith(("ollama/", "ollama_chat/")) else default
+
+
 def reply_text(completion: Callable, **kwargs) -> str:
-    """Send one request and return the reply text, or raise LabelError. Shared with the issue namer."""
+    """Send one request and return the reply text, or raise LabelError. Shared with the issue namer.
+
+    An effort of "none" leaves reasoning_effort out of the request.
+    """
+    if kwargs.get("reasoning_effort") in (None, NO_EFFORT):
+        kwargs.pop("reasoning_effort", None)
     try:
         response = completion(num_retries=RETRIES, **kwargs)
     except CONFIG_ERRORS:
@@ -81,7 +97,7 @@ class LLMLabeller:
         # Tests pass a fake in place of litellm.completion.
         self.completion = completion or litellm.completion
         self.model = model or os.environ.get("KAIZEN_LABEL_MODEL", DEFAULT_MODEL)
-        self.effort = effort or os.environ.get("KAIZEN_LABEL_EFFORT", DEFAULT_EFFORT)
+        self.effort = effort_for(self.model, effort or os.environ.get("KAIZEN_LABEL_EFFORT"), DEFAULT_EFFORT)
 
     @property
     def name(self) -> str:
