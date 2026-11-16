@@ -108,7 +108,7 @@ def test_rising_compares_last_week_with_the_four_before() -> None:
     assert stats.rising is True and stats.recent_count == 4
 
 
-def add_labelled(app, texts: list[str], sentiment="negative", source=Source.PATIENT_FAMILY) -> list[int]:
+def add_labelled(app, texts: list[str], sentiment="negative", source=Source.PATIENT_FAMILY, categories=("institutional_processes",)) -> list[int]:
     with app.state.sessionmaker() as session:
         batch = ImportBatch(channel=Channel.CSV)
         session.add(batch)
@@ -118,7 +118,7 @@ def add_labelled(app, texts: list[str], sentiment="negative", source=Source.PATI
             c = Comment(batch_id=batch.id, source=source, unit="4B", feedback_date=date(2026, 10, 1 + n % 28), text=text)
             session.add(c)
             session.flush()
-            label = {"sentiment": sentiment, "categories": ["institutional_processes"], "stage": "discharge_and_transfers", "urgency": "medium"}
+            label = {"sentiment": sentiment, "categories": list(categories), "stage": "discharge_and_transfers", "urgency": "medium"}
             session.add(CommentLabel(comment_id=c.id, suggested=label, labeller="fake", prompt_version="x", **label))
             ids.append(c.id)
         session.commit()
@@ -130,6 +130,7 @@ def test_build_saves_ranked_issues_and_skips_praise(app) -> None:
     add_labelled(app, texts[:20])  # pharmacy and noise, from patients
     add_labelled(app, texts[20:], source=Source.STAFF)  # triage, from staff
     praise = add_labelled(app, ["Lovely staff, thank you"] * 10, sentiment="positive")
+    praise += add_labelled(app, ["Nothing", "Did not answer"] * 5, sentiment="neutral", categories=())  # non-answers
 
     with app.state.sessionmaker() as session:
         run = build_issues(session, FakeEmbedder(), KeywordNamer(), min_cluster_size=5)

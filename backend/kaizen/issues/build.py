@@ -1,7 +1,9 @@
 """Builds the ranked issue list from saved, labelled comments (FR4).
 
-Only negative and neutral comments are grouped, since issues are problems to fix; praise is
-left out. Comments that have no labels yet are skipped, so run the labeller first. Each run
+Only comments that describe a problem are grouped: negative or neutral, with at least one
+problem category. Praise is left out, and so are non-answers like "Nothing" or "Did not
+answer", which are neutral with no category. On the real FFT comments those non-answers
+formed six of the seven issues, each with an invented name. Comments that have no labels yet are skipped, so run the labeller first. Each run
 is kept, and the dashboard shows the newest one.
 """
 
@@ -23,6 +25,7 @@ def load(session: Session) -> tuple[list[int], list[str], list[RankInput]]:
         .where(CommentLabel.sentiment != "positive")
         .order_by(Comment.id)
     ).all()
+    rows = [(c, lab) for c, lab in rows if lab.categories]  # JSON list, so filtered here
     ids = [c.id for c, _ in rows]
     texts = [c.text for c, _ in rows]  # de-identified
     comments = [
