@@ -2,9 +2,10 @@
 
 Group project for COMP 4310 (Web Health Informatics), Lakehead University.
 
-**Status: build starting.** P0 to P2 are submitted and P3 (requirements and design) is in
-draft. Import, de-identification and labelling are on `main`; issue grouping is in
-review. The plan is in [docs/p3-requirements-design.md](docs/p3-requirements-design.md).
+**Status: built and evaluated.** Every Must and Should requirement in P3 has code on `main` or in an open
+pull request, and the results against P3 Table 9 are in
+[docs/evaluation](docs/evaluation/README.md), including the targets we missed. The plan is in
+[docs/p3-requirements-design.md](docs/p3-requirements-design.md).
 
 ## The idea
 

@@ -137,3 +137,19 @@ there, a fixed 8 found 3 of 8 problems, anything from 1% to 4% found 7 of 8, and
 2% sits in the middle of that range. On the 2,300 comments it gives a minimum of 33 and finds
 all 8, with the medication, night-noise and transport patterns all correct. Runs of under
 400 comments, such as the 345 grouped NHS comments, still use 8. `--min-size` overrides it.
+
+## 2026-11-15 Simulated people instead of team raters and classmates
+
+P3 planned two members to hand-label comments and rate issues and suggestions, and five
+classmates for the usability test. We did not have the time, so each of those judgements was
+made by a separate LLM agent given a persona and the same material a person would get: the
+labelling guide, the P3 rubric, the four usability tasks and the SUS questionnaire. Raters
+and annotators worked without seeing each other's output, and a third persona settled
+labelling disagreements. Usability participants used the real app in a browser on their own
+seeded database. Everything produced this way is reported as simulated in
+`docs/evaluation/`, never as people. Personas from one model family agree with each other
+more than people would, so agreement and SUS figures are likely generous.
+
+There was also no API key, so every LLM step ran on qwen2.5:7b through Ollama, the local
+fallback P3 section 5.2 allows. Those results describe a 7B model, not the Claude models P3
+planned.
