@@ -3,7 +3,7 @@
 Group the saved, labelled comments into ranked issues. Names come from the LLM (Claude by
 default, needs ANTHROPIC_API_KEY); --keyword-names skips the LLM and names issues from keywords:
 
-    python -m kaizen.issues build [--min-size 8] [--keyword-names]
+    python -m kaizen.issues build [--min-size N] [--keyword-names]
 
 Write the rating sheet for the newest run (P3 Table 9):
 
@@ -35,7 +35,7 @@ def _build(args) -> None:
     namer = KeywordNamer() if args.keyword_names else IssueNamer()
     with make_sessionmaker(make_engine())() as session:
         run = build_issues(session, SentenceEmbedder(), namer, min_cluster_size=args.min_size)
-        print(f"run {run.id}: {run.comments_used} comments, {run.outliers} outliers")
+        print(f"run {run.id}: {run.comments_used} comments, {run.outliers} outliers, smallest issue {run.min_cluster_size}")
         from sqlalchemy import select
 
         from kaizen.db import Issue
@@ -92,7 +92,7 @@ def main() -> None:
     sub = parser.add_subparsers(dest="command", required=True)
 
     build = sub.add_parser("build", help="group labelled comments into ranked issues")
-    build.add_argument("--min-size", type=int, default=8, help="smallest group that counts as an issue")
+    build.add_argument("--min-size", type=int, help="smallest group that counts as an issue (default: 2%% of the comments, at least 8)")
     build.add_argument("--keyword-names", action="store_true", help="name issues from keywords, without the LLM")
     build.set_defaults(func=_build)
 
@@ -102,7 +102,7 @@ def main() -> None:
 
     recovery = sub.add_parser("recovery", help="check a labelled synthetic file for its built-in problems")
     recovery.add_argument("file", type=Path)
-    recovery.add_argument("--min-size", type=int, default=8)
+    recovery.add_argument("--min-size", type=int, help="default: 2%% of the comments, at least 8")
     recovery.set_defaults(func=_recovery)
 
     args = parser.parse_args()

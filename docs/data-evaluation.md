@@ -316,6 +316,14 @@ The saved reports identify the code revision and exact dataset hash.
 | Real baseline processing, 1,000 comments | 12.022 seconds | At most 900 seconds, PASS for measured scope |
 | Slowest of the populated dashboard API samples | 0.021011 seconds | At most 2 seconds, PASS for in-process scope |
 
+**Update, November 15.** The default minimum issue size is now 2% of the grouped comments,
+at least 8 (33 here), chosen on the separate 1,200-comment fixture rather than on this
+dataset (see `docs/decisions.md`). Rerun on the same data and baseline predictions, it finds
+8 of 8 planted problems, and the medication, night-noise and transport patterns all pass.
+1,000 comments take 21.9 seconds end to end on a Windows laptop. Results and the new rating
+sheet are in [reports/issue-size-default](../reports/issue-size-default/summary.md); the
+table above is kept as the record of the earlier run.
+
 The [size-40 diagnostic](../reports/bhavya/grouping-40.json) isolates a grouping parameter
 without changing teammate-owned code. The default produced 121 small issues; minimum
 size 40 produced eleven larger ones and recovered all eight planted problems. Medication

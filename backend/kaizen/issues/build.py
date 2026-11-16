@@ -17,7 +17,7 @@ from sqlalchemy.orm import Session
 
 from kaizen.db import ActivityLog, Comment, CommentLabel, Issue, IssueComment, IssueRun
 from kaizen.issues.embed import Embedder
-from kaizen.issues.pipeline import find_issues
+from kaizen.issues.pipeline import default_min_size, find_issues
 from kaizen.issues.rank import IssueComment as RankInput
 
 
@@ -62,11 +62,13 @@ def build_issues(
     embedder: Embedder,
     namer,
     *,
-    min_cluster_size: int = 8,
+    min_cluster_size: int | None = None,
     seed: int = 42,
     user_id: int | None = None,
 ) -> IssueRun:
     ids, texts, comments = load(session)
+    # None means the default: 2% of the comments being grouped, at least 8.
+    min_cluster_size = min_cluster_size or default_min_size(len(texts))
     vectors = embedder.embed(texts) if texts else None
     found, outliers = find_issues(texts, comments, vectors, min_cluster_size, seed) if texts else ([], [])
 
