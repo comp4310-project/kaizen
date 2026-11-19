@@ -30,13 +30,19 @@ src/main.tsx                mounts App inside BrowserRouter and AuthProvider
 src/App.tsx                 header, routes, RequireLogin guard
 src/api.ts                  every API call and the types of its replies
 src/auth.tsx                AuthProvider, useAuth(), canReviewSuggestions()
+src/features.css            styles for the overview, charts, processing panel and comments page, loaded after styles.css
+src/WeeklyChart.tsx         stacked weekly bars (patient or family, staff) in plain SVG with a table under "Show the numbers"
+src/ProcessPanel.tsx        "Process new feedback" button and run status, polls every 2 s while a run is going
+src/IssueTrend.tsx          weekly chart and the rising rule at the top of issue detail
 src/states.tsx              ErrorNotice (with an optional Try again), EmptyState, SkeletonRows, SkeletonBlocks, describeError(), canRetry()
-src/format.ts               words(), percent(), sourceName(), sortUnits(), roleName(), dateTime()
+src/format.ts               words(), percent(), sourceName(), sortUnits(), roleName(), dateTime(), shortDate(), count()
 src/hooks.ts                useFilter(): a select or input that reloads data on a pick, Enter or leaving it, not on every arrow key
 src/SuggestionCard.tsx      one suggestion: the change as its heading, owner / stage / measure, quoted citations, accept / edit / reject
 src/IssueSuggestions.tsx    the suggestions panel for an issue's page: Draft suggestions, the drafting wait, the 503 with Try again. Not wired in yet: IssueDetailPage still has its own `Suggestions` and should render this instead
 src/IssueReview.tsx         issue and comment correction forms for QI and admin
 src/pages/LoginPage.tsx
+src/pages/OverviewPage.tsx      landing page: key numbers, next step, weekly chart, top 3 issues
+src/pages/CommentsPage.tsx      comments behind a comparison row, filtered by the URL query
 src/pages/ImportPage.tsx        CSV upload and rejected row details for QI and admin
 src/pages/FeedbackPage.tsx      public feedback form
 src/pages/IssuesPage.tsx        ranked table
@@ -68,6 +74,9 @@ so when a handler changes, change the type in the same PR:
 | `LoginOut`, `Me`, `Unit` | `backend/kaizen/api/app.py` (`login`, `me`, `units`) |
 | `FeedbackIn`, `ImportOut` | `backend/kaizen/api/app.py` (`submit_feedback`, `import_csv`) |
 | `CompareBy`, `CompareOut` | `backend/kaizen/api/compare.py` (`compare`) |
+| `CommentListFilters`, `CommentRow`, `CommentsOut` | `backend/kaizen/api/app.py` (`list_comments`) |
+| `OverviewOut`, `OverviewIssue`, `Week`, `TrendOut` | `backend/kaizen/api/overview.py` |
+| `ProcessRun`, `ProcessStatus` | `backend/kaizen/api/runs.py` (`run_out`) |
 | `IssuesOut`, `IssueSummary`, `IssueRun`, `IssueCommentsOut`, `IssueComment`, `CommentLabels` | `backend/kaizen/api/issues.py` |
 | `Suggestion`, `Citation`, `SuggestionsOut`, `DraftOut`, `Decision` | `backend/kaizen/api/suggestions.py` (`_out`, `DecisionIn`) |
 | `Stage`, `STAGES` | `backend/kaizen/classify/labels.py` |
@@ -80,7 +89,13 @@ rather than trusting the docs page.
 
 `AuthProvider` checks a stored token against `/me` on load and keeps `me` (username, role,
 unit). `RequireLogin` in `App.tsx` wraps the protected routes. Login and the feedback form
-are public. Upload CSV is available to QI and admin.
+are public. Upload CSV and Process new feedback are available to QI and admin. After login
+everyone lands on `/overview`, unless they were sent to the login page from another page.
+
+On every route change `App.tsx` moves focus to the page's `h1` (it adds `tabIndex=-1` if the
+page did not), so keyboard and screen reader users start in the same place however the page
+was opened. Changes to the query string alone, and links to an `#anchor`, leave focus alone.
+Give every page exactly one `h1`.
 
 Roles are `qi`, `admin` and `manager`. The API enforces access; the front end only hides
 what a role cannot use, so nobody clicks a button that returns 403:
