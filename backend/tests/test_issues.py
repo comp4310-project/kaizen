@@ -212,3 +212,10 @@ def test_non_answers_are_recognised_by_text() -> None:
         assert is_non_answer(text), text
     for text in ["Nothing was explained to me", "No one came for 3 hours", "Waited too long", "Not really listened to"]:
         assert not is_non_answer(text), text
+
+
+def test_llm_names_come_back_in_sentence_case() -> None:
+    from kaizen.issues.name import _tidy
+
+    assert _tidy("Corridor Noise Disturbs Sleep During Night Shift") == "Corridor noise disturbs sleep during night shift"
+    assert _tidy("long ED waits for IV antibiotics") == "Long ED waits for IV antibiotics"

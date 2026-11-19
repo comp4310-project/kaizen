@@ -5,6 +5,12 @@ export function words(value: string): string {
   return value.replace(/_/g, " ");
 }
 
+/** words() with a capital first letter, for row and column labels. */
+export function label(value: string): string {
+  const text = words(value);
+  return text.charAt(0).toUpperCase() + text.slice(1);
+}
+
 export function percent(share: number): string {
   return `${Math.round(share * 100)}%`;
 }

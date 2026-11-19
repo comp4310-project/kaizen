@@ -2,8 +2,9 @@
    defined in styles.css, so light and dark mode and the checked contrast come with them.
    Loaded after styles.css from main.tsx. */
 
-/* Route focus moves to the h1 (App.tsx). Show the ring for keyboard users only. */
-main h1[tabindex="-1"]:focus:not(:focus-visible) {
+/* Route focus moves to the h1 (App.tsx) so screen readers start at the page title. The
+   heading is not a control, so no ring is drawn even after keyboard navigation. */
+main h1[tabindex="-1"]:focus {
   outline: none;
 }
 

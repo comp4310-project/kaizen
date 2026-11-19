@@ -202,7 +202,10 @@ else
         warn "Ollama is running but does not have $OLLAMA_MODEL. Suggestions will not work until it does."
         info "Fix: ollama pull $OLLAMA_MODEL   (about 4.7 GB)"
     else
-        ok "Ollama is running with $OLLAMA_MODEL, suggestions use ollama/$OLLAMA_MODEL"
+        ok "Ollama is running with $OLLAMA_MODEL, suggestions and issue names use ollama/$OLLAMA_MODEL"
+        # Readable issue names instead of keyword lists.
+        export KAIZEN_NAME_MODEL="ollama/$OLLAMA_MODEL"
+        OLLAMA_READY=1
     fi
 fi
 
@@ -283,6 +286,7 @@ else
     [[ ${#password} -ge 10 ]] || fail "No password of 10 or more characters was given." "run the script again"
     labeller=()
     if [[ $LLM_LABELS -eq 1 ]]; then labeller=(--labeller llm); fi
+    if [[ ${OLLAMA_READY:-0} -eq 1 ]]; then labeller+=(--llm-names); fi
     info "Importing, de-identifying, labelling and grouping 2,300 synthetic comments, about two minutes."
     # The variable is set on this one command only, so no other process sees it.
     if ! (cd "$BACKEND" && KAIZEN_DEMO_PASSWORD="$password" "$VENV_PYTHON" scripts/demo_data.py "$DB_BUILDING" "${labeller[@]+"${labeller[@]}"}"); then

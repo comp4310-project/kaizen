@@ -259,6 +259,9 @@ function Test-Port([int]$Port, [string]$What) {
     }
 }
 
+# Set to $true by Set-Models when Ollama has the model, so the build can name issues with it.
+$script:OllamaReady = $false
+
 # Decides which models the API (and an LLM-labelled build) will use, and sets them.
 function Set-Models {
     if ($env:ANTHROPIC_API_KEY -and -not $Local) {
@@ -286,7 +289,10 @@ function Set-Models {
         Write-Warn "Ollama is running but does not have $OllamaModel. Suggestions will not work until it does."
         Write-Info "Fix: ollama pull $OllamaModel   (about 4.7 GB)"
     } else {
-        Write-Ok "Ollama is running with $OllamaModel, suggestions use ollama/$OllamaModel"
+        Write-Ok "Ollama is running with $OllamaModel, suggestions and issue names use ollama/$OllamaModel"
+        # Readable issue names ("Delayed discharge medications") instead of keyword lists.
+        Set-DemoEnv "KAIZEN_NAME_MODEL" "ollama/$OllamaModel"
+        $script:OllamaReady = $true
     }
 }
 
@@ -372,6 +378,7 @@ function Build-Database {
     $password = Get-DemoPassword
     $arguments = @((Join-Path $Backend "scripts\demo_data.py"), $DbBuilding)
     if ($LlmLabels) { $arguments += @("--labeller", "llm") }
+    if ($script:OllamaReady) { $arguments += @("--llm-names") }
     Write-Info "Importing, de-identifying, labelling and grouping 2,300 synthetic comments, about two minutes."
 
     $psi = New-Object System.Diagnostics.ProcessStartInfo
