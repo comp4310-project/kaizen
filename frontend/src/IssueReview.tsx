@@ -100,11 +100,6 @@ export function CommentReview({ comment, onUpdate }: {
     <div className="review-controls">
       <ErrorNotice error={error} />
       <p role="status" className="small">{note}</p>
-      {mode === null && comment.labels?.status === "suggested" && (
-        <p className="small">
-          The model set these labels. Check them against the comment, then confirm or edit them.
-        </p>
-      )}
       {mode === null && (
         <div className="review-actions">
           {comment.labels?.status === "suggested" && (

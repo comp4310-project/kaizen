@@ -47,9 +47,17 @@ def keyword_name(keywords: Sequence[str]) -> str:
     return ", ".join(words).capitalize() if words else "Unnamed issue"
 
 
+def _sentence_word(word: str, first: bool) -> str:
+    """Models mix Title Case and sentence case. Keep acronyms (ED, IV) and words with inner
+    capitals (iPad); lower-case the rest, except the first word."""
+    if word.isupper() and len(word) > 1 or any(c.isupper() for c in word[1:]):
+        return word
+    return word[:1].upper() + word[1:].lower() if first else word.lower()
+
+
 def _tidy(name: str) -> str:
-    words = name.strip().strip('."').split()
-    return " ".join(words[:MAX_WORDS])
+    words = name.strip().strip('."').split()[:MAX_WORDS]
+    return " ".join(_sentence_word(w, i == 0) for i, w in enumerate(words))
 
 
 class IssueNamer:

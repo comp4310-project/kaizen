@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { api, type CompareBy, type CompareOut, type Unit } from "../api";
 import { useAuth } from "../auth";
-import { count, percent, sortUnits, words } from "../format";
+import { count, label, percent, sortUnits, words } from "../format";
 import { useFilter } from "../hooks";
 import { EmptyState, ErrorNotice, SkeletonRows } from "../states";
 
@@ -161,7 +161,7 @@ function CompareResults({ by, unit, from, to }: { by: CompareBy; unit?: string; 
     <>
       <p role="status" className="muted">
         {data
-          ? `Labelled comments: ${data.totals.patient} patient or family, ${data.totals.staff} staff.`
+          ? `Labelled comments: ${data.totals.patient.toLocaleString()} patient or family, ${data.totals.staff.toLocaleString()} staff.`
           : "Loading comparison."}
       </p>
       {data && data.totals.patient + data.totals.staff > 0 && (
@@ -197,7 +197,7 @@ function CompareResults({ by, unit, from, to }: { by: CompareBy; unit?: string; 
                 {!data && <SkeletonRows columns={["wide", "num", "num", "text"]} />}
                 {data?.rows.map((row) => (
                   <tr key={row.key}>
-                    <th scope="row"><Link to={commentsLink(by, row.key, filters)}>{words(row.key)}</Link></th>
+                    <th scope="row"><Link to={commentsLink(by, row.key, filters)}>{label(row.key)}</Link></th>
                     <CountCell value={row.patient} max={max} to={commentsLink(by, row.key, filters, "patient_family")}
                       label={`${row.patient} from patients or families, ${words(row.key)}`} />
                     <CountCell value={row.staff} max={max} to={commentsLink(by, row.key, filters, "staff")}

@@ -205,7 +205,7 @@ function IssueDetail({ issueId }: { issueId: number }) {
             <ErrorNotice error={unitsError} />
             {hasResults && data && (
               <p className="muted small" role="status">
-                Showing {data.comments.length} of {data.total}. Typical examples, the comments closest to what this issue is about, come first. All text is de-identified.
+                Showing {data.comments.length} of {data.total}. Typical examples, the comments closest to what this issue is about, come first. All text is de-identified. Labels marked "suggested automatically" were set by the model: confirm them or edit them.
                 {me?.role === "manager" && ` Only comments from unit ${me.unit}.`}
               </p>
             )}
