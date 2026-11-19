@@ -1,4 +1,5 @@
-import { useId, useState, type FormEvent } from "react";
+import { useEffect, useId, useRef, useState, type FormEvent } from "react";
+import { Link } from "react-router-dom";
 import { api, STAGES, type Decision, type Stage, type Suggestion, type SuggestionStatus } from "./api";
 import { dateTime, words } from "./format";
 import { ErrorNotice } from "./states";
@@ -6,12 +7,12 @@ import { ErrorNotice } from "./states";
 interface Props {
   suggestion: Suggestion;
   onDecided: (updated: Suggestion) => void;
-  /** Hide the issue name when the card is already on that issue's page. */
+  /** Hide the issue link when the card is already on that issue's page. */
   showIssue?: boolean;
 }
 
 const STATUS_TEXT: Record<SuggestionStatus, string> = {
-  suggested: "Waiting",
+  suggested: "Waiting for a decision",
   accepted: "Accepted",
   edited: "Edited",
   rejected: "Rejected",
@@ -28,23 +29,45 @@ function isStage(value: string): value is Stage {
   return (STAGES as string[]).includes(value);
 }
 
-/** One suggestion with its citations, plus accept, edit and reject for QI staff (FR7, NFR2). */
+/**
+ * One suggestion, laid out to scan: the change as the heading, then owner, stage and
+ * measure, then the quoted passages it rests on, then the decision (FR7, NFR2).
+ */
 export function SuggestionCard({ suggestion: s, onDecided, showIssue = true }: Props) {
   const id = useId();
   const [editing, setEditing] = useState(false);
+  const [changing, setChanging] = useState(false);
   const [change, setChange] = useState(s.change);
   const [owner, setOwner] = useState(s.owner);
   const [stage, setStage] = useState<string>(s.stage);
   const [measure, setMeasure] = useState(s.measure);
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<unknown>(null);
+  const [last, setLast] = useState<Decision | null>(null);
+  // After a decision the buttons go away, so focus moves to the line that says what happened.
+  const outcome = useRef<HTMLParagraphElement>(null);
+  const moveFocus = useRef(false);
+  const decided = s.status !== "suggested";
+
+  useEffect(() => {
+    if (!moveFocus.current) return;
+    moveFocus.current = false;
+    outcome.current?.focus();
+  });
 
   async function send(decision: Decision) {
     setBusy(true);
     setError(null);
+    setLast(decision);
     try {
       const updated = await api.decide(s.id, decision);
       setEditing(false);
+      setChanging(false);
+      setChange(updated.change);
+      setOwner(updated.owner);
+      setStage(updated.stage);
+      setMeasure(updated.measure);
+      moveFocus.current = true;
       onDecided(updated);
     } catch (e) {
       setError(e);
@@ -77,25 +100,27 @@ export function SuggestionCard({ suggestion: s, onDecided, showIssue = true }: P
     setEditing(false);
   }
 
+  const retry = last ? () => void send(last) : undefined;
+  const showActions = !editing && (!decided || changing);
+
   return (
-    <article className="card" aria-labelledby={`${id}-title`}>
-      <header className="card-head">
-        <h3 id={`${id}-title`}>Suggestion {s.id}</h3>
+    <article className="card suggestion" aria-labelledby={`${id}-title`}>
+      <p className="suggestion-meta">
+        <span className="muted small">Suggestion {s.id}</span>
         <span className={`badge ${STATUS_BADGE[s.status]}`}>{STATUS_TEXT[s.status]}</span>
-      </header>
+      </p>
+      <h3 id={`${id}-title`} className="suggestion-change">{s.change}</h3>
       {showIssue && (
-        <p className="muted small">
-          Issue {s.issue.id}: {s.issue.name}
+        <p className="small">
+          For issue <Link to={`/issues/${s.issue.id}`}>{s.issue.name}</Link>
         </p>
       )}
 
       {!editing && (
         <dl className="fields">
-          <dt>Change</dt>
-          <dd>{s.change}</dd>
           <dt>Owner</dt>
           <dd>{s.owner}</dd>
-          <dt>Stage</dt>
+          <dt>Stage of care</dt>
           <dd>{words(s.stage)}</dd>
           <dt>Measure</dt>
           <dd>{s.measure}</dd>
@@ -113,7 +138,7 @@ export function SuggestionCard({ suggestion: s, onDecided, showIssue = true }: P
             <input id={`${id}-owner`} maxLength={120} required value={owner} onChange={(e) => setOwner(e.target.value)} />
           </div>
           <div className="field">
-            <label htmlFor={`${id}-stage`}>Stage</label>
+            <label htmlFor={`${id}-stage`}>Stage of care</label>
             <select id={`${id}-stage`} value={stage} onChange={(e) => setStage(e.target.value)}>
               {!isStage(s.stage) && <option value={s.stage}>{words(s.stage)}</option>}
               {STAGES.map((value) => (
@@ -127,10 +152,10 @@ export function SuggestionCard({ suggestion: s, onDecided, showIssue = true }: P
             <label htmlFor={`${id}-measure`}>Measure</label>
             <textarea id={`${id}-measure`} rows={2} required value={measure} onChange={(e) => setMeasure(e.target.value)} />
           </div>
-          <ErrorNotice error={error} />
+          <ErrorNotice error={error} onRetry={retry} />
           <div className="actions">
             <button type="submit" className="btn btn-primary" disabled={busy}>
-              Save edit
+              {busy ? "Saving" : "Save edit"}
             </button>
             <button type="button" className="btn btn-secondary" disabled={busy} onClick={cancelEdit}>
               Cancel
@@ -143,41 +168,54 @@ export function SuggestionCard({ suggestion: s, onDecided, showIssue = true }: P
       {s.citations.length === 0 ? (
         <p className="muted small">No citations.</p>
       ) : (
-        <ol className="citations">
+        <ul className="citations">
           {s.citations.map((c, i) => (
             <li key={`${c.passage_id}-${i}`}>
               <blockquote>{c.quote}</blockquote>
-              <p className="muted small">
-                {c.title}
-                {c.heading ? `, ${c.heading}` : ""}. Passage {c.passage_id}.
+              <p className="citation-source small">
+                <cite>{c.title}</cite>
+                {c.heading ? `, ${c.heading}` : ""}
               </p>
             </li>
           ))}
-        </ol>
+        </ul>
       )}
 
-      {s.status !== "suggested" && (
-        <p className="muted small">
-          {STATUS_TEXT[s.status]} by {s.decided_by ?? "unknown"}
-          {s.decided_at ? `, ${dateTime(s.decided_at)}` : ""}.
+      <div className="decision">
+        <p ref={outcome} tabIndex={-1} className={decided ? "decision-outcome" : "small muted"}>
+          {decided
+            ? `${STATUS_TEXT[s.status]} by ${s.decided_by ?? "unknown"}${s.decided_at ? `, ${dateTime(s.decided_at)}` : ""}.`
+            : "Accept it as written, edit it first, or reject it. Every decision is logged."}
         </p>
-      )}
 
-      {!editing && <ErrorNotice error={error} />}
+        {!editing && <ErrorNotice error={error} onRetry={retry} />}
 
-      {!editing && (
-        <div className="actions">
-          <button type="button" className="btn btn-primary" disabled={busy} onClick={() => send({ decision: "accept" })}>
-            Accept
-          </button>
-          <button type="button" className="btn btn-secondary" disabled={busy} onClick={() => setEditing(true)}>
-            Edit
-          </button>
-          <button type="button" className="btn btn-danger" disabled={busy} onClick={() => send({ decision: "reject" })}>
-            Reject
-          </button>
-        </div>
-      )}
+        {showActions && (
+          <div className="actions" role="group" aria-label={`Decision on suggestion ${s.id}`}>
+            <button type="button" className="btn btn-primary" disabled={busy} onClick={() => send({ decision: "accept" })}>
+              {busy && last?.decision === "accept" ? "Accepting" : "Accept"}
+            </button>
+            <button type="button" className="btn btn-secondary" disabled={busy} onClick={() => { setError(null); setEditing(true); }}>
+              Edit
+            </button>
+            <button type="button" className="btn btn-danger" disabled={busy} onClick={() => send({ decision: "reject" })}>
+              {busy && last?.decision === "reject" ? "Rejecting" : "Reject"}
+            </button>
+            {decided && (
+              <button type="button" className="btn btn-secondary" disabled={busy} onClick={() => setChanging(false)}>
+                Cancel
+              </button>
+            )}
+          </div>
+        )}
+        {decided && !changing && !editing && (
+          <div className="actions">
+            <button type="button" className="btn btn-secondary btn-small" onClick={() => { setError(null); setChanging(true); }}>
+              Change decision
+            </button>
+          </div>
+        )}
+      </div>
     </article>
   );
 }
