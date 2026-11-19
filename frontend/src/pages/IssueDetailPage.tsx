@@ -7,6 +7,7 @@ import { useFilter } from "../hooks";
 import { describeError, EmptyState, ErrorNotice, SkeletonBlocks } from "../states";
 import { SuggestionCard } from "../SuggestionCard";
 import { CommentReview, IssueReview } from "../IssueReview";
+import { IssueTrend } from "../IssueTrend";
 
 const PAGE_SIZE = 50;
 
@@ -223,6 +224,7 @@ function IssueDetail({ issueId }: { issueId: number }) {
         )}
       </div>
       <ErrorNotice error={error} />
+      {!error && <IssueTrend issueId={issueId} />}
 
       {(!error || data) && (
         <div className={canReview ? "detail-layout" : undefined}>
