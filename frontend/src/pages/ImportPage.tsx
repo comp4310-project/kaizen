@@ -1,5 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { api, type ImportOut } from "../api";
+import { ProcessPanel } from "../ProcessPanel";
 import { ErrorNotice } from "../states";
 
 export function ImportPage() {
@@ -57,10 +58,21 @@ export function ImportPage() {
         <div role="status">
           {busy && <p>Uploading and checking the CSV.</p>}
           {result && (
-            <p className="notice">Batch {result.batch_id}: {result.saved} saved, {result.rejected} rejected.</p>
+            <p className="notice">
+              Batch {result.batch_id}: {result.saved} saved, {result.rejected} rejected.
+              {result.saved > 0 && " The saved comments are not in any issue until they are processed below."}
+            </p>
           )}
         </div>
       </form>
+      <section aria-labelledby="process-heading" className="intake-form">
+        <h2 id="process-heading">Process new feedback</h2>
+        <p className="small">
+          Uploads and the public form only save comments. Processing labels them and rebuilds the issues, so new feedback
+          shows up on the Issues and Overview pages.
+        </p>
+        <ProcessPanel />
+      </section>
       {!!result?.errors.length && (
         <section aria-labelledby="import-errors">
           <h2 id="import-errors">Rejected rows</h2>

@@ -1,5 +1,6 @@
 // Typed client for the Kaizen API. The shapes below are copied from what the FastAPI
-// handlers return (backend/kaizen/api/app.py, compare.py, issues.py, suggestions.py), so change them
+// handlers return (backend/kaizen/api/app.py, compare.py, issues.py, overview.py, runs.py,
+// suggestions.py), so change them
 // together. Every call goes through /api, which the Vite dev server forwards to uvicorn.
 
 const BASE = "/api";
@@ -64,6 +65,8 @@ export interface CompareOut {
   date_from: string | null;
   date_to: string | null;
   totals: { patient: number; staff: number };
+  /** How many of the counted labels a person has checked. The rest are the model's. */
+  checked: number;
   rows: { key: string; patient: number; staff: number; only: "patient" | "staff" | null }[];
 }
 
@@ -126,6 +129,101 @@ export interface IssueCommentsOut {
 export interface CommentFilters {
   unit?: string;
   source?: Source;
+}
+
+/** Filters for `GET /comments`. `category` and `stage` only match labelled comments. */
+export interface CommentListFilters extends CommentFilters {
+  category?: string;
+  stage?: string;
+  labelled?: "true" | "false";
+  date_from?: string;
+  date_to?: string;
+}
+
+export interface CommentRow {
+  id: number;
+  source: Source;
+  unit: string;
+  date: string;
+  text: string;
+  labels: CommentLabels | null;
+}
+
+export interface CommentsOut {
+  total: number;
+  comments: CommentRow[];
+}
+
+/** One 7-day block ending on `end`, both dates inclusive. */
+export interface Week {
+  start: string;
+  end: string;
+  patient: number;
+  staff: number;
+}
+
+export type ProcessStatus = "queued" | "running" | "done" | "failed";
+
+export interface ProcessRun {
+  id: number;
+  status: ProcessStatus;
+  labeller: string | null;
+  to_label: number;
+  labelled: number;
+  failed_batches: number;
+  issue_run_id: number | null;
+  issues: number | null;
+  comments_used: number | null;
+  error: string | null;
+  created_at: string;
+  started_at: string | null;
+  finished_at: string | null;
+}
+
+export interface OverviewIssue {
+  id: number;
+  rank: number;
+  name: string;
+  size: number;
+  unit_size: number | null;
+  negative_share: number;
+  rising: boolean;
+}
+
+export interface OverviewOut {
+  unit: string | null;
+  comments: {
+    total: number;
+    labelled: number;
+    unlabelled: number;
+    confirmed: number;
+    patient: number;
+    staff: number;
+    /** Saved after the newest issue run started, so not yet in any issue. */
+    new_since_run: number;
+  };
+  run: { id: number; created_at: string; as_of: string | null; comments_used: number } | null;
+  issues: { count: number; rising: number; top: OverviewIssue[] };
+  /** Newest comment date. Weeks end on this day, as the rising flag does. */
+  weeks_as_of: string | null;
+  weeks: Week[];
+  last_import: string | null;
+  /** The newest processing run. Only for QI and admin, null for managers. */
+  process: ProcessRun | null;
+}
+
+export interface TrendOut {
+  issue: { id: number; rank: number; name: string };
+  unit: string | null;
+  as_of: string;
+  weeks: Week[];
+  rising: boolean;
+  /** Counted over the whole issue, whatever the unit, so they explain `rising`. */
+  last_week: number;
+  prior_weeks: number;
+  prior_weekly_average: number;
+  rising_min_comments: number;
+  rising_factor: number;
 }
 
 export const CATEGORIES = [
@@ -332,6 +430,18 @@ export const api = {
 
   compare: (options: { by: CompareBy; unit?: string; date_from?: string; date_to?: string }) =>
     request<CompareOut>("GET", "/compare" + query(options)),
+
+  overview: () => request<OverviewOut>("GET", "/overview"),
+
+  comments: (filters: CommentListFilters & { limit?: number; offset?: number } = {}) =>
+    request<CommentsOut>("GET", "/comments" + query({ ...filters })),
+
+  issueTrend: (issueId: number) => request<TrendOut>("GET", `/issues/${issueId}/trend`),
+
+  /** Starts labelling and issue building in the background. 409 while a run is going. */
+  startRun: () => request<ProcessRun>("POST", "/runs"),
+
+  latestRun: () => request<{ run: ProcessRun | null }>("GET", "/runs/latest"),
 
   issues: (limit?: number) => request<IssuesOut>("GET", "/issues" + query({ limit })),
 

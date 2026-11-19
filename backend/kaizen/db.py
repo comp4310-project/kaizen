@@ -225,6 +225,39 @@ class Suggestion(Base):
     created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow)
 
 
+class ProcessStatus(str, enum.Enum):
+    QUEUED = "queued"
+    RUNNING = "running"
+    DONE = "done"
+    FAILED = "failed"
+
+
+class ProcessRun(Base):
+    """One "Process new feedback" run from the app: label what is unlabelled, then rebuild issues.
+
+    `error` holds the exception's type and message, which never include comment text.
+    """
+
+    __tablename__ = "process_runs"
+
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    status: Mapped[ProcessStatus] = mapped_column(
+        Enum(ProcessStatus, values_callable=lambda e: [m.value for m in e]), default=ProcessStatus.QUEUED
+    )
+    labeller: Mapped[str | None] = mapped_column(String(80))
+    to_label: Mapped[int] = mapped_column(Integer, default=0)
+    labelled: Mapped[int] = mapped_column(Integer, default=0)
+    failed_batches: Mapped[int] = mapped_column(Integer, default=0)
+    issue_run_id: Mapped[int | None] = mapped_column(ForeignKey("issue_runs.id"))
+    issues: Mapped[int | None] = mapped_column(Integer)
+    comments_used: Mapped[int | None] = mapped_column(Integer)
+    error: Mapped[str | None] = mapped_column(String(500))
+    created_by: Mapped[int | None] = mapped_column(ForeignKey("users.id"))
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), default=utcnow, index=True)
+    started_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+    finished_at: Mapped[datetime | None] = mapped_column(DateTime(timezone=True))
+
+
 def make_engine(url: str | None = None) -> Engine:
     url = url or os.environ.get("KAIZEN_DATABASE_URL", DEFAULT_URL)
     kwargs = {"connect_args": {"check_same_thread": False}} if url.startswith("sqlite") else {"pool_pre_ping": True}

@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import { api, type IssueComment, type IssueCommentsOut, type Source, type Suggestion, type Unit } from "../api";
+import { api, type IssueComment, type IssueCommentsOut, type Source, type Unit } from "../api";
 import { canReviewSuggestions, useAuth } from "../auth";
 import { sortUnits, sourceName, words } from "../format";
 import { useFilter } from "../hooks";
 import { describeError, EmptyState, ErrorNotice, SkeletonBlocks } from "../states";
-import { SuggestionCard } from "../SuggestionCard";
 import { CommentReview, IssueReview } from "../IssueReview";
+import { IssueSuggestions } from "../IssueSuggestions";
+import { IssueTrend } from "../IssueTrend";
 
 const PAGE_SIZE = 50;
 
@@ -36,67 +37,6 @@ function Labels({ comment }: { comment: IssueComment }) {
         <dd>{l.status === "confirmed" ? "checked by a person" : "suggested automatically, not yet checked"}</dd>
       </div>
     </dl>
-  );
-}
-
-function Suggestions({ issueId }: { issueId: number }) {
-  const [rows, setRows] = useState<Suggestion[] | null>(null);
-  const [error, setError] = useState<unknown>(null);
-  const [drafting, setDrafting] = useState(false);
-  const [draftError, setDraftError] = useState<unknown>(null);
-  const [note, setNote] = useState("");
-
-  useEffect(() => {
-    api.issueSuggestions(issueId).then((out) => setRows(out.suggestions), setError);
-  }, [issueId]);
-
-  async function draft() {
-    setDrafting(true);
-    setDraftError(null);
-    setNote("");
-    try {
-      const out = await api.draftSuggestions(issueId);
-      setRows((old) => [...out.suggestions, ...(old ?? [])]);
-      const dropped = out.dropped ? ` ${out.dropped} dropped by the citation check: ${out.reasons.join("; ")}.` : "";
-      setNote(`Drafted ${out.suggestions.length}.${dropped}`);
-    } catch (e) {
-      setDraftError(e);
-    } finally {
-      setDrafting(false);
-    }
-  }
-
-  function replace(updated: Suggestion) {
-    setRows((old) => (old ?? []).map((s) => (s.id === updated.id ? updated : s)));
-  }
-
-  return (
-    <section aria-labelledby="suggestions-heading" className="detail-aside">
-      <div className="section-head">
-        <h2 id="suggestions-heading">Suggestions</h2>
-        <button type="button" className="btn btn-primary" onClick={draft} disabled={drafting}>
-          {drafting ? "Drafting" : "Draft suggestions"}
-        </button>
-      </div>
-      <p className="muted small">
-        Sends the issue name, keywords and stage to the model with the closest document passages, never comment text.
-        Takes up to a minute.
-      </p>
-      <p role="status" className="small">
-        {drafting ? "Drafting, this can take up to a minute." : note}
-      </p>
-      <ErrorNotice error={draftError} />
-      <ErrorNotice error={error} />
-      {!rows && !error && <SkeletonBlocks count={1} label="Loading suggestions" card />}
-      {rows && rows.length === 0 && (
-        <EmptyState>
-          <p>No suggestions for this issue yet. Use Draft suggestions to ask for two or three.</p>
-        </EmptyState>
-      )}
-      {rows?.map((s) => (
-        <SuggestionCard key={s.id} suggestion={s} onDecided={replace} showIssue={false} />
-      ))}
-    </section>
   );
 }
 
@@ -223,6 +163,7 @@ function IssueDetail({ issueId }: { issueId: number }) {
         )}
       </div>
       <ErrorNotice error={error} />
+      {!error && <IssueTrend issueId={issueId} />}
 
       {(!error || data) && (
         <div className={canReview ? "detail-layout" : undefined}>
@@ -299,7 +240,7 @@ function IssueDetail({ issueId }: { issueId: number }) {
               </button>
             )}
           </section>
-          {canReview && <Suggestions issueId={issueId} />}
+          {canReview && <IssueSuggestions issueId={issueId} />}
         </div>
       )}
     </section>

@@ -1,0 +1,228 @@
+/* Overview, weekly charts, the processing panel and the comments page. Uses only the tokens
+   defined in styles.css, so light and dark mode and the checked contrast come with them.
+   Loaded after styles.css from main.tsx. */
+
+/* Route focus moves to the h1 (App.tsx). Show the ring for keyboard users only. */
+main h1[tabindex="-1"]:focus:not(:focus-visible) {
+  outline: none;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Key numbers: a plain row of number over label, divided by thin rules. Not cards. */
+.key-numbers {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 0 24px;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  row-gap: 12px;
+}
+
+/* Number first, then its label, then any note. The markup keeps dt before dd. */
+.key-numbers > div {
+  display: flex;
+  flex-direction: column;
+  min-width: 7rem;
+  padding: 0 24px 0 0;
+  margin-right: 24px;
+  border-right: 1px solid var(--border);
+}
+
+.key-numbers > div:last-child {
+  border-right: 0;
+  margin-right: 0;
+}
+
+.key-numbers dt {
+  order: 2;
+  font-size: 0.87rem;
+  color: var(--text-muted);
+}
+
+.key-numbers dd {
+  display: contents;
+}
+
+.key-value {
+  order: 1;
+  font-size: 1.47rem;
+  font-weight: 700;
+  line-height: 1.2;
+  font-variant-numeric: tabular-nums;
+}
+
+.key-note {
+  order: 3;
+  line-height: 1.3;
+}
+
+@media (max-width: 40rem) {
+  .key-numbers {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    column-gap: 16px;
+  }
+  .key-numbers > div,
+  .key-numbers > div:last-child {
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    border-right: 0;
+  }
+}
+
+/* Next step: one line and, for QI, the processing button. */
+.next-step {
+  margin-bottom: 32px;
+  padding-left: 12px;
+  border-left: 3px solid var(--accent);
+}
+
+.next-step h2 {
+  margin-bottom: 4px;
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 32px;
+}
+
+.overview-grid h2 {
+  margin-bottom: 8px;
+}
+
+@media (min-width: 64rem) {
+  .overview-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+/* Charts: flat bars, a baseline and one grid line, direct labels, no animation. */
+.chart {
+  margin: 0 0 8px;
+}
+
+.chart figcaption {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+}
+
+.chart-title {
+  font-weight: 600;
+  font-size: 0.93rem;
+}
+
+.chart-area {
+  width: 100%;
+  min-height: 168px;
+}
+
+.chart svg {
+  display: block;
+  overflow: visible;
+}
+
+.chart-axis {
+  stroke: var(--border-control);
+  stroke-width: 1;
+}
+
+.chart-grid {
+  stroke: var(--border);
+  stroke-width: 1;
+}
+
+.chart-patient {
+  fill: var(--accent);
+}
+
+.chart-staff {
+  fill: var(--border-control);
+}
+
+.chart-tick {
+  font-size: 12px;
+  fill: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+
+.chart-label {
+  font-size: 12px;
+  fill: var(--text-muted);
+}
+
+.chart-label-patient {
+  fill: var(--accent);
+  font-weight: 600;
+}
+
+.chart-numbers {
+  margin-top: 8px;
+  font-size: 0.93rem;
+}
+
+.chart-numbers summary {
+  cursor: pointer;
+  color: var(--accent);
+  width: max-content;
+}
+
+.chart-numbers .table-wrap {
+  margin-top: 8px;
+  max-height: 20rem;
+}
+
+.issue-trend {
+  margin-bottom: 24px;
+  max-width: 48rem;
+}
+
+.issue-trend-loading {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.skeleton-chart {
+  height: 220px;
+  width: 100%;
+}
+
+.issue-trend > p {
+  max-width: 70ch;
+}
+
+/* Processing: the button with its help text beside it, the status underneath. */
+.process-panel {
+  margin-top: 12px;
+}
+
+.process-action {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.process-action p {
+  margin: 0;
+  max-width: 48ch;
+}
+
+.process-panel [role="status"] > * {
+  margin-top: 8px;
+}

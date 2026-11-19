@@ -50,11 +50,15 @@ serves the full, current docs at `/docs`.
 | `GET /units` | anyone | The unit list, for the form |
 | `POST /feedback` | anyone, no login | The web form: `text`, `source`, `unit`, optional `date` |
 | `POST /imports` | QI, admin | CSV upload as a `file` field; returns counts and row errors |
-| `GET /comments` | QI, admin, manager | De-identified comments, filter by `unit` and `source`. Managers only get their own unit |
+| `GET /comments` | QI, admin, manager | De-identified comments with their labels, in import order. Filter by `unit`, `source`, `category`, `stage`, `labelled` (`true` or `false`), `date_from` and `date_to`; `category` and `stage` only match labelled comments, the same ones `/compare` counts. Managers only get their own unit |
 | `POST /users` | admin | Create an account |
 | `GET /issues` | QI, admin, manager | The newest run's ranked issues. Managers only get issues with comments from their unit, with `unit_size` set |
 | `GET /issues/{id}/comments` | QI, admin, manager | The comments behind an issue with their labels, most typical first. Filter by `unit` and `source`. Managers only get their unit's comments, and 404 for issues outside it. `format=csv` returns the same rows as a CSV file (FR8) |
-| `GET /compare` | QI, admin, manager | Patient and staff comment counts side by side, grouped by `by=category` (default), `stage` or `unit`. Filter by `unit`, `date_from`, `date_to`. Each row has `only` set to `patient` or `staff` when the other group has none (FR5). Managers only get their own unit |
+| `GET /compare` | QI, admin, manager | Patient and staff comment counts side by side, grouped by `by=category` (default), `stage` or `unit`. Filter by `unit`, `date_from`, `date_to`. Each row has `only` set to `patient` or `staff` when the other group has none (FR5). `checked` is how many of the counted labels a person has confirmed. Managers only get their own unit |
+| `GET /overview` | QI, admin, manager | Comment counts (total, labelled, checked, by source, imported since the newest issue run), number of issues and rising issues, the top 3, comments per week for 12 weeks by source, the last import time, and for QI and admin the newest processing run. Managers only get their own unit |
+| `GET /issues/{id}/trend` | QI, admin, manager | Weekly comment counts for one issue by source, from its first comment to the run's newest date, plus the counts behind its rising flag. Managers get their unit's counts and 404 for issues outside it |
+| `POST /runs` | QI, admin | Labels every unlabelled comment and rebuilds the issues in a background thread. Returns 202 with the run; 409 while another run is queued or running |
+| `GET /runs/latest` | QI, admin | The newest processing run: `status` (`queued`, `running`, `done`, `failed`), counts, start and finish times and the error message |
 | `POST /comments/{id}/labels` | QI, admin | Confirms the labels, or corrects any of `sentiment`, `categories`, `stage`, `urgency`. Sets `status` to `confirmed`; `suggested` is never changed (FR6) |
 | `POST /comments/{id}/redact` | QI, admin | `{"start": 10, "end": 20}` replaces that character range of the stored text with `<REDACTED>`. 422 if the range is empty or past the end |
 | `POST /issues/{id}/rename` | QI, admin | `{"name": "..."}`, 1 to 120 characters |
@@ -146,3 +150,22 @@ typical comments. Rename it after merging if the name no longer fits.
 
 Viewing the comparison adds a `view_compare` row, and a CSV export adds
 `export_issue_comments`.
+
+## Processing from the app (FR3, FR4)
+
+Uploads and the public form only save comments. `POST /runs` does what
+`python -m kaizen.classify label` and `python -m kaizen.issues build` do, from the app. One
+`process_runs` row per run holds its status, the labeller's name, how many comments were
+waiting and how many were labelled, the issue run it built and, if it failed, the exception
+type and message (never comment text). The thread opens its own database session.
+
+The labeller is the TF-IDF baseline trained on the synthetic training split
+(`kaizen.classify.synthetic`, the same training `backend/scripts/demo_data.py` does), unless
+`KAIZEN_LABEL_MODEL` is set, in which case the LLM labeller is used. Issue names come from
+keywords unless `KAIZEN_NAME_MODEL` is set. On the 2,300-comment demo database a run takes
+about 25 seconds, most of it embedding. Only one run at a time; a run left `running` by a
+server that stopped is marked `failed` the next time anyone asks.
+
+The log gets `process_feedback` when a run starts, then `label_comments` and `build_issues`
+as usual, then `process_feedback_done` or `process_feedback_failed`. Viewing the overview
+adds `view_overview` and an issue's trend `view_issue_trend`.

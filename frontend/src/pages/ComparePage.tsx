@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { api, type CompareBy, type CompareOut, type Unit } from "../api";
 import { useAuth } from "../auth";
-import { percent, sortUnits, words } from "../format";
+import { count, percent, sortUnits, words } from "../format";
 import { useFilter } from "../hooks";
 import { EmptyState, ErrorNotice, SkeletonRows } from "../states";
 
@@ -11,22 +12,30 @@ const groupNames: Record<CompareBy, string> = {
   unit: "Unit",
 };
 
-// The API has no category filter yet, so rows cannot link to the comments they count and
-// switching Group by starts again from every comment. See TASKS.md, FR5 follow-up.
 const groupMeaning: Record<CompareBy, string> = {
-  category: "Each row counts the labelled comments with that category from each group, across all issues and the filters above.",
-  stage: "Each row counts the labelled comments about that stage of care from each group, across all issues and the filters above.",
-  unit: "Each row counts the labelled comments recorded against that unit from each group, across all issues and the filters above.",
+  category: "Each row counts the labelled comments with that category from each group, across all issues and the filters above. Select a row or a count to read those comments.",
+  stage: "Each row counts the labelled comments about that stage of care from each group, across all issues and the filters above. Select a row or a count to read those comments.",
+  unit: "Each row counts the labelled comments recorded against that unit from each group, across all issues and the filters above. Select a row or a count to read those comments.",
 };
 
-function CountCell({ count, max }: { count: number; max: number }) {
+/** The comments page for one row, with the same unit and dates as the comparison. */
+function commentsLink(by: CompareBy, key: string, filters: { unit?: string; from: string; to: string }, source?: string): string {
+  const params = new URLSearchParams({ [by]: key, labelled: "true" });
+  if (filters.unit && by !== "unit") params.set("unit", filters.unit);
+  if (filters.from) params.set("date_from", filters.from);
+  if (filters.to) params.set("date_to", filters.to);
+  if (source) params.set("source", source);
+  return `/comments?${params}`;
+}
+
+function CountCell({ value, max, to, label }: { value: number; max: number; to: string; label: string }) {
   return (
     <td className="num">
       <span className="share">
         <span className="share-track" aria-hidden="true">
-          <span className="bar" style={{ width: percent(count / max) }} />
+          <span className="bar" style={{ width: percent(value / max) }} />
         </span>
-        {count}
+        {value > 0 ? <Link to={to} aria-label={label}>{value}</Link> : value}
       </span>
     </td>
   );
@@ -116,6 +125,15 @@ export function ComparePage() {
   );
 }
 
+/** Says plainly whether the counts rest on labels a person has checked. */
+function checkedLine(checked: number, total: number): string {
+  if (checked === 0) {
+    return `None of these ${count(total, "label")} has been checked by a person yet. All were set automatically, so treat the counts as a first look.`;
+  }
+  if (checked === total) return `All ${count(total, "label")} behind these counts have been checked by a person.`;
+  return `${checked.toLocaleString()} of the ${count(total, "label")} behind these counts have been checked by a person. The other ${(total - checked).toLocaleString()} were set automatically and not yet checked.`;
+}
+
 function CompareResults({ by, unit, from, to }: { by: CompareBy; unit?: string; from: string; to: string }) {
   const [data, setData] = useState<CompareOut | null>(null);
   const [error, setError] = useState<unknown>(null);
@@ -137,6 +155,7 @@ function CompareResults({ by, unit, from, to }: { by: CompareBy; unit?: string; 
 
   if (error !== null) return <ErrorNotice error={error} />;
 
+  const filters = { unit, from, to };
   const max = Math.max(1, ...(data?.rows.map((row) => Math.max(row.patient, row.staff)) ?? []));
   return (
     <>
@@ -145,6 +164,11 @@ function CompareResults({ by, unit, from, to }: { by: CompareBy; unit?: string; 
           ? `Labelled comments: ${data.totals.patient} patient or family, ${data.totals.staff} staff.`
           : "Loading comparison."}
       </p>
+      {data && data.totals.patient + data.totals.staff > 0 && (
+        <p className="small">
+          {checkedLine(data.checked, data.totals.patient + data.totals.staff)}
+        </p>
+      )}
       {data?.rows.length === 0 ? (
         <EmptyState>
           {data.totals.patient + data.totals.staff === 0 ? (
@@ -173,9 +197,11 @@ function CompareResults({ by, unit, from, to }: { by: CompareBy; unit?: string; 
                 {!data && <SkeletonRows columns={["wide", "num", "num", "text"]} />}
                 {data?.rows.map((row) => (
                   <tr key={row.key}>
-                    <th scope="row">{words(row.key)}</th>
-                    <CountCell count={row.patient} max={max} />
-                    <CountCell count={row.staff} max={max} />
+                    <th scope="row"><Link to={commentsLink(by, row.key, filters)}>{words(row.key)}</Link></th>
+                    <CountCell value={row.patient} max={max} to={commentsLink(by, row.key, filters, "patient_family")}
+                      label={`${row.patient} from patients or families, ${words(row.key)}`} />
+                    <CountCell value={row.staff} max={max} to={commentsLink(by, row.key, filters, "staff")}
+                      label={`${row.staff} from staff, ${words(row.key)}`} />
                     <td>{row.only
                       ? <span className="badge badge-warn">{row.only === "patient" ? "Only patients or families" : "Only staff"}</span>
                       : "Both groups"}</td>

@@ -38,7 +38,11 @@ Implemented at `/compare` for QI, admin and managers. The unit choices come from
 `api.units()`, and managers see only their assigned unit. Both count columns share
 the same bar scale. The table shows which groups reported each category, stage or unit.
 
-Follow-up from study round 1: three of five participants wanted to click a row to see the
+Drill-down done: each category, stage or unit name links to `/comments` with the same
+filter, unit and dates, and each count links to the same list for that group only. The page
+says how many of the counted labels a person has checked.
+
+Follow-up from study round 1 (now done, see above): three of five participants wanted to click a row to see the
 comments it counts, or to keep a chosen category when switching Group by (task 2). Neither
 works with the current API, because `/compare`, `/issues` and `/issues/{id}/comments` have
 no category or stage filter. The page says in one line under the table what each grouping
@@ -139,6 +143,16 @@ Done when:
 - The file opens in a spreadsheet without running a formula from comment text.
 - The filters keep working after "Show more".
 
+## Overview, trend and processing
+
+Done: `/overview` is the landing page for every role, with key numbers, a next step, comments
+per week and the top three issues. Issue detail starts with a weekly chart and the rising rule
+in words. QI and admin can press Process new feedback on the overview or the upload page,
+which labels new comments and rebuilds the issues in the background (`POST /runs`).
+
+Still open: the weekly chart has no keyboard way into single bars; the numbers are in the
+table under "Show the numbers". Run the axe scan on the new pages.
+
 ## NFR4: accessibility scan and SUS test
 
 See [the accessibility and usability evaluation](../docs/frontend-usability.md) for the
@@ -155,5 +169,5 @@ To do:
 - Write the four tasks, for example: find the top issue's comments (should take one click), find whether staff report it, draft and accept a suggestion, export the comments for unit ED. Run them with five classmates and score the SUS forms.
 - Put the scan results, the task times and the SUS score in `docs/`.
 
-Three clicks: the top issue's comments are one click from the issues page, which is where
-login lands.
+Three clicks: login lands on the overview, which links the top three issues, and each issue
+page opens on its comments. The issues page also links every issue.
