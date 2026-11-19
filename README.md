@@ -58,8 +58,47 @@ Chroma, and with no API budget the LLM steps run on a free local model for now.
 
 ## Quick demo
 
-This builds a database by running the real pipeline on the 2,300 synthetic comments, then
-starts the app. No API key and no cost. You need Python 3.12 and Node 24.
+One command builds a database by running the real pipeline on the 2,300 synthetic comments,
+then starts the app. No API key and no cost. You need Python 3.12 or newer and Node 20.19 or
+newer (we use 24). From the repository root on Windows:
+
+```
+powershell -ExecutionPolicy Bypass -File scripts\demo.ps1
+```
+
+and on macOS or Linux:
+
+```
+bash scripts/demo.sh
+```
+
+The script checks Python, Node and npm, creates `backend/.venv` and installs the back end,
+runs `npm ci`, and builds `work/demo.db`. Each of those is skipped when it is already done
+and `pyproject.toml` or `package-lock.json` has not changed. It then starts the API and the
+front end with their logs in `work/logs/`, opens http://localhost:5173 and prints the
+accounts. Ctrl+C stops both. On a Windows laptop the first run took about six minutes, four
+and a half of them the back end install, and later runs were up in 15 seconds.
+
+The first run asks for one password for three accounts: `demo-qi` (QI staff), `demo-manager`
+(unit 4B only) and `demo-admin`. It is not printed or saved anywhere; if you forget it, run
+again with `-Fresh` (`--fresh` in bash) to rebuild the database with a new one. If Ollama is
+running with `qwen2.5:7b`, suggestions use it. If `ANTHROPIC_API_KEY` is set, they use the
+hosted models instead, unless you pass `-Local`. Other options are `-Check` (checks only,
+changes nothing), `-ApiPort` and `-WebPort`; `Get-Help scripts\demo.ps1 -Detailed` or
+`bash scripts/demo.sh --help` lists them all.
+
+### Before the demo
+
+1. `git checkout main` and `git pull`.
+2. Run the script with `-Check` (`--check` in bash). Every line should say `ok`; a `FAIL`
+   line comes with the fix.
+3. Start Ollama (the app, or `ollama serve`) and run `ollama pull qwen2.5:7b` if `-Check`
+   says the model is missing. Without it everything except suggestions still works.
+4. Run the script for real once, log in as `demo-qi` with your password, open an issue and
+   draft suggestions. The first draft also loads the documents and embeds them (14 seconds
+   with Ollama on our test laptop), so get that out of the way before people are watching.
+
+### The same steps by hand
 
 ```
 cd backend
@@ -69,10 +108,9 @@ pip install -e ".[dev]"
 python scripts/demo_data.py ../work/demo.db
 ```
 
-The script asks for one password for three accounts: `demo-qi` (QI staff), `demo-manager`
-(unit 4B only) and `demo-admin`. It imports the comments through the CSV checks and
-de-identification, labels them with the TF-IDF baseline, and builds the ranked issues, which
-takes about two minutes. Then start the API on that database:
+The script asks for the password for the three accounts. It imports the comments through
+the CSV checks and de-identification, labels them with the TF-IDF baseline, and builds the
+ranked issues, which takes about two minutes. Then start the API on that database:
 
 ```
 # PowerShell: $env:KAIZEN_DATABASE_URL = "sqlite:///../work/demo.db"
@@ -91,7 +129,8 @@ npm run dev
 Open http://localhost:5173 and log in as `demo-qi` to try **Upload CSV**. To try the
 public feedback form, follow **Send feedback without logging in** on the login page.
 New feedback is saved for the next labelling and issue grouping run. The API docs are
-at http://localhost:8000/docs.
+at http://localhost:8000/docs. If the API runs on another port, set `KAIZEN_API_PORT` to
+it before `npm run dev` so the front end's `/api` proxy follows.
 
 ## Running it yourself
 
