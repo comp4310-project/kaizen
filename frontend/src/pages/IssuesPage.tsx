@@ -10,14 +10,69 @@ function ShareBar({ share }: { share: number }) {
   return <span className="bar" style={{ width: `${Math.round(share * 100)}%` }} aria-hidden="true" />;
 }
 
+/**
+ * Plain explanations of the table's terms, for readers who do not work in QI. Visible on
+ * a click rather than on hover, so it works by keyboard and touch. The wording matches
+ * kaizen/issues/rank.py.
+ */
+function ColumnHelp() {
+  return (
+    <details className="help">
+      <summary>What these columns mean</summary>
+      <dl className="help-list">
+        <dt>Rank</dt>
+        <dd>
+          The order of the list, most pressing first. Issues with more comments come higher, and more so when
+          those comments are negative or marked high urgency.
+        </dd>
+        <dt>Comments, Patient or family, Staff</dt>
+        <dd>How many comments make up the issue, and how many came from patients or families and from staff.</dd>
+        <dt>Main stage</dt>
+        <dd>
+          The part of the hospital stay most of its comments are about, for example admission, care on the ward or
+          discharge.
+        </dd>
+        <dt>Negative</dt>
+        <dd>The share of its comments that are complaints rather than praise or neutral remarks.</dd>
+        <dt>Rising</dt>
+        <dd>
+          At least 3 comments in the most recent week of feedback, and at least twice as many as in an average
+          week over the month before. It is an early warning, not a measure of how serious the issue is.
+        </dd>
+        <dt>Outliers</dt>
+        <dd>Comments that were not similar enough to any issue to be grouped. They are kept but not listed here.</dd>
+        <dt>Typical example</dt>
+        <dd>On an issue&apos;s page, the comments that best show what the issue is about. They are listed first.</dd>
+        <dt>Suggested automatically</dt>
+        <dd>
+          Labels such as sentiment and stage of care that the model set and nobody has checked yet. QI staff
+          confirm or correct them on the issue&apos;s page.
+        </dd>
+      </dl>
+    </details>
+  );
+}
+
 export function IssuesPage() {
   const { me } = useAuth();
   const [data, setData] = useState<IssuesOut | null>(null);
   const [error, setError] = useState<unknown>(null);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
-    api.issues(50).then(setData, setError);
-  }, []);
+    let current = true;
+    api.issues(50).then(
+      (out) => { if (current) setData(out); },
+      (cause: unknown) => { if (current) setError(cause); },
+    );
+    return () => { current = false; };
+  }, [attempt]);
+
+  function retry() {
+    setError(null);
+    setData(null);
+    setAttempt((n) => n + 1);
+  }
 
   const isManager = me?.role === "manager";
   const columns: ("text" | "num" | "wide")[] = isManager
@@ -42,7 +97,7 @@ export function IssuesPage() {
         )}
       </div>
 
-      <ErrorNotice error={error} />
+      <ErrorNotice error={error} onRetry={retry} />
 
       {data && !data.run && (
         <EmptyState>
@@ -57,6 +112,8 @@ export function IssuesPage() {
           <p>No issues in the newest run{isManager ? ` have comments from unit ${me?.unit}` : ""}.</p>
         </EmptyState>
       )}
+
+      {!error && (!data || data.issues.length > 0) && <ColumnHelp />}
 
       {!error && (!data || data.issues.length > 0) && (
         <div className="table-wrap" tabIndex={0} aria-labelledby="issues-caption">
