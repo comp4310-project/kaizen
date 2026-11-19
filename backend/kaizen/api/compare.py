@@ -1,9 +1,10 @@
 """Patient and staff feedback side by side (FR5).
 
 Counts labelled comments by source, grouped by HCAT category, stage of care or unit, using
-the current labels (a person's correction once there is one, FR6). A row is marked `only`
-when one group has no comments in it, which is the "only one group reports this" flag P3
-asks for. Unit managers only get their own unit (NFR1).
+the current labels (a person's correction once there is one, FR6). `checked` says how many
+of the counted labels a person has checked; the others are still the model's. A row is
+marked `only` when one group has no comments in it, which is the "only one group reports
+this" flag P3 asks for. Unit managers only get their own unit (NFR1).
 
 A comment with two categories counts once in each, so category rows can add up to more
 than the number of comments. Comments with no categories (praise, usually) are left out of
@@ -21,7 +22,7 @@ from sqlalchemy import select
 from sqlalchemy.orm import Session
 
 from kaizen.api.auth import get_session, require, unit_scope
-from kaizen.db import ActivityLog, Comment, CommentLabel, Role, Source, User
+from kaizen.db import ActivityLog, Comment, CommentLabel, LabelStatus, Role, Source, User
 
 router = APIRouter()
 readers = require(Role.QI, Role.ADMIN, Role.MANAGER)
@@ -48,7 +49,7 @@ def compare(
         raise HTTPException(422, "date_from is after date_to")
     unit = unit_scope(user, unit)
 
-    query = select(Comment.source, Comment.unit, CommentLabel.stage, CommentLabel.categories).join(
+    query = select(Comment.source, Comment.unit, CommentLabel.stage, CommentLabel.categories, CommentLabel.status).join(
         CommentLabel, CommentLabel.comment_id == Comment.id
     )
     if unit:
@@ -60,8 +61,10 @@ def compare(
 
     counts: dict[str, Counter] = {}
     totals: Counter = Counter()
-    for source, comment_unit, stage, categories in session.execute(query):
+    checked = 0  # labels a person has confirmed or corrected (FR6); the rest are the model's
+    for source, comment_unit, stage, categories, label_status in session.execute(query):
         totals[source] += 1
+        checked += label_status is LabelStatus.CONFIRMED
         keys = {"category": categories or [], "stage": [stage], "unit": [comment_unit]}[by]
         for key in keys:
             counts.setdefault(key, Counter())[source] += 1
@@ -86,5 +89,6 @@ def compare(
         "date_from": date_from.isoformat() if date_from else None,
         "date_to": date_to.isoformat() if date_to else None,
         "totals": {"patient": totals[Source.PATIENT_FAMILY], "staff": totals[Source.STAFF]},
+        "checked": checked,
         "rows": rows,
     }

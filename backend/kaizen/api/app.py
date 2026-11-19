@@ -8,19 +8,24 @@ mysql+pymysql://kaizen:password@localhost:3306/kaizen. The default is a local SQ
 
 from __future__ import annotations
 
+import threading
 from datetime import date
 
 from fastapi import Depends, FastAPI, HTTPException, Query, UploadFile, status
 from pydantic import BaseModel
-from sqlalchemy import func, select
+from sqlalchemy import String, cast, func, select
 from sqlalchemy.orm import Session
 
 from kaizen.api.auth import current_user, get_session, hash_password, issue_token, require, unit_scope, verify_password
 from kaizen.api.compare import router as compare_router
 from kaizen.api.corrections import router as corrections_router
 from kaizen.api.issues import router as issues_router
+from kaizen.api.overview import router as overview_router
+from kaizen.api.runs import default_pipeline
+from kaizen.api.runs import router as runs_router
 from kaizen.api.suggestions import router as suggestions_router
-from kaizen.db import ActivityLog, Channel, Comment, Role, Source, User, make_engine, make_sessionmaker
+from kaizen.classify.labels import Category, Stage
+from kaizen.db import ActivityLog, Channel, Comment, CommentLabel, Role, Source, User, make_engine, make_sessionmaker
 from kaizen.ingest.csv_import import CsvFormatError, check_row, parse_csv
 from kaizen.ingest.save import save_feedback
 from kaizen.units import UNITS, is_known_unit
@@ -64,9 +69,14 @@ def log(session: Session, user: User | None, action: str, entity_type=None, enti
 def create_app(database_url: str | None = None) -> FastAPI:
     app = FastAPI(title="Kaizen", version="0.1.0")
     app.state.sessionmaker = make_sessionmaker(make_engine(database_url))
+    # One "Process new feedback" run at a time (kaizen.api.runs). Tests replace the pipeline.
+    app.state.run_lock = threading.Lock()
+    app.state.pipeline = default_pipeline()
     app.include_router(compare_router)
     app.include_router(corrections_router)
     app.include_router(issues_router)
+    app.include_router(overview_router)
+    app.include_router(runs_router)
     app.include_router(suggestions_router)
 
     @app.post("/auth/login")
@@ -119,21 +129,57 @@ def create_app(database_url: str | None = None) -> FastAPI:
     def list_comments(
         unit: str | None = None,
         source: Source | None = None,
+        category: Category | None = None,
+        stage: Stage | None = None,
+        labelled: bool | None = None,
+        date_from: date | None = None,
+        date_to: date | None = None,
         limit: int = Query(50, ge=1, le=500),
         offset: int = Query(0, ge=0),
         user: User = Depends(require(Role.QI, Role.ADMIN, Role.MANAGER)),
         session: Session = Depends(get_session),
     ):
-        """De-identified comments. Unit managers only see their own unit (NFR1)."""
+        """De-identified comments with their labels. Unit managers only see their own unit (NFR1).
+
+        `category` and `stage` match the current labels, so they only return labelled comments,
+        the same ones `/compare` counts. `labelled=true` keeps only labelled comments and
+        `labelled=false` only the ones still waiting for labels.
+        """
+        if date_from and date_to and date_from > date_to:
+            raise HTTPException(422, "date_from is after date_to")
         unit = unit_scope(user, unit)
-        query = select(Comment)
+        query = select(Comment, CommentLabel).outerjoin(CommentLabel, CommentLabel.comment_id == Comment.id)
         if unit:
             query = query.where(Comment.unit == unit)
         if source:
             query = query.where(Comment.source == source)
+        if category:
+            # JSON list stored as text in SQLite and MySQL, e.g. ["communication", "safety"].
+            query = query.where(cast(CommentLabel.categories, String).like(f'%"{category.value}"%'))
+        if stage:
+            query = query.where(CommentLabel.stage == stage.value)
+        if labelled is True:
+            query = query.where(CommentLabel.id.is_not(None))
+        elif labelled is False:
+            query = query.where(CommentLabel.id.is_(None))
+        if date_from:
+            query = query.where(Comment.feedback_date >= date_from)
+        if date_to:
+            query = query.where(Comment.feedback_date <= date_to)
         total = session.scalar(select(func.count()).select_from(query.subquery()))
-        comments = session.scalars(query.order_by(Comment.id).limit(limit).offset(offset)).all()
-        log(session, user, "view_comments", detail={"unit": unit, "source": source and source.value, "count": len(comments)})
+        rows = session.execute(query.order_by(Comment.id).limit(limit).offset(offset)).all()
+        log(
+            session,
+            user,
+            "view_comments",
+            detail={
+                "unit": unit,
+                "source": source and source.value,
+                "category": category and category.value,
+                "stage": stage and stage.value,
+                "count": len(rows),
+            },
+        )
         session.commit()
         return {
             "total": total,
@@ -144,8 +190,17 @@ def create_app(database_url: str | None = None) -> FastAPI:
                     "unit": c.unit,
                     "date": c.feedback_date.isoformat(),
                     "text": c.text,
+                    "labels": None
+                    if label is None
+                    else {
+                        "sentiment": label.sentiment,
+                        "categories": label.categories,
+                        "stage": label.stage,
+                        "urgency": label.urgency,
+                        "status": label.status.value,
+                    },
                 }
-                for c in comments
+                for c, label in rows
             ],
         }
 
