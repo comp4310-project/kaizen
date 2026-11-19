@@ -2,8 +2,13 @@
 
 from __future__ import annotations
 
+import logging
+
+import litellm
+import pytest
 from sqlalchemy import select
 
+from kaizen.api import suggestions
 from kaizen.db import ActivityLog, Suggestion
 from kaizen.suggest.draft import SuggestionDrafter
 from kaizen.suggest.retrieve import PassageIndex
@@ -143,3 +148,66 @@ def test_review_queue_lists_undecided_suggestions(app, client) -> None:
 def test_suggestions_need_login(client) -> None:
     assert client.get("/suggestions").status_code == 401
     assert client.post("/issues/1/suggestions").status_code == 401
+
+
+# When the model cannot be used, the analyst gets a 503 that says what to do. The fake
+# completion raises LiteLLM's own exceptions, so nothing leaves the machine.
+SECRET = "do-not-log-this-text"
+
+
+def fails_with(exc) -> FakeCompletion:
+    def respond(_):
+        raise exc
+
+    return FakeCompletion(respond=respond)
+
+
+@pytest.mark.parametrize(
+    "exc, expected",
+    [
+        (litellm.APIConnectionError(f"refused {SECRET}", "ollama", "ollama/qwen2.5:7b"), "The model is not reachable."),
+        (litellm.Timeout(f"slow {SECRET}", "ollama/qwen2.5:7b", "ollama"), "did not answer within 120 seconds"),
+        (litellm.NotFoundError(f"model not found {SECRET}", "ollama", "ollama/no-such-model"), "fake/model is not available"),
+        (litellm.AuthenticationError(f"no key {SECRET}", "anthropic", "anthropic/claude-opus-5-5"), "API key"),
+    ],
+)
+def test_unreachable_model_is_503_with_what_to_do(app, client, caplog, exc, expected) -> None:
+    setup_issues(app)
+    use_drafter(app, fails_with(exc))
+    headers = login(client, "analyst")
+    with caplog.at_level(logging.DEBUG):
+        response = draft(client, headers, first_issue(client, headers)["id"])
+
+    assert response.status_code == 503, response.text
+    detail = response.json()["detail"]
+    assert expected in detail
+    assert "Start Ollama and pull qwen2.5:7b" in detail or "check that Ollama is running" in detail
+    # Neither the reply nor the log repeats the exception text, which could hold the request.
+    assert SECRET not in detail and SECRET not in caplog.text
+    with app.state.sessionmaker() as session:
+        assert session.scalars(select(Suggestion)).all() == []
+
+
+def test_a_rejected_request_is_502_not_a_stack_trace(app, client) -> None:
+    setup_issues(app)
+    use_drafter(app, fails_with(litellm.BadRequestError("bad effort", "ollama/qwen2.5:7b", "ollama")))
+    headers = login(client, "analyst")
+    response = draft(client, headers, first_issue(client, headers)["id"])
+    assert response.status_code == 502
+    assert "KAIZEN_SUGGEST_MODEL" in response.json()["detail"]
+
+
+def test_the_default_drafter_has_a_time_limit_and_no_retries(app, client, monkeypatch) -> None:
+    sent = []
+
+    def fake_completion(**kwargs):
+        sent.append(kwargs)
+        return reply('{"suggestions": []}')
+
+    monkeypatch.setattr(suggestions.llm.litellm, "completion", fake_completion)
+    monkeypatch.setattr(suggestions, "load_index", lambda: PassageIndex.build(PASSAGES, FakeEmbedder()))
+    setup_issues(app)
+    headers = login(client, "analyst")
+    assert draft(client, headers, first_issue(client, headers)["id"]).status_code == 201
+    assert sent[0]["timeout"] == suggestions.DRAFT_TIMEOUT == 120
+    assert sent[0]["num_retries"] == 0

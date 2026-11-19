@@ -30,11 +30,12 @@ src/main.tsx                mounts App inside BrowserRouter and AuthProvider
 src/App.tsx                 header, routes, RequireLogin guard
 src/api.ts                  every API call and the types of its replies
 src/auth.tsx                AuthProvider, useAuth(), canReviewSuggestions()
-src/states.tsx              ErrorNotice, EmptyState, SkeletonRows, SkeletonBlocks, describeError()
+src/states.tsx              ErrorNotice (with an optional Try again), EmptyState, SkeletonRows, SkeletonBlocks, describeError(), canRetry()
 src/format.ts               words(), percent(), sourceName(), sortUnits(), roleName(), dateTime()
 src/hooks.ts                useFilter(): a select or input that reloads data on a pick, Enter or leaving it, not on every arrow key
-src/SuggestionCard.tsx      one suggestion: fields, citations, accept / edit / reject
-src/IssueReview.tsx        issue and comment correction forms for QI and admin
+src/SuggestionCard.tsx      one suggestion: the change as its heading, owner / stage / measure, quoted citations, accept / edit / reject
+src/IssueSuggestions.tsx    the suggestions panel for an issue's page: Draft suggestions, the drafting wait, the 503 with Try again. Not wired in yet: IssueDetailPage still has its own `Suggestions` and should render this instead
+src/IssueReview.tsx         issue and comment correction forms for QI and admin
 src/pages/LoginPage.tsx
 src/pages/ImportPage.tsx        CSV upload and rejected row details for QI and admin
 src/pages/FeedbackPage.tsx      public feedback form
@@ -131,6 +132,9 @@ Radius: `--radius-control` (6px) on buttons, inputs, badges and notices; `--radi
 | `field`, `field-inline` | a label above its input, or beside it in a toolbar |
 | `muted`, `small` | secondary text |
 | `empty`, `notice`, `notice-error` | rendered by the components in `states.tsx`; don't hand-roll them |
+| `help`, `help-list` | a closed `<details>` that explains a page's terms in plain words, such as "What these columns mean" above the issues table. Use it instead of hover-only `title` text |
+| `label-form`, `label-selects`, `review-categories`, `label-help` | the label editor: selects in a row, categories in two columns, the line about confirming, one action row |
+| `suggestion-meta`, `suggestion-change`, `citation-source`, `decision` | parts of a suggestion card. One badge per card, for its status |
 
 ## States every view needs
 
@@ -138,11 +142,14 @@ Every view that loads data has all four, using `src/states.tsx`:
 
 1. Loading: `SkeletonRows` inside the real `<tbody>` with the same column kinds as the header, or `SkeletonBlocks` (`card` when cards will appear). No spinners.
 2. Empty: `EmptyState` that says how to fill it, for example "No issues yet. Run `python -m kaizen.issues build`".
-3. Error: `ErrorNotice error={e}`. Keep the caught value as `unknown` and pass it in; `describeError` turns status 0, 403, 404, 409, 422 and 5xx into plain words. 401 never reaches a page, it goes to login.
+3. Error: `ErrorNotice error={e} onRetry={reload}`. Keep the caught value as `unknown` and pass it in; `describeError` turns status 0, 403, 404, 409, 422 and 5xx into plain words. Status 0 says the API is not reachable and how to start it; a 502 or 503 shows the server's own sentence, which says what to do (for example "Start Ollama and pull qwen2.5:7b"). The Try again button only appears for errors a retry can fix (`canRetry`: status 0, 409, 5xx), so pass `onRetry` wherever reloading makes sense. 401 never reaches a page, it goes to login.
 4. Data.
 
 Actions (buttons that POST) show their own `ErrorNotice` next to the button and disable
-the button while the request runs.
+the button while the request runs. A slow action says how long it can take on the button
+itself ("Drafting, this can take up to a minute"). When an action makes its buttons
+disappear, move focus to the text that says what happened, as `SuggestionCard` does after
+a decision and `FeedbackPage` after sending.
 
 ## Accessibility (NFR4)
 
@@ -153,7 +160,8 @@ the button while the request runs.
 - Status words go in text, never colour alone. Bars and decorative elements get `aria-hidden="true"` and the number stays in text.
 - Errors use `role="alert"`; progress and counts use `role="status"`.
 - Animation and transitions are switched off under `prefers-reduced-motion`.
-- Check 375px wide: nothing but the table scrolls sideways.
+- Check 375px wide: nothing but the table scrolls sideways. Also check 768px: the header stays on one line there (the username is hidden below 52rem, and below 46rem the links move to their own line).
+- Explain jargon in visible text (a `help` disclosure or a sentence), never in hover-only tooltips.
 - Don't disable a submit button to signal missing input; let it submit and say what is missing.
 
 ## Writing

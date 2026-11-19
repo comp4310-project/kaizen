@@ -37,12 +37,18 @@ export function CommentReview({ comment, onUpdate }: {
   const editButton = useRef<HTMLButtonElement>(null);
   const redactButton = useRef<HTMLButtonElement>(null);
   const returnFocus = useRef<"labels" | "redact" | null>(null);
+  const actionRow = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (mode !== null || returnFocus.current === null) return;
     (returnFocus.current === "redact" ? redactButton : editButton).current?.focus();
     returnFocus.current = null;
   });
+
+  // Focus has gone to Sentiment, which scrolls only that far. Bring Save into view too.
+  useEffect(() => {
+    if (mode === "labels") actionRow.current?.scrollIntoView({ block: "nearest" });
+  }, [mode]);
 
   function open(next: typeof mode) {
     returnFocus.current = next === null ? mode : null;
@@ -94,6 +100,11 @@ export function CommentReview({ comment, onUpdate }: {
     <div className="review-controls">
       <ErrorNotice error={error} />
       <p role="status" className="small">{note}</p>
+      {mode === null && comment.labels?.status === "suggested" && (
+        <p className="small">
+          The model set these labels. Check them against the comment, then confirm or edit them.
+        </p>
+      )}
       {mode === null && (
         <div className="review-actions">
           {comment.labels?.status === "suggested" && (
@@ -131,23 +142,17 @@ export function CommentReview({ comment, onUpdate }: {
           }
           confirm(changed);
         }}>
-          <fieldset disabled={busy}>
+          {/* One form, one action row. It is short enough (about 330px) to show whole on a
+              768px screen; opening it scrolls just far enough to bring the buttons into view. */}
+          <fieldset disabled={busy} className="label-form">
             <legend>Edit labels for comment {comment.id}</legend>
-            <div className="review-actions">
+            <div className="label-selects">
               <LabelSelect id={id} name="sentiment" label="Sentiment" value={comment.labels.sentiment} choices={sentiments} autoFocus />
               <LabelSelect id={id} name="stage" label="Stage of care" value={comment.labels.stage} choices={STAGES} />
               <LabelSelect id={id} name="urgency" label="Urgency" value={comment.labels.urgency} choices={urgencies} />
             </div>
-            <p id={id + "save-help"} className="muted small">Saving also marks these labels as checked by a person.</p>
-            {/* Save is repeated here so it is reachable without going past the seven categories. */}
-            <div className="review-actions">
-              <button type="submit" className="btn btn-primary" aria-describedby={id + "save-help"}>
-                {busy ? "Saving" : "Save labels"}
-              </button>
-              <button type="button" className="btn btn-secondary" onClick={() => open(null)}>Cancel</button>
-            </div>
             <fieldset className="review-categories">
-              <legend>Categories</legend>
+              <legend>Categories (tick all that apply)</legend>
               {CATEGORIES.map((category) => (
                 <div key={category}>
                   <input type="checkbox" id={id + category} name="categories" value={category}
@@ -156,7 +161,10 @@ export function CommentReview({ comment, onUpdate }: {
                 </div>
               ))}
             </fieldset>
-            <div className="review-actions">
+            <p id={id + "save-help"} className="label-help">
+              Saving also marks these labels as checked by a person, even if you leave them as they are.
+            </p>
+            <div className="review-actions" ref={actionRow}>
               <button type="submit" className="btn btn-primary" aria-describedby={id + "save-help"}>
                 {busy ? "Saving" : "Save labels"}
               </button>
@@ -211,6 +219,7 @@ export function IssueReview({ issue, onRename, onMerge }: {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState<unknown>(null);
   const [note, setNote] = useState("");
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     if (mode !== "merge") return;
@@ -224,7 +233,7 @@ export function IssueReview({ issue, onRename, onMerge }: {
       (cause: unknown) => { if (current) setError(cause); },
     );
     return () => { current = false; };
-  }, [issue.id, mode]);
+  }, [issue.id, mode, attempt]);
 
   function open(next: typeof mode) {
     setName(issue.name);
@@ -265,7 +274,7 @@ export function IssueReview({ issue, onRename, onMerge }: {
 
   return (
     <div className="review-controls">
-      <ErrorNotice error={error} />
+      <ErrorNotice error={error} onRetry={mode === "merge" && !targets ? () => { setError(null); setAttempt((n) => n + 1); } : undefined} />
       <p role="status" className="small">{note}</p>
       {mode === null ? (
         <div className="review-actions">
