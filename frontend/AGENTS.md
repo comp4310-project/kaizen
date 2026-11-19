@@ -38,7 +38,7 @@ src/states.tsx              ErrorNotice (with an optional Try again), EmptyState
 src/format.ts               words(), percent(), sourceName(), sortUnits(), roleName(), dateTime(), shortDate(), count()
 src/hooks.ts                useFilter(): a select or input that reloads data on a pick, Enter or leaving it, not on every arrow key
 src/SuggestionCard.tsx      one suggestion: the change as its heading, owner / stage / measure, quoted citations, accept / edit / reject
-src/IssueSuggestions.tsx    the suggestions panel for an issue's page: Draft suggestions, the drafting wait, the 503 with Try again. Not wired in yet: IssueDetailPage still has its own `Suggestions` and should render this instead
+src/IssueSuggestions.tsx    the suggestions panel for an issue's page: Draft suggestions, the drafting wait, the 503 with Try again. Rendered by IssueDetailPage for QI and admin
 src/IssueReview.tsx         issue and comment correction forms for QI and admin
 src/pages/LoginPage.tsx
 src/pages/OverviewPage.tsx      landing page: key numbers, next step, weekly chart, top 3 issues
