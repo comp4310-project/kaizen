@@ -1,8 +1,13 @@
 """Suggestion endpoints for QI staff (FR7, NFR2).
 
-Drafting runs one LLM request while the client waits, usually well under a minute. The
+Drafting runs one LLM request while the client waits, usually well under a minute. It gives
+up after DRAFT_TIMEOUT seconds with no retry, since the person can press Try again. The
 drafter (documents, passage vectors and the embedding model) loads on the first request and
 is kept in `app.state.drafter`; tests put a fake there.
+
+When the model cannot be used (Ollama not running, a model that was never pulled, no API
+key, or no answer in time) the reply is a 503 that says what to do, not a stack trace. Only
+the error's type name is logged, never its text or the request.
 
 Nothing the model writes is final: a suggestion stays `suggested` until a person accepts,
 edits or rejects it, and every decision is logged with field names only.
@@ -10,6 +15,7 @@ edits or rejects it, and every decision is logged with field names only.
 
 from __future__ import annotations
 
+import logging
 from typing import Literal
 
 from fastapi import APIRouter, Depends, HTTPException, Query, Request, status
@@ -19,6 +25,8 @@ from sqlalchemy.orm import Session
 
 from kaizen.api.auth import get_session, require
 from kaizen.classify.labels import Stage
+from kaizen.classify import llm  # imports LiteLLM after kaizen.classify has configured it
+from kaizen.classify.llm import CONFIG_ERRORS, limited, unreachable_reason
 from kaizen.db import ActivityLog, Issue, Role, Suggestion, SuggestionStatus, User, utcnow
 from kaizen.suggest.corpus import CorpusError
 from kaizen.suggest.draft import DraftError, SuggestionDrafter
@@ -28,6 +36,19 @@ router = APIRouter()
 qi = require(Role.QI, Role.ADMIN)
 
 EDITABLE = ("change", "owner", "stage", "measure")
+DRAFT_TIMEOUT = 120  # seconds
+LOCAL_FIX = "Start Ollama and pull qwen2.5:7b, or set an API key."
+logger = logging.getLogger(__name__)
+
+
+def unreachable_message(reason: str, model: str) -> str:
+    """What the QI analyst sees when the model cannot be used, with what to do about it."""
+    return {
+        "timeout": f"The model did not answer within {DRAFT_TIMEOUT} seconds. Try again, or check that Ollama is running.",
+        "connection": f"The model is not reachable. {LOCAL_FIX}",
+        "not_found": f"The model {model} is not available. {LOCAL_FIX}",
+        "auth": f"The model needs an API key that is missing or wrong. {LOCAL_FIX}",
+    }[reason]
 
 
 class DecisionIn(BaseModel):
@@ -49,9 +70,9 @@ def _drafter(request: Request) -> SuggestionDrafter:
     drafter = getattr(request.app.state, "drafter", None)
     if drafter is None:
         try:
-            drafter = SuggestionDrafter(load_index())
+            drafter = SuggestionDrafter(load_index(), completion=limited(llm.litellm.completion, DRAFT_TIMEOUT, retries=0))
         except CorpusError as exc:
-            raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, f"documents could not be loaded: {exc}") from exc
+            raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, f"The documents could not be loaded: {exc}.") from exc
         request.app.state.drafter = drafter
     return drafter
 
@@ -95,11 +116,24 @@ def draft(
         raise HTTPException(status.HTTP_404_NOT_FOUND, "no such issue")
     drafter = _drafter(request)
     if not drafter.index.passages:
-        raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, "no documents loaded, so there is nothing to cite")
+        raise HTTPException(
+            status.HTTP_503_SERVICE_UNAVAILABLE, "No documents are loaded, so there is nothing to cite. Add them to documents/."
+        )
     try:
         result, rows = draft_for_issue(session, issue, drafter, user.id)
-    except DraftError as exc:
-        raise HTTPException(status.HTTP_502_BAD_GATEWAY, f"the model gave no usable reply ({exc}), try again") from exc
+    # reply_text lets a wrong key, model name or request through unwrapped (they stop a
+    # labelling run), so catch those here as well as DraftError.
+    except (DraftError, *CONFIG_ERRORS) as exc:
+        logger.warning("drafting for issue %s failed: %s", issue_id, type(exc.__cause__ or exc).__name__)
+        reason = unreachable_reason(exc)
+        if reason is not None:
+            raise HTTPException(status.HTTP_503_SERVICE_UNAVAILABLE, unreachable_message(reason, drafter.model)) from exc
+        if isinstance(exc, DraftError):
+            raise HTTPException(status.HTTP_502_BAD_GATEWAY, f"The model gave no usable reply ({exc}). Try again.") from exc
+        raise HTTPException(
+            status.HTTP_502_BAD_GATEWAY,
+            f"The model refused the request ({type(exc).__name__}). Check KAIZEN_SUGGEST_MODEL and KAIZEN_SUGGEST_EFFORT.",
+        ) from exc
     return {
         "suggestions": [_out(s, {}) for s in rows],
         "dropped": len(result.dropped),

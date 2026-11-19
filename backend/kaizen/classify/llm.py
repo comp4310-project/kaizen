@@ -38,11 +38,51 @@ SERVICE_ERRORS = (
     litellm.APIError,
 )
 
+# LiteLLM prints a "Give Feedback / Get Help" banner to stdout on every error. Turn it off so
+# server logs only hold what we write ourselves.
+litellm.suppress_debug_info = True
+
 RESPONSE_FORMAT = {"type": "json_schema", "json_schema": {"name": "labels", "schema": BATCH_SCHEMA, "strict": True}}
 
 
 class LabelError(RuntimeError):
     """One batch could not be labelled. Its comments stay unlabelled and are retried next run."""
+
+
+def unreachable_reason(exc: BaseException) -> str | None:
+    """Why the model cannot be used right now, or None for any other failure.
+
+    "timeout": it did not answer in time. "connection": nothing answered, for example Ollama
+    is not running. "not_found": no model by that name, for example it was never pulled.
+    "auth": the API key is missing or wrong. Follows `__cause__`, so a LabelError raised from
+    one of these still counts.
+    """
+    while exc is not None:
+        if isinstance(exc, litellm.Timeout):
+            return "timeout"
+        if isinstance(exc, (litellm.APIConnectionError, litellm.ServiceUnavailableError)):
+            return "connection"
+        if isinstance(exc, litellm.NotFoundError):
+            return "not_found"
+        if isinstance(exc, (litellm.AuthenticationError, litellm.PermissionDeniedError)):
+            return "auth"
+        exc = exc.__cause__
+    return None
+
+
+def limited(completion: Callable, timeout: float, retries: int) -> Callable:
+    """`completion` with a time limit per request and its own retry count.
+
+    For requests a person waits on: `reply_text` asks for RETRIES tries, which suits a long
+    labelling run but could keep someone waiting several minutes for one draft.
+    """
+
+    def call(**kwargs):
+        kwargs["timeout"] = timeout
+        kwargs["num_retries"] = retries
+        return completion(**kwargs)
+
+    return call
 
 
 class _Item(BaseModel):
