@@ -1,3 +1,5 @@
 # The synthetic data is checked against SHA-256 hashes in its manifest, so Git must not
 # change its line endings on Windows checkouts.
 data/synthetic/** -text
+# Shell scripts keep LF endings everywhere, or bash stops on the carriage returns.
+*.sh text eol=lf
