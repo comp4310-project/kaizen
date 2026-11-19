@@ -134,7 +134,9 @@ export function OverviewPage() {
               {data.issues.top.length ? (
                 <div className="table-wrap" tabIndex={0} aria-labelledby="top-caption">
                   <table className="data-table">
-                    <caption id="top-caption">The three highest ranked issues in the newest run</caption>
+                    <caption id="top-caption">
+                      The three highest ranked issues in the newest run{data.unit ? ` with comments from unit ${data.unit}` : ""}
+                    </caption>
                     <thead>
                       <tr>
                         <th scope="col" className="num">Rank</th>
