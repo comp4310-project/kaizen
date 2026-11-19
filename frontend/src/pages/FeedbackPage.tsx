@@ -1,4 +1,4 @@
-import { useEffect, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { Link } from "react-router-dom";
 import { api, type Source, type Unit } from "../api";
 import { useAuth } from "../auth";
@@ -13,6 +13,13 @@ export function FeedbackPage() {
   const [error, setError] = useState<unknown>(null);
   const [busy, setBusy] = useState(false);
   const [sent, setSent] = useState(false);
+  // The fieldset is disabled while sending, which drops focus to the page. Put it on the
+  // thank-you line so keyboard and screen reader users land on the result.
+  const sentNotice = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    if (sent) sentNotice.current?.focus();
+  }, [sent]);
 
   useEffect(() => {
     let active = true;
@@ -63,16 +70,15 @@ export function FeedbackPage() {
     <section className="intake-page">
       <div className="page-head">
         <h1>Send feedback</h1>
-        <p className="muted">Use fictional feedback for this prototype. Leave out names and identifying details.</p>
+        <p>
+          Names and other personal details are removed from your comment before it is stored, and the hospital&apos;s
+          quality improvement (QI) team then reviews it alongside other feedback.
+        </p>
+        <p className="muted">This is a prototype, so please use made-up feedback and leave out real names.</p>
         {!me && <Link to="/login">Staff log in</Link>}
       </div>
 
-      {unitsError !== null && (
-        <>
-          <ErrorNotice error={unitsError} />
-          <button type="button" className="btn btn-secondary" onClick={retryUnits}>Reload units</button>
-        </>
-      )}
+      <ErrorNotice error={unitsError} onRetry={retryUnits} />
       {!units && unitsError === null && <SkeletonBlocks count={1} label="Loading units" />}
       {units?.length === 0 && <EmptyState>No units are available. Contact a Kaizen administrator.</EmptyState>}
       {!!units?.length && (
@@ -109,7 +115,11 @@ export function FeedbackPage() {
           </fieldset>
           <div role="status">
             {busy && <p>Sending feedback.</p>}
-            {sent && <p className="notice">Thank you. Your feedback was received.</p>}
+            {sent && (
+              <p className="notice" ref={sentNotice} tabIndex={-1}>
+                Thank you, your feedback has been sent. You can send another comment with the form above.
+              </p>
+            )}
           </div>
         </form>
       )}

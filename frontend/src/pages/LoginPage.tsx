@@ -42,7 +42,7 @@ export function LoginPage() {
   return (
     <section className="login panel">
       <h1>Kaizen</h1>
-      <p className="muted">Recurring issues from patient or family and staff feedback. Log in with your Kaizen account.</p>
+      <p className="muted">Recurring issues found in feedback from patients, families and staff. Log in with your Kaizen account.</p>
       {expired && !error && (
         <p className="notice" role="status">
           Your login ended. Log in again to carry on.
@@ -74,7 +74,7 @@ export function LoginPage() {
         </div>
         {wrongPassword ? (
           <p className="notice notice-error" role="alert">
-            Wrong username or password.
+            That username and password do not match. Check both and try again.
           </p>
         ) : (
           <ErrorNotice error={error} />
@@ -83,7 +83,9 @@ export function LoginPage() {
           {busy ? "Logging in" : "Log in"}
         </button>
       </form>
-      <p><Link to="/feedback">Send feedback without logging in</Link></p>
+      <p className="login-alt">
+        <Link to="/feedback">Send feedback without logging in</Link>
+      </p>
     </section>
   );
 }
