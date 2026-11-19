@@ -3,12 +3,20 @@ import type { ReactNode } from "react";
 import { ApiError } from "./api";
 import { useAuth } from "./auth";
 
+/** "the model gave no usable reply" becomes "The model gave no usable reply." */
+function sentence(text: string): string {
+  const trimmed = text.trim();
+  if (!trimmed) return "";
+  const first = trimmed[0].toUpperCase() + trimmed.slice(1);
+  return /[.!?]$/.test(first) ? first : `${first}.`;
+}
+
 /** What went wrong, in plain words, followed by the server's own reason when it gave one. */
 export function describeError(error: unknown, role: string | undefined): string {
   if (!(error instanceof ApiError)) return error instanceof Error ? error.message : String(error);
   switch (error.status) {
     case 0:
-      return "Cannot reach the API. Check that uvicorn is running on port 8000.";
+      return "The Kaizen API is not reachable. Start it from the backend folder with uvicorn kaizen.api.app:create_app --factory, then try again.";
     case 401:
       return "Your login has ended. Log in again.";
     case 403:
@@ -19,22 +27,44 @@ export function describeError(error: unknown, role: string | undefined): string 
       return `This cannot be done yet: ${error.message}.`;
     case 422:
       return `The server did not accept this: ${error.message}.`;
+    // These come with a full sentence that says what to do, for example when the model
+    // used for drafting is not running.
     case 502:
     case 503:
-      return `The server could not finish this: ${error.message}.`;
+      return sentence(error.message) || "The server could not finish this. Try again.";
     default:
       return `Error ${error.status}: ${error.message}.`;
   }
 }
 
-/** Inline error for a view or an action. Announced to screen readers when it appears. */
-export function ErrorNotice({ error }: { error: unknown }) {
+/** Whether pressing the same button again could work. A 403, 404 or 422 will not change. */
+export function canRetry(error: unknown): boolean {
+  if (!(error instanceof ApiError)) return false;
+  return error.status === 0 || error.status === 409 || error.status >= 500;
+}
+
+/**
+ * Inline error for a view or an action. Announced to screen readers when it appears.
+ * Pass `onRetry` where repeating the request could work; the button only shows for errors
+ * that a retry can fix (no connection, a server or model failure).
+ */
+export function ErrorNotice({ error, onRetry, retryLabel = "Try again" }: {
+  error: unknown;
+  onRetry?: () => void;
+  retryLabel?: string;
+}) {
   const { me } = useAuth();
   if (error === null || error === undefined) return null;
+  const retry = onRetry && canRetry(error);
   return (
-    <p className="notice notice-error" role="alert">
-      {describeError(error, me?.role)}
-    </p>
+    <div className="notice notice-error" role="alert">
+      <p>{describeError(error, me?.role)}</p>
+      {retry && (
+        <button type="button" className="btn btn-secondary btn-small" onClick={onRetry}>
+          {retryLabel}
+        </button>
+      )}
+    </div>
   );
 }
 
