@@ -30,3 +30,13 @@ export function dateTime(iso: string): string {
   const hasZone = /(Z|[+-]\d\d:\d\d)$/.test(iso);
   return new Date(hasZone ? iso : `${iso}Z`).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" });
 }
+
+/** "2026-10-29" becomes "29 Oct" in the reader's locale. Read as UTC, so the day never shifts. */
+export function shortDate(isoDate: string): string {
+  return new Date(`${isoDate}T00:00:00Z`).toLocaleDateString(undefined, { day: "numeric", month: "short", timeZone: "UTC" });
+}
+
+/** "1 comment", "1,250 comments". */
+export function count(n: number, singular: string, plural = `${singular}s`): string {
+  return `${n.toLocaleString()} ${n === 1 ? singular : plural}`;
+}
