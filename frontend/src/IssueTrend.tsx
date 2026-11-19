@@ -23,17 +23,19 @@ export function IssueTrend({ issueId }: { issueId: number }) {
   const { me } = useAuth();
   const [data, setData] = useState<TrendOut | null>(null);
   const [error, setError] = useState<unknown>(null);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     let current = true;
+    setError(null);
     api.issueTrend(issueId).then(
       (out) => { if (current) setData(out); },
       (cause: unknown) => { if (current) setError(cause); },
     );
     return () => { current = false; };
-  }, [issueId]);
+  }, [issueId, attempt]);
 
-  if (error !== null) return <ErrorNotice error={error} />;
+  if (error !== null) return <ErrorNotice error={error} onRetry={() => setAttempt((n) => n + 1)} />;
   if (!data) {
     // Same height as the chart, so the comments below do not jump when it arrives.
     return (

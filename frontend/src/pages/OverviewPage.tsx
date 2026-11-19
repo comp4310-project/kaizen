@@ -102,7 +102,7 @@ export function OverviewPage() {
         )}
         {!data && !error && <p className="muted" role="status">Loading the overview.</p>}
       </div>
-      <ErrorNotice error={error} />
+      <ErrorNotice error={error} onRetry={load} />
 
       {data && (
         <>

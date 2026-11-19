@@ -56,6 +56,7 @@ export function CommentsPage() {
   const [error, setError] = useState<unknown>(null);
   const [loadingMore, setLoadingMore] = useState(false);
   const [moreError, setMoreError] = useState<unknown>(null);
+  const [attempt, setAttempt] = useState(0);
 
   useEffect(() => {
     let current = true;
@@ -67,7 +68,7 @@ export function CommentsPage() {
       (cause: unknown) => { if (current) setError(cause); },
     );
     return () => { current = false; };
-  }, [key]);
+  }, [key, attempt]);
 
   async function loadMore() {
     if (!data) return;
@@ -110,7 +111,7 @@ export function CommentsPage() {
         </div>
       </div>
 
-      <ErrorNotice error={error} />
+      <ErrorNotice error={error} onRetry={() => setAttempt((n) => n + 1)} />
       {!error && (
         <p className="muted small" role="status">
           {data ? `Showing ${data.comments.length} of ${count(data.total, "comment")}, in the order they were imported.` : "Loading comments."}
@@ -139,7 +140,7 @@ export function CommentsPage() {
           ))}
         </ol>
       )}
-      <ErrorNotice error={moreError} />
+      <ErrorNotice error={moreError} onRetry={loadMore} />
       {data && data.comments.length < data.total && (
         <button type="button" className="btn btn-secondary" onClick={loadMore} disabled={loadingMore}>
           {loadingMore ? "Loading" : `Show ${Math.min(PAGE_SIZE, data.total - data.comments.length)} more`}
